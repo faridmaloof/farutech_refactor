@@ -18,3 +18,6 @@ export type { UseAuthReturn } from './useAuth';
 
 export { useMenu } from './useMenu';
 export type { UseMenuOptions, UseMenuReturn, MenuItem } from './useMenu';
+
+export { useNotification } from './useNotification';
+export type { UseNotificationReturn, Notification } from './useNotification';

@@ -115,6 +115,11 @@ export type { Tag, TagInputProps } from './TagInput'
 export { FloatingActionButton } from './FloatingActionButton'
 export type { FloatingActionButtonProps, FABAction } from './FloatingActionButton'
 
+// Auth screens - export from main index to avoid circular dependencies
+// export { LoginScreen } from '../auth-screens/LoginScreen'
+// export { RegisterScreen } from '../auth-screens/RegisterScreen'
+// export type { LoginScreenProps, RegisterScreenProps } from '../auth-screens'
+
 // Export types
 export type { BreadcrumbItem } from './Breadcrumb'
 export type { DropdownItem } from './Dropdown'
