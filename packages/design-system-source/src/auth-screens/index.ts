@@ -1,22 +1,9 @@
 /**
- * Auth Screens - Farutech Design System
- * 
- * Pantallas de autenticación reutilizables:
- * - Login
- * - Register
- * - ForgotPassword
- * 
- * Cada pantalla recibe el endpoint/callback por props,
- * sin backend fijo embebido.
+ * Exports de pantallas de autenticación
  */
 
 export { LoginScreen } from './LoginScreen'
-export { RegisterScreen } from './RegisterScreen'
-export { ForgotPasswordScreen } from './ForgotPasswordScreen'
+export type { LoginScreenProps } from './LoginScreen'
 
-export type {
-  LoginScreenProps,
-  RegisterScreenProps,
-  ForgotPasswordScreenProps,
-  AuthScreenConfig,
-} from './types'
+export { RegisterScreen } from './RegisterScreen'
+export type { RegisterScreenProps } from './RegisterScreen'

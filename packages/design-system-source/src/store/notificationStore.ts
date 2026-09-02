@@ -1,9 +1,14 @@
-/**
- * Store para sistema de notificaciones toast
- */
-
 import { create } from 'zustand'
-import type { Notification } from '@/types'
+
+export type NotificationType = 'success' | 'error' | 'warning' | 'info'
+
+export interface Notification {
+  id: string
+  type: NotificationType
+  message: string
+  title?: string
+  duration?: number
+}
 
 interface NotificationState {
   notifications: Notification[]
@@ -14,52 +19,50 @@ interface NotificationState {
 
 export const useNotificationStore = create<NotificationState>((set) => ({
   notifications: [],
-  
   addNotification: (notification) => {
-    const id = Math.random().toString(36).substring(7)
-    const newNotification: Notification = {
-      id,
-      duration: 5000, // 5 segundos por defecto
-      ...notification,
-    }
-
-    set((state) => ({
-      notifications: [...state.notifications, newNotification],
-    }))
-
-    // Auto-remover después de la duración
-    if (newNotification.duration && newNotification.duration > 0) {
+    const id = Math.random().toString(36).substr(2, 9)
+    const newNotification: Notification = { id, ...notification }
+    set((state) => ({ notifications: [...state.notifications, newNotification] }))
+    
+    // Auto-remove after duration
+    if (notification.duration !== 0) {
       setTimeout(() => {
         set((state) => ({
           notifications: state.notifications.filter((n) => n.id !== id),
         }))
-      }, newNotification.duration)
+      }, notification.duration || 5000)
     }
   },
-
-  removeNotification: (id) => {
+  removeNotification: (id) =>
     set((state) => ({
       notifications: state.notifications.filter((n) => n.id !== id),
-    }))
-  },
-
-  clearAll: () => {
-    set({ notifications: [] })
-  },
+    })),
+  clearAll: () => set({ notifications: [] }),
 }))
 
-// Helper para uso rápido
 export const notify = {
-  success: (title: string, message?: string) => {
-    useNotificationStore.getState().addNotification({ type: 'success', title, message })
-  },
-  error: (title: string, message?: string) => {
-    useNotificationStore.getState().addNotification({ type: 'error', title, message })
-  },
-  warning: (title: string, message?: string) => {
-    useNotificationStore.getState().addNotification({ type: 'warning', title, message })
-  },
-  info: (title: string, message?: string) => {
-    useNotificationStore.getState().addNotification({ type: 'info', title, message })
-  },
+  success: (message: string, title?: string) =>
+    useNotificationStore.getState().addNotification({
+      type: 'success',
+      message,
+      title,
+    }),
+  error: (message: string, title?: string) =>
+    useNotificationStore.getState().addNotification({
+      type: 'error',
+      message,
+      title,
+    }),
+  warning: (message: string, title?: string) =>
+    useNotificationStore.getState().addNotification({
+      type: 'warning',
+      message,
+      title,
+    }),
+  info: (message: string, title?: string) =>
+    useNotificationStore.getState().addNotification({
+      type: 'info',
+      message,
+      title,
+    }),
 }
