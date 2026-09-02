@@ -1,18 +1,25 @@
 /**
- * Componente ProgressBar - Barra de progreso
+ * Componente ProgressBar - Barra de progreso con soporte para estado indeterminado
+ * Ideal para mostrar progreso de cargas asíncronas o procesos en segundo plano
  */
 
 import clsx from 'clsx'
+import { Spinner } from './Spinner'
 
 interface ProgressBarProps {
-  value: number // 0-100
+  /** Valor actual (0-100 o valor absoluto) */
+  value?: number // Opcional para estado indeterminado
   max?: number
   label?: string
   showLabel?: boolean
   size?: 'sm' | 'md' | 'lg'
-  variant?: 'default' | 'gradient' | 'striped'
+  variant?: 'default' | 'gradient' | 'striped' | 'indeterminate'
   color?: 'primary' | 'success' | 'warning' | 'error' | 'info'
   className?: string
+  /** Mostrar spinner cuando está en estado indeterminado */
+  showSpinner?: boolean
+  /** Mensaje mientras está cargando */
+  loadingMessage?: string
 }
 
 const sizeStyles = {
@@ -45,40 +52,77 @@ export function ProgressBar({
   size = 'md',
   variant = 'default',
   color = 'primary',
-  className
+  className,
+  showSpinner = false,
+  loadingMessage = 'Cargando...',
 }: ProgressBarProps) {
-  const percentage = Math.min(100, Math.max(0, (value / max) * 100))
+  const isIndeterminate = variant === 'indeterminate' || value === undefined
+  
+  const percentage = value !== undefined 
+    ? Math.min(100, Math.max(0, (value / max) * 100))
+    : 0
 
   return (
     <div className={className}>
-      {(label || showLabel) && (
-        <div className="flex justify-between mb-2">
+      {(label || showLabel || (isIndeterminate && showSpinner)) && (
+        <div className="flex justify-between items-center mb-2">
           {label && (
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {label}
             </span>
           )}
-          {showLabel && (
+          {showLabel && !isIndeterminate && (
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {Math.round(percentage)}%
             </span>
           )}
+          {isIndeterminate && showSpinner && (
+            <div className="flex items-center gap-2">
+              <Spinner size="xs" className="text-primary-600" />
+              <span className="text-sm text-gray-500 dark:text-gray-400">{loadingMessage}</span>
+            </div>
+          )}
         </div>
       )}
+      
       <div
         className={clsx(
           'w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden',
           sizeStyles[size]
         )}
       >
-        <div
-          className={clsx(
-            'h-full transition-all duration-500 ease-out',
-            variant === 'gradient' ? gradientStyles[color] : colorStyles[color],
-            variant === 'striped' && 'bg-stripes animate-stripes'
-          )}
-          style={{ width: `${percentage}%` }}
-        />
+        {isIndeterminate ? (
+          // Estado indeterminado - animación continua
+          <div
+            className={clsx(
+              'h-full relative overflow-hidden',
+              variant === 'gradient' ? gradientStyles[color] : colorStyles[color]
+            )}
+          >
+            <div
+              className={clsx(
+                'absolute inset-y-0 w-1/2',
+                'animate-shimmer',
+                variant === 'striped' && 'bg-stripes animate-stripes'
+              )}
+              style={{
+                background: variant === 'gradient' 
+                  ? undefined 
+                  : undefined,
+              }}
+            />
+          </div>
+        ) : (
+          // Progreso determinado
+          <div
+            className={clsx(
+              'h-full transition-all duration-500 ease-out',
+              variant === 'gradient' ? gradientStyles[color] : colorStyles[color],
+              variant === 'striped' && 'bg-stripes animate-stripes'
+            )}
+            style={{ width: `${percentage}%` }}
+          />
+        )}
       </div>
     </div>
   )

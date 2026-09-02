@@ -1,7 +1,7 @@
 # 🚀 Bitácora de Implementación - Refactorización Farutech
 
 ## Fecha: 2025-09-02
-## Estado: En Progreso (21.4% completado)
+## Estado: En Progreso (26.8% completado)
 
 ---
 
@@ -14,6 +14,7 @@ Se está realizando una refactorización completa del repositorio para convertir
 3. **Workers** para procesos asíncronos
 4. **Backend API** independiente con Laravel 11 + Scalar
 5. **Componentes avanzados** con hooks y stores centralizados
+6. **Soporte para carga asíncrona de datos** desde APIs con mapeo configurable
 
 ---
 
@@ -33,14 +34,15 @@ Se está realizando una refactorización completa del repositorio para convertir
 
 ---
 
-### FASE 2: Design System (@farutech/design-system) (69% - 9/13 tareas)
+### FASE 2: Design System (@farutech/design-system) (85% - 11/13 tareas)
 
 #### TASK-201: Configuración del Paquete ✅
 - [x] Package.json configurado para publicación en GitHub Packages
-- [x] Exports modulares (ui, crud, layout, auth-screens, tokens)
+- [x] Exports modulares (ui, crud, layout, auth-screens, tokens, hooks)
 - [x] peerDependencies para React 18-19
 - [x] Scripts de build y test configurados
-- [x] Build exitoso: `dist/index.js` (2.45 MB gzip 548 KB), `dist/styles.css` (107 KB gzip 16 KB)
+- [x] Build exitoso: `dist/index.js` (2.46 MB gzip 549 KB), `dist/styles.css` (108 KB gzip 16.6 KB)
+- [x] 0 errores críticos, 0 warnings
 
 #### TASK-202: Tokens de Diseño ✅
 - [x] Sistema de colores (primarios, secundarios, semánticos, grises)
@@ -98,6 +100,91 @@ Se está realizando una refactorización completa del repositorio para convertir
   
 - [x] **usePushNotification.ts** - Hook para notificaciones push
   - requestPermission para Notification API
+  
+- [x] **useAsyncData.ts** - Hook genérico para carga asíncrona ⭐ NUEVO
+  - Soporte para APIs REST
+  - Mapeo de respuestas configurable
+  - Estados de loading/error
+  - minLoadingTime para evitar parpadeos
+  - refetch y reset
+  
+- [x] **useAsyncSelect.ts** - Hook específico para Select ⭐ NUEVO
+  - Integración con useAsyncData
+  - Tipo SelectOption predefinido
+  
+- [x] **useAsyncDropdown.ts** - Hook específico para Dropdown ⭐ NUEVO
+  - Tipo DropdownItem predefinido
+  
+- [x] **useAsyncPagination.ts** - Hook para paginación asíncrona ⭐ NUEVO
+  - nextPage, previousPage, goToPage
+  - Control de página actual
+
+#### TASK-206: Componentes con Soporte Asíncrono ⭐ NUEVO
+- [x] **Select.tsx** mejorado
+  - Props: `asyncData`, `isLoading`, `loadingMessage`, `emptyMessage`
+  - Spinner integrado durante carga
+  - Prioriza asyncData sobre options estáticos
+  - Opciones deshabilitadas individuales
+  
+- [x] **Dropdown.tsx** mejorado
+  - Props: `asyncItems`, `isLoading`, `loadingMessage`, `emptyMessage`
+  - Spinner en botón y menú durante carga
+  - Mensaje de "No hay opciones" cuando está vacío
+  - Prioriza asyncItems sobre items estáticos
+  
+- [x] **ProgressBar.tsx** mejorado
+  - Nuevo variant: `indeterminate` para estado desconocido
+  - Prop `showSpinner` para mostrar spinner durante carga
+  - Prop `loadingMessage` configurable
+  - Ideal para procesos en segundo plano
+
+#### TASK-207: Componentes CRUD Avanzados ✅
+- [x] **CRUDTable.tsx** - Tabla CRUD completa
+  - Acciones globales (export, importar, bulk actions)
+  - Acciones por registro (editar, eliminar, activar/inactivar)
+  - Búsqueda, filtros, paginación, ordenamiento
+  - Selección múltiple
+  - Exportación CSV/Excel/PDF
+  
+- [x] **CrudActions.tsx** - Acciones del CRUD
+- [x] **CrudFilters.tsx** - Filtros del CRUD
+- [x] **CrudPagination.tsx** - Paginación del CRUD
+
+#### TASK-208: Componentes de Navegación ✅
+- [x] **TopNav.tsx** - Menú horizontal
+  - Filtrado por permisos
+  - Submenús anidados
+  - Menú de usuario (perfil, configuración, logout)
+  - Badges para notificaciones
+  - Responsive con menú hamburguesa
+  
+- [x] **Sidebar.tsx** - Menú vertical existente
+- [x] **menu.config.ts** - Configuración centralizada de menús
+
+#### TASK-209: Auth Screens ✅
+- [x] **LoginScreen.tsx** - Pantalla de login
+  - Psicología del color aplicada
+  - Validación en tiempo real
+  - Sidebar decorativo responsive
+  - Callbacks configurables
+  
+- [x] **RegisterScreen.tsx** - Pantalla de registro
+  - Campos adicionales opcionales
+  - Términos y condiciones
+  - Fortalecimiento de contraseña
+
+#### TASK-210: Componentes UI Adicionales ✅
+- [x] Avatar, Badge, Breadcrumb, Button, Card, Carousel
+- [x] Charts, Checkbox, CodePreview, CommandPalette
+- [x] DataTable, DateControls, DatePicker, Divider, Drawer
+- [x] EmptyState, FloatingActionButton, Form, GlobalLoading
+- [x] ImageUpload, Input, ListBox, ListGroup, Loading
+- [x] LogoSpinner, MaskedInput, Modal, ModuleSwitcher
+- [x] NotificationPanel, PhoneInput, RadioGroup, Scheduler
+- [x] Skeleton, Spinner, StatsCard, Stepper, Switch, Tabs
+- [x] TagInput, Textarea, Tooltip
+
+---
   - unreadCount
   - Funciones de gestión completas
   
