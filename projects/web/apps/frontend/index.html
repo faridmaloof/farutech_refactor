@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon: logo oficial de FaruTech -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://www.farutech.com/" />
+
+    <!-- SEO -->
+    <title>FaruTech · Desarrollo de software a medida y plataformas SaaS</title>
+    <meta
+      name="description"
+      content="Desarrollo de software a medida, plataformas SaaS multi-tenant y soluciones empresariales. Ingeniería senior, desde el primer commit hasta el runbook. Bogotá · Cali · Remoto."
+    />
+    <meta name="theme-color" content="#fdfdfe" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FaruTech" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:title" content="FaruTech · Desarrollo de software a medida y plataformas SaaS" />
+    <meta
+      property="og:description"
+      content="Software a medida que llega a producción y se queda. Plataformas SaaS multi-tenant, soluciones empresariales e IA aplicada."
+    />
+    <meta property="og:url" content="https://www.farutech.com/" />
+    <meta property="og:image" content="https://www.farutech.com/logo.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FaruTech · Desarrollo de software a medida" />
+    <meta name="twitter:image" content="https://www.farutech.com/logo.webp" />
+
+    <!-- Fuentes: Geist + Geist Mono (identidad del refactor) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Datos estructurados -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "FaruTech",
+        "url": "https://www.farutech.com",
+        "logo": "https://www.farutech.com/logo.webp",
+        "description": "Desarrollo de software a medida, plataformas SaaS multi-tenant y soluciones empresariales.",
+        "email": "hello@farutech.com",
+        "areaServed": ["CO", "LATAM"],
+        "address": { "@type": "PostalAddress", "addressLocality": "Bogotá", "addressCountry": "CO" },
+        "knowsAbout": [
+          "Desarrollo de software a medida",
+          "Plataformas SaaS multi-tenant",
+          "Soluciones empresariales",
+          "IA y automatización",
+          "Modernización tecnológica",
+          "UX Engineering"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "FaruTech",
+        "url": "https://www.farutech.com",
+        "inLanguage": ["es-CO", "en-US"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Desarrollo de Software a Medida",
+        "serviceType": "Custom Software Development",
+        "provider": { "@type": "Organization", "name": "FaruTech", "url": "https://www.farutech.com" },
+        "areaServed": ["CO", "LATAM"],
+        "description": "Sistemas diseñados y construidos para tu operación: desde el primer commit hasta producción.",
+        "url": "https://www.farutech.com/services/software-development"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Cuánto tarda un proyecto de software a medida?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Depende del alcance. Un MVP funcional puede estar en producción en 6-8 semanas. Proyectos enterprise con integraciones complejas suelen tomar 3-6 meses." }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Trabajan con equipos remotos?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sí. Somos un equipo distribuido por diseño, con presencia en Bogotá y Cali. Trabajamos con clientes en LATAM y de forma remota." }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué incluye el precio de un proyecto?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Cada proyecto se cotiza según alcance. Incluye diseño, desarrollo, pruebas, despliegue y documentación. Sin costos ocultos." }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Ofrecen soporte post-lanzamiento?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sí. Ofrecemos planes de mantenimiento y soporte con SLA. El código es tuyo: documentación, ADRs y acceso completo al repositorio." }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Fondo claro por defecto: evita destello oscuro antes de cargar el tema -->
+    <style>
+      html { background-color: #fdfdfe; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

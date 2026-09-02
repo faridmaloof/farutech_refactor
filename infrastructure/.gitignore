@@ -1,0 +1,17 @@
+# ==============================================================================
+# Infraestructura FaruTech — .gitignore
+# ==============================================================================
+# Configuración local / real (NUNCA versionar credenciales reales)
+.env
+*.env.local
+
+# Datos reales de bases de datos (no versionables — contienen hashes/credenciales)
+mysql/data/
+postgres/data/
+mongodb/data/
+
+# Volúmenes / dumps
+*.sql
+*.sqlite
+*.dump
+pgadmin/

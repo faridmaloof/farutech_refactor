@@ -1,0 +1,218 @@
+/* ============================================================================
+   FaruTech — global.css
+   ÚNICA fuente de verdad de theming. NO debe existir tokens.css en el
+   proyecto ni un tailwind.config.* con theme.extend duplicando esto.
+   ============================================================================ */
+
+@import "tailwindcss";
+
+@theme inline {
+  /* Tipografía */
+  --font-display: "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  /* Paleta base derivada del isotipo FaruTech */
+  --color-primary: oklch(0.62 0.14 220);   /* cian — ala superior del logo */
+  --color-accent: oklch(0.72 0.16 45);     /* coral — punto de acento */
+  --color-spark: oklch(0.58 0.18 45);      /* ámbar/alerta */
+  --color-charcoal: oklch(0.3 0.02 250);   /* gris carbón — pliegue central */
+  --color-emerald: oklch(0.68 0.17 155);   /* verde — bloque inferior */
+  --color-success: oklch(0.64 0.15 155);   /* estados OK */
+
+  /* Acentos hex por servicio (fallbacks base = cian/coral del isotipo) */
+  --accent-hex: #3FC1FF;
+  --accent2-hex: #FF7A1A;
+  --glow-color: oklch(0.74 0.15 220 / 0.32);
+
+  /* Semánticos del tema claro */
+  --color-background: oklch(0.99 0.002 250);
+  --color-foreground: oklch(0.16 0.012 250);
+  --color-surface: oklch(0.965 0.007 250);
+  --color-muted: oklch(0.92 0.01 250);
+  --color-muted-foreground: oklch(0.45 0.022 250);
+  --color-card: oklch(1 0 0);
+  --color-border: oklch(0.88 0.012 250);
+
+  --shadow-glow: 0 0 60px -10px oklch(0.75 0.15 220 / 0.4);
+  --shadow-elevated: 0 12px 40px -16px oklch(0.2 0.03 250 / 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+   Theming por servicio — cascada de variables CSS, NO config de Tailwind
+   duplicada. El slug de cada [data-service] DEBE coincidir con
+   Service.slug en src/content/servicesData.ts
+   ---------------------------------------------------------------------------- */
+
+[data-service="software-development"] {
+  --color-primary: oklch(0.72 0.14 230);
+  --color-accent: oklch(0.62 0.18 290);
+  --accent-hex: #3FC1FF;
+  --accent2-hex: #7C5CFF;
+  --glow-color: oklch(0.72 0.14 230 / 0.35);
+}
+
+[data-service="enterprise-solutions"] {
+  --color-primary: oklch(0.68 0.18 45);
+  --color-accent: oklch(0.62 0.20 340);
+  --accent-hex: #FF7A1A;
+  --accent2-hex: #FF3D71;
+  --glow-color: oklch(0.68 0.18 45 / 0.35);
+}
+
+[data-service="saas-platforms"] {
+  --color-primary: oklch(0.68 0.17 155);
+  --color-accent: oklch(0.65 0.15 190);
+  --accent-hex: #22E07C;
+  --accent2-hex: #14B8A6;
+  --glow-color: oklch(0.68 0.17 155 / 0.35);
+}
+
+[data-service="ux-engineering"] {
+  --color-primary: oklch(0.65 0.20 300);
+  --color-accent: oklch(0.68 0.18 340);
+  --accent-hex: #B66BFF;
+  --accent2-hex: #FF6BD6;
+  --glow-color: oklch(0.65 0.20 300 / 0.35);
+}
+
+[data-service="ai-automation"] {
+  --color-primary: oklch(0.72 0.16 190);
+  --color-accent: oklch(0.65 0.14 240);
+  --accent-hex: #36E0C0;
+  --accent2-hex: #3F9BFF;
+  --glow-color: oklch(0.72 0.16 190 / 0.35);
+}
+
+[data-service="modernization"] {
+  --color-primary: oklch(0.72 0.16 55);
+  --color-accent: oklch(0.68 0.18 35);
+  --accent-hex: #FFB020;
+  --accent2-hex: #FF7A1A;
+  --glow-color: oklch(0.72 0.16 55 / 0.35);
+}
+
+/* ---------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------
+   Patrones visuales del refactor — mesh, glow, gradiente de texto, borde
+   degradado y grano. Son utilities que los componentes usan directamente.
+   ---------------------------------------------------------------------------- */
+
+/* Fondo malla: manchas radiales sutiles en el tono del tema. */
+.bg-mesh {
+  background-image:
+    radial-gradient(at 18% 28%, var(--color-primary) / 0.14, transparent 52%),
+    radial-gradient(at 82% 74%, var(--color-emerald) / 0.12, transparent 52%),
+    radial-gradient(at 65% 12%, var(--color-accent) / 0.1, transparent 52%),
+    radial-gradient(at 40% 92%, var(--color-primary) / 0.08, transparent 45%);
+}
+
+/* Mancha de brillo radial (blobs decorativos de hero y CTA). */
+.bg-glow {
+  background: radial-gradient(closest-side, var(--glow-color), transparent 72%);
+}
+
+/* Texto con gradiente de marca (sobre fondos claros). */
+.text-gradient {
+  background-image: linear-gradient(
+    110deg,
+    var(--color-accent) 0%,
+    var(--color-primary) 48%,
+    oklch(0.3 0.04 250) 118%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Borde con gradiente (anillo de 1px alrededor del contenedor). */
+.border-gradient {
+  position: relative;
+}
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    oklch(0.65 0.18 220 / 0.55),
+    oklch(0.72 0.16 45 / 0.5) 55%,
+    transparent 80%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Grano sutil (capa sobre imagen/fondo). Requiere `overflow-hidden`. */
+.noise {
+  position: relative;
+}
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Marquee infinito: la fila duplica su contenido y se desplaza -50%. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 42s linear infinite;
+}
+
+/* Flotación sutil (chips y logo del hero). */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------- */
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: oklch(0.72 0.16 45 / 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee,
+  .animate-float {
+    animation: none;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

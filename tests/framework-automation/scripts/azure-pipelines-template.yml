@@ -1,0 +1,145 @@
+# Azure DevOps Pipeline Template for Enterprise Automation Framework
+# Usage: Include this template in your pipeline YAML
+
+parameters:
+  - name: solutionPath
+    type: string
+    default: 'src/Framework.Automation.slnx'
+  - name: configuration
+    type: string
+    default: 'Release'
+  - name: testFilter
+    type: string
+    default: ''
+  - name: enableParallel
+    type: boolean
+    default: true
+  - name: maxWorkers
+    type: number
+    default: 4
+  - name: publishTestResults
+    type: boolean
+    default: true
+  - name: publishCodeCoverage
+    type: boolean
+    default: true
+  - name: enableSharding
+    type: boolean
+    default: false
+  - name: shardCount
+    type: number
+    default: 4
+
+stages:
+  - stage: Build
+    displayName: 'Build and Test'
+    jobs:
+      - job: Build
+        displayName: 'Build Solution'
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK'
+            inputs:
+              packageType: 'sdk'
+              version: '10.x'
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore NuGet Packages'
+            inputs:
+              command: 'restore'
+              projects: '${{ parameters.solutionPath }}'
+              feedsToUse: 'select'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build Solution'
+            inputs:
+              command: 'build'
+              projects: '${{ parameters.solutionPath }}'
+              configuration: '${{ parameters.configuration }}'
+              arguments: '--no-restore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Install Playwright Browsers'
+            inputs:
+              command: 'custom'
+              custom: 'exec'
+              arguments: 'playwright.ps1 install --with-deps'
+              workingDirectory: 'src/Automation.UI.Tests'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Run Tests'
+            condition: succeeded()
+            inputs:
+              command: 'test'
+              projects: '${{ parameters.solutionPath }}'
+              configuration: '${{ parameters.configuration }}'
+              arguments: >-
+                --no-build
+                --logger "trx;LogFileName=$(System.DefaultWorkingDirectory)/TestResults/test-results.trx"
+                ${{ eq(parameters.testFilter, '') }}: ''
+                ${{ ne(parameters.testFilter, '') }}: '--filter "${{ parameters.testFilter }}"'
+                ${{ eq(parameters.enableParallel, true) }}: '--configuration Release'
+              workingDirectory: 'src'
+
+          - task: PublishTestResults@2
+            displayName: 'Publish Test Results'
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: 'VSTest'
+              testResultsFiles: '**/*.trx'
+              searchFolder: '$(System.DefaultWorkingDirectory)/TestResults'
+              mergeTestResults: true
+              publishRunAttachments: true
+
+          - task: PublishCodeCoverageResults@1
+            displayName: 'Publish Code Coverage'
+            condition: succeededOrFailed()
+            inputs:
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '**/coverage.cobertura.xml'
+              failIfCoverageEmpty: false
+
+      - job: ShardedTests
+        displayName: 'Run Sharded Tests'
+        dependsOn: Build
+        condition: and(succeeded(), eq('${{ parameters.enableSharding }}', true))
+        strategy:
+          matrix:
+            ${{ each shard in range(1, parameters.shardCount) }}:
+              Shard_${{ shard }}:
+                ShardIndex: ${{ shard }}
+                ShardTotal: ${{ parameters.shardCount }}
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK'
+            inputs:
+              packageType: 'sdk'
+              version: '10.x'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Run Sharded Tests'
+            inputs:
+              command: 'test'
+              projects: '${{ parameters.solutionPath }}'
+              configuration: '${{ parameters.configuration }}'
+              arguments: >-
+                --no-build
+                --logger "trx;LogFileName=$(System.DefaultWorkingDirectory)/TestResults/test-results-shard-$(ShardIndex).trx"
+              workingDirectory: 'src'
+            env:
+              XUNIT_SHARD_INDEX: $(ShardIndex)
+              XUNIT_SHARD_TOTAL: $(ShardTotal)
+
+          - task: PublishTestResults@2
+            displayName: 'Publish Shard Test Results'
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: 'VSTest'
+              testResultsFiles: '**/*.trx'
+              searchFolder: '$(System.DefaultWorkingDirectory)/TestResults'
+              mergeTestResults: true

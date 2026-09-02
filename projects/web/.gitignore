@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# FaruTech Web — Git ignore (monorepo: apps/ y docker/)
+# ---------------------------------------------------------------------------
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build artifacts
+dist/
+dist-ssr/
+build/
+out/
+
+# Environment variables (nunca subir secretos)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Caches
+.vite/
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# Coverage / testing
+coverage/
+
+# Temporal
+tmp/
+temp/
+# Artefactos y respaldos locales
+apps/backend/Backend.zip
+*.ps1
+apps/backend_lumen_backup/

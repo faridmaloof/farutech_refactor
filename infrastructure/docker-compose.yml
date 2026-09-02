@@ -1,0 +1,190 @@
+services:
+  # ============================================================
+  # GATEWAY
+  #
+  # Entrada única para:
+  #
+  # HTTP
+  #   :80
+  #
+  # MySQL
+  #   :3306
+  #
+  # PostgreSQL
+  #   :5432
+  #
+  # MongoDB
+  #   :27017
+  # ============================================================
+  gateway:
+    image: haproxy:3.2-alpine
+    container_name: farutech-gateway
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "3306:3306"
+      - "5432:5432"
+      - "27017:27017"
+    volumes:
+      - ./gateway/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    networks:
+      farutech-proxy-network:
+        aliases:
+          - gateway.farutech.local
+      farutech-data-network:
+        aliases:
+          - db.farutech.local
+    depends_on:
+      - mysql
+      - postgres
+      - mongodb
+
+  # ============================================================
+  # MYSQL — credenciales por .env / Secrets (TASK-002). Los defaults
+  # son placeholders CHANGE_ME_OR_SET_SECRET; los valores reales se
+  # proveen vía .env (local) o Secrets (dev/qa/staging/prod).
+  # ============================================================
+  mysql:
+    image: mysql:8.4
+    container_name: farutech-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-CHANGE_ME_OR_SET_SECRET}
+      MYSQL_USER: ${MYSQL_USER:-CHANGE_ME_OR_SET_SECRET}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    networks:
+      - farutech-data-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ============================================================
+  # POSTGRESQL
+  # ============================================================
+  postgres:
+    image: postgres:17-alpine
+    container_name: farutech-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-CHANGE_ME_OR_SET_SECRET}
+      POSTGRES_USER: ${POSTGRES_USER:-CHANGE_ME_OR_SET_SECRET}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - farutech-data-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ============================================================
+  # MONGODB
+  # ============================================================
+  mongodb:
+    image: mongo:8
+    container_name: farutech-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-CHANGE_ME_OR_SET_SECRET}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+    volumes:
+      - ./mongodb/data:/data/db
+    networks:
+      - farutech-data-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mongosh mongodb://$${MONGO_INITDB_ROOT_USERNAME}:$${MONGO_INITDB_ROOT_PASSWORD}@localhost:27017/admin?authSource=admin --quiet --eval \"db.adminCommand('ping').ok\" | grep -E '^(1|true)\\s*$'"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  # ============================================================
+  # PHPMYADMIN
+  # ============================================================
+  phpmyadmin:
+    image: phpmyadmin:5-apache
+    container_name: farutech-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    networks:
+      - farutech-data-network
+      - farutech-proxy-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # ============================================================
+  # PGADMIN
+  # ============================================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: farutech-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-CHANGE_ME_OR_SET_SECRET}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - farutech-data-network
+      - farutech-proxy-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ============================================================
+  # MONGO EXPRESS
+  # ============================================================
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: farutech-mongo-express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME:-CHANGE_ME_OR_SET_SECRET}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USER:-CHANGE_ME_OR_SET_SECRET}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+    networks:
+      - farutech-data-network
+      - farutech-proxy-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+# ================================================================
+# NETWORKS
+# ================================================================
+networks:
+  farutech-data-network:
+    external: true
+  farutech-proxy-network:
+    external: true
+
+# ================================================================
+# VOLUMES
+# ================================================================
+volumes:
+  pgadmin-data:

@@ -1,0 +1,48 @@
+services:
+  # ============================================================
+  # FRONTEND — VITE_API_URL se hornea en el build (por ambiente)
+  # ============================================================
+  frontend:
+    build:
+      context: .
+      dockerfile: deployment/docker/frontend/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://api.farutech.local}
+    container_name: farutech-frontend
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - farutech-proxy-network
+
+  # ============================================================
+  # BACKEND
+  # ============================================================
+  backend:
+    build:
+      context: .
+      dockerfile: deployment/docker/backend/Dockerfile
+    container_name: farutech-backend
+    restart: unless-stopped
+    expose:
+      - "80"
+    environment:
+      # Flags de plataforma por ambiente (los SECRETOS de la app viven SOLO
+      # en el .env montado de apps/backend — única fuente, nunca duplicada).
+      SWAGGER_UI_ENABLED: ${SWAGGER_UI_ENABLED:-true}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://farutech.local}
+
+    networks:
+      - farutech-proxy-network
+      - farutech-data-network
+    volumes:
+      - ./apps/backend:/var/www/html:rw
+
+# ================================================================
+# NETWORKS
+# ================================================================
+networks:
+  farutech-proxy-network:
+    external: true
+  farutech-data-network:
+    external: true

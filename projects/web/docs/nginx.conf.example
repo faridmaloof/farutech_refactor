@@ -1,0 +1,140 @@
+# Nginx Configuration for Production
+# Copiar a: /etc/nginx/sites-available/tudominio.com
+
+server {
+    listen 443 ssl http2;
+    server_name tudominio.com www.tudominio.com;
+
+    # SSL Configuration (LetsEncrypt)
+    ssl_certificate /etc/letsencrypt/live/tudominio.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/tudominio.com/privkey.pem;
+    
+    # SSL Hardening
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    
+    # Security Headers
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+    
+    # Content Security Policy (Ajustar según necesidades)
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'self';" always;
+    
+    # Logging
+    access_log /var/log/nginx/tudominio_access.log;
+    error_log /var/log/nginx/tudominio_error.log;
+    
+    # Root para Frontend (Vite SSR/Prerender)
+    root /var/www/tu-proyecto/dist;
+    index index.html;
+    
+    # Gzip Compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_proxied expired no-cache no-store private auth;
+    gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml application/javascript application/json;
+    gzip_disable "MSIE [1-6]\.";
+    
+    # Frontend Routes (SPA Fallback)
+    location / {
+        try_files $uri $uri/ /index.html;
+        
+        # Cache Control para HTML
+        if ($request_uri ~* "\.(html|htm)$") {
+            add_header Cache-Control "no-cache, no-store, must-revalidate";
+        }
+    }
+    
+    # Backend API Proxy
+    location /api {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        
+        # Timeouts
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+        
+        # Buffering
+        proxy_buffering off;
+    }
+    
+    # Health Check Endpoint (sin logging para monitoreo frecuente)
+    location = /api/health {
+        proxy_pass http://127.0.0.1:8000/api/health;
+        access_log off;
+    }
+    
+    # Static Assets (Cache Largo)
+    location ~* \.(jpg|jpeg|png|gif|ico|svg|webp|avif)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+    
+    location ~* \.(css|js|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+    
+    # Sitemap y Robots
+    location = /sitemap.xml {
+        alias /var/www/tu-proyecto/dist/sitemap.xml;
+        add_header Content-Type "application/xml";
+    }
+    
+    location = /robots.txt {
+        alias /var/www/tu-proyecto/dist/robots.txt;
+        add_header Content-Type "text/plain";
+    }
+    
+    # Deny Access to Sensitive Files
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    
+    location ~* /(vendor|node_modules|apps/backend/storage|apps/backend/bootstrap)\. {
+        deny all;
+    }
+}
+
+# HTTP → HTTPS Redirect
+server {
+    listen 80;
+    server_name tudominio.com www.tudominio.com;
+    
+    # Redirect all HTTP to HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+# Rate Limiting Zone (en http block de nginx.conf)
+# limit_req_zone $binary_remote_addr zone=api_limit:10m rate=60r/m;
+# limit_req_zone $binary_remote_addr zone=login_limit:10m rate=5r/m;
+
+# Ejemplo de aplicación de rate limiting en location /api:
+# location /api {
+#     limit_req zone=api_limit burst=20 nodelay;
+#     ...
+# }
+
+# Ejemplo para endpoint de login:
+# location = /api/auth/login {
+#     limit_req zone=login_limit burst=3 nodelay;
+#     ...
+# }
