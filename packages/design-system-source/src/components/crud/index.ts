@@ -5,8 +5,8 @@
 export { CRUDTable } from './CRUDTable'
 export type { 
   CRUDTableProps, 
-  ColumnDef, 
-  ActionButton, 
+  Column, 
   GlobalAction,
+  RowAction,
   FilterConfig 
 } from './CRUDTable'

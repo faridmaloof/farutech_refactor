@@ -8,6 +8,7 @@ interface SearchState {
   setOpen: (isOpen: boolean) => void;
   addRecentSearch: (query: string) => void;
   clearRecentSearches: () => void;
+  clear: () => void;
 }
 
 export const useSearchStore = create<SearchState>((set) => ({
@@ -21,4 +22,5 @@ export const useSearchStore = create<SearchState>((set) => ({
       recentSearches: [query, ...state.recentSearches.filter((s) => s !== query)].slice(0, 5),
     })),
   clearRecentSearches: () => set({ recentSearches: [] }),
+  clear: () => set({ query: '', isOpen: false }),
 }));

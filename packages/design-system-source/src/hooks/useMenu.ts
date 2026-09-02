@@ -1,30 +1,24 @@
 import { useState, useCallback, useMemo } from 'react';
-
-export interface MenuItem {
-  id: string;
-  label: string;
-  icon?: string;
-  path?: string;
-  children?: MenuItem[];
-  permissions?: string[];
-  badge?: number | string;
-}
+import type { MenuItem, MenuCategory } from '@/config/menu.config';
 
 export interface UseMenuOptions {
-  items: MenuItem[];
+  items?: MenuItem[];
+  categories?: MenuCategory[];
   userPermissions?: string[];
 }
 
 export interface UseMenuReturn {
-  menuItems: MenuItem[];
+  menu: MenuItem[];
+  categories: MenuCategory[];
   isExpanded: Record<string, boolean>;
   toggleExpand: (id: string) => void;
   collapseAll: () => void;
+  expandAll: () => void;
   activeId: string | null;
   setActiveId: (id: string | null) => void;
 }
 
-export function useMenu({ items, userPermissions = [] }: UseMenuOptions): UseMenuReturn {
+export function useMenu({ items = [], categories = [], userPermissions = [] }: UseMenuOptions): UseMenuReturn {
   const [isExpanded, setIsExpanded] = useState<Record<string, boolean>>({});
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -52,7 +46,17 @@ export function useMenu({ items, userPermissions = [] }: UseMenuOptions): UseMen
     }, []);
   }, [userPermissions]);
 
-  const menuItems = useMemo(() => filterByPermissions(items), [items, filterByPermissions]);
+  const menu = useMemo(() => {
+    if (items && items.length > 0) {
+      return filterByPermissions(items);
+    }
+    // Si se proporcionan categorías, aplanar los items
+    if (categories && categories.length > 0) {
+      const allItems = categories.flatMap(cat => cat.items);
+      return filterByPermissions(allItems);
+    }
+    return [];
+  }, [items, categories, filterByPermissions]);
 
   const toggleExpand = useCallback((id: string) => {
     setIsExpanded(prev => ({
@@ -65,11 +69,27 @@ export function useMenu({ items, userPermissions = [] }: UseMenuOptions): UseMen
     setIsExpanded({});
   }, []);
 
+  const expandAll = useCallback(() => {
+    const allIds: Record<string, boolean> = {};
+    const collectIds = (menuItems: MenuItem[]) => {
+      menuItems.forEach(item => {
+        if (item.children && item.children.length > 0) {
+          allIds[item.id] = true;
+          collectIds(item.children);
+        }
+      });
+    };
+    collectIds(menu);
+    setIsExpanded(allIds);
+  }, [menu]);
+
   return {
-    menuItems,
+    menu,
+    categories,
     isExpanded,
     toggleExpand,
     collapseAll,
+    expandAll,
     activeId,
     setActiveId,
   };

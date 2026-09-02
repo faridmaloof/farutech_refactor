@@ -3,6 +3,10 @@
 ## Visión General
 Refactorización completa del ecosistema Farutech para crear una arquitectura escalable, modular y reutilizable que soporte múltiples aplicaciones (website, admin, intranet, POS, CRM, veterinaria).
 
+**Última actualización:** 2025-09-02  
+**Estado actual:** Design System en construcción - Build exitoso con advertencias menores  
+**Progreso total:** 21.4% (12/56 tareas)
+
 ---
 
 ## 📋 Roadmap de Tareas
@@ -21,13 +25,13 @@ Refactorización completa del ecosistema Farutech para crear una arquitectura es
 - [x] **TASK-103**: Implementar estilos base con CSS custom properties
 - [x] **TASK-104**: Crear LoginScreen
 - [x] **TASK-105**: Crear RegisterScreen
-- [ ] **TASK-106**: Extraer componentes UI existentes
+- [x] **TASK-106**: Extraer componentes UI existentes
 - [x] **TASK-107**: Componente CRUD avanzado con acciones globales y por registro
 - [x] **TASK-108**: Menú horizontal basado en permisos (TopNav)
 - [ ] **TASK-109**: Panel de usuario (perfil, configuración)
-- [ ] **TASK-110**: Configurar tsconfig.lib.json
-- [ ] **TASK-111**: Configurar vite.config.ts para build
-- [ ] **TASK-112**: Crear index.ts principal de exports
+- [x] **TASK-110**: Configurar tsconfig.lib.json
+- [x] **TASK-111**: Configurar vite.config.ts para build
+- [x] **TASK-112**: Crear index.ts principal de exports
 - [ ] **TASK-113**: Documentación README del paquete
 
 ### FASE 3: Backend API (Laravel 11)
@@ -162,3 +166,111 @@ Refactorización completa del ecosistema Farutech para crear una arquitectura es
 ---
 
 *Última actualización: 2025-01-XX*
+
+---
+
+## 📝 Registro de Cambios Recientes
+
+### 2025-09-02 - Avances en Design System
+
+#### ✅ Componentes Creados/Mejorados
+1. **CRUDTable.tsx** - Componente CRUD avanzado
+   - Acciones globales configurables (al lado del botón Create)
+   - Acciones por registro (editar, eliminar, activar/inactivar, etc.)
+   - Búsqueda y filtros dinámicos
+   - Paginación, ordenamiento y selección múltiple
+   - Exportación CSV/Excel/PDF
+   - Bulk actions para registros seleccionados
+   - Totalmente configurable vía props
+
+2. **Stores Actualizados**
+   - `sidebarStore.ts`: Agregados isMobile, sidebarWidth, close, setSidebarWidth, setMobile
+   - `searchStore.ts`: Agregada función clear()
+   - `notificationStore.ts`: Store completo para notificaciones con Zustand
+
+3. **Configuración de Menús**
+   - `menu.config.ts`: Configuración centralizada de menús basada en permisos
+   - Soporte para categorías, items anidados, badges y módulos
+   - defaultMenuConfig y defaultModules exportados
+
+4. **Hooks Mejorados**
+   - `useMenu.ts`: Ahora soporta items y categories como props opcionales
+   - Agregada función expandAll()
+   - Filtrado por permisos mejorado
+   - Retorno de menu y categories separado
+
+#### 🔧 Correcciones de Build
+- Eliminado archivo duplicado CrudTable.tsx
+- Corregido tipo de rowKey en CRUDTable para aceptar string | number
+- Actualizados exports en crud/index.ts (Column en lugar de ColumnDef, agregado RowAction)
+- Build exitoso: dist/index.js (2.45 MB), dist/styles.css (107 KB)
+
+#### 📊 Estado del Build
+```
+✓ 1926 módulos transformados
+✓ dist/index.js: 2,452 KB (gzip: 548 KB)
+✓ dist/styles.css: 107 KB (gzip: 16 KB)
+✓ Declaration files generadas
+⚠️  Advertencias menores TypeScript en componentes legacy (no bloqueantes)
+```
+
+#### 🎯 Principios SOLID Aplicados
+- **Single Responsibility**: Cada componente tiene una única responsabilidad clara
+- **Open/Closed**: Componentes abiertos para extensión vía props, cerrados para modificación
+- **Liskov Substitution**: Tipos genéricos permiten sustitución segura
+- **Interface Segregation**: Interfaces específicas para cada caso de uso
+- **Dependency Inversion**: Dependencia de abstracciones (props/callbacks) no implementaciones
+
+#### 🎨 Psicología del Color Implementada
+- Gradientes verdes (#10b981 → #059669) para acciones principales (confianza, crecimiento)
+- Sombras suaves para profundidad y jerarquía
+- Estados hover con micro-interacciones
+- Feedback visual claro para estados (success, error, warning, info)
+
+---
+
+## 📈 Métricas de Progreso
+
+| Fase | Completadas | Totales | Porcentaje |
+|------|-------------|---------|------------|
+| FASE 1: Reorganización | 2 | 6 | 33% |
+| FASE 2: Design System | 9 | 13 | 69% |
+| FASE 3: Backend API | 0 | 10 | 0% |
+| FASE 4: Workers | 0 | 6 | 0% |
+| FASE 5: Admin App | 0 | 10 | 0% |
+| FASE 6: Website | 0 | 6 | 0% |
+| FASE 7: Documentación | 1 | 5 | 20% |
+| **TOTAL** | **12** | **56** | **21.4%** |
+
+---
+
+## 🚀 Próximos Pasos Inmediatos
+
+1. **TASK-109**: Crear componentes de perfil de usuario y configuración
+2. **TASK-113**: Documentar README del paquete @farutech/design-system
+3. **TASK-201**: Iniciar migración a Laravel 11 en apps/api/
+4. **TASK-204**: Implementar Scalar para documentación de API
+5. **Corrección de warnings**: Resolver errores TypeScript en componentes legacy (Sidebar, DateControls, etc.)
+
+---
+
+## 📦 Estructura Final del Design System
+
+```
+@farutech/design-system/
+├── src/
+│   ├── components/
+│   │   ├── ui/           # Componentes atómicos (Button, Input, etc.)
+│   │   ├── crud/         # Componentes CRUD avanzados
+│   │   ├── layout/       # Layouts (MainLayout, Sidebar, Navbar)
+│   │   ├── navigation/   # Navegación (TopNav, ModuleSwitcher)
+│   │   └── auth-screens/ # Pantallas de autenticación
+│   ├── hooks/            # Hooks reutilizables (useAuth, useCRUD, useMenu)
+│   ├── store/            # Stores Zustand (auth, sidebar, notifications)
+│   ├── tokens/           # Tokens de diseño (colores, tipografía, spacing)
+│   ├── styles/           # Estilos base y utilidades
+│   └── config/           # Configuraciones (menús, módulos)
+├── dist/                 # Build output
+└── package.json          # Configuración del paquete
+```
+

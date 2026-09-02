@@ -89,7 +89,7 @@ export interface CRUDTableProps<T = any> {
   // Personalización
   className?: string;
   emptyMessage?: string;
-  rowKey?: keyof T | ((record: T) => string);
+  rowKey?: keyof T | ((record: T) => string | number);
   
   // Bulk actions (acciones masivas)
   bulkActions?: GlobalAction[];
@@ -148,12 +148,11 @@ export function CRUDTable<T = any>({
   const [localPageSize, setLocalPageSize] = useState(pageSize);
   const [localSort, setLocalSort] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const [showExportMenu, setShowExportMenu] = useState(false);
-  const [expandedRow, setExpandedRow] = useState<string | number | null>(null);
 
   // Obtener key única para cada row
   const getRowKey = (record: T, index: number): string | number => {
     if (rowKey) {
-      return typeof rowKey === 'function' ? rowKey(record) : record[rowKey];
+      return typeof rowKey === 'function' ? rowKey(record) : record[rowKey as keyof T] as string | number;
     }
     return index;
   };
