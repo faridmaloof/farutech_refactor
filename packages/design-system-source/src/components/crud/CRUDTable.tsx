@@ -126,14 +126,11 @@ export function CRUDTable<T = any>({
   pagination = true,
   pageSize = 10,
   total,
-  onPageChange,
-  currentPage = 1,
   selectable = false,
   selectedRows = [],
   onSelectionChange,
   sortable = true,
   onSortChange,
-  sortConfig,
   exportable = false,
   onExport,
   className = '',
@@ -145,7 +142,7 @@ export function CRUDTable<T = any>({
   const [localSearch, setLocalSearch] = useState('');
   const [localFilters, setLocalFilters] = useState<Record<string, any>>({});
   const [localPage, setLocalPage] = useState(1);
-  const [localPageSize, setLocalPageSize] = useState(pageSize);
+  const [localPageSize] = useState(pageSize);
   const [localSort, setLocalSort] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const [showExportMenu, setShowExportMenu] = useState(false);
 
