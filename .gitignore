@@ -1,64 +1,62 @@
-# =============================================================================
-# FaruTech Monorepo — .gitignore raíz
-# =============================================================================
-# Reglas generales que aplican a TODOS los subproyectos del repositorio.
-# Cada proyecto (apps/*, packages/*, tests/*, infrastructure/*) añade además
-# sus reglas específicas en su propio .gitignore.
-#
-# NOTA: los archivos .env.example SÍ se versionan y NO deben ser ignorados.
-# =============================================================================
-
+```
 # Dependencies
+vendor/
 node_modules/
-venv/
-.venv/
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-target/
-.gradle/
 
-# Build artifacts
-dist/
-build/
-*.pyc
-*.o
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.out
+# Laravel/Lumen specific
+bootstrap/cache/
+storage/logs/
+storage/framework/
+app/storage/
+public/packages/
+composer.lock
 
-# Editor/IDE files
-.vscode/*
-!.vscode/extensions.json
+# Environment
+.env
+.env.local
+.env.*
+
+# IDE
+.vscode/
 .idea/
 *.swp
 *.swo
-*.tmp
 
-# System files
+# OS
 .DS_Store
 Thumbs.db
-# Variables de entorno — nunca versionar secretos (los .env.example sí se versionan)
-.env
-.env.local
-.env.*.local
-.env.backup
-.env.development
-.env.staging
-.env.production
 
 # Logs
 *.log
 
-# Coverage
+# Temporary files
+*.tmp
+*~
+
+# Compiled files
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.exe
+*.pyc
+__pycache__/
+
+# Build directories
+build/
+dist/
+target/
+
+# Cache
+.cache/
+.mypy_cache/
+.pytest_cache/
 coverage/
 htmlcov/
 .coverage
 
-# Compressed files
+# Compression
 *.zip
 *.gz
 *.tar
@@ -81,3 +79,4 @@ htmlcov/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
+```

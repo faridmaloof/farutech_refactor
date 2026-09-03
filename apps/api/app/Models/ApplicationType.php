@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Location extends Model
+class ApplicationType extends Model
 {
     protected $fillable = [
-        'type',
+        'service_id',
         'name',
-        'code',
-        'parent_id',
+        'slug',
+        'description',
         'is_active',
         'sort_order',
     ];

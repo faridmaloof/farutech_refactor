@@ -1,59 +1,71 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\LocationController;
-use App\Http\Controllers\Api\V1\LeadController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes - Farutech API v1
+| API Routes (api.farutech.local, sin prefijo /api redundante)
 |--------------------------------------------------------------------------
-|
-| Documentación completa disponible en: /docs (Scalar)
-| Prefijo: /api/v1
-|
 */
 
-Route::prefix('v1')->group(function () {
-    
-    // Rutas públicas
-    Route::get('/locations/search', [LocationController::class, 'search'])
-        ->name('api.v1.locations.search');
-    
-    Route::get('/locations/{id}', [LocationController::class, 'show'])
-        ->name('api.v1.locations.show');
-    
-    Route::get('/locations/{id}/hierarchy', [LocationController::class, 'hierarchy'])
-        ->name('api.v1.locations.hierarchy');
+Route::get('/', function () {
+    return 'FaruTech API - Laravel '.app()->version();
+});
 
-    // Rutas protegidas (requieren autenticación)
-    Route::middleware('auth:sanctum')->group(function () {
-        
-        // Leads CRUD
-        Route::apiResource('leads', LeadController::class);
-        
-        // Búsqueda de oportunidades
-        Route::post('/leads/opportunities/search', [LeadController::class, 'searchOpportunities'])
-            ->name('api.v1.leads.opportunities.search');
-        
-        // Guardar oportunidad encontrada
-        Route::post('/leads/opportunities/save', [LeadController::class, 'saveOpportunity'])
-            ->name('api.v1.leads.opportunities.save');
-        
-        // Estadísticas de leads
-        Route::get('/leads/stats', [LeadController::class, 'stats'])
-            ->name('api.v1.leads.stats');
-        
-        // Exportar leads
-        Route::get('/leads/export', [LeadController::class, 'export'])
-            ->name('api.v1.leads.export');
-        
-        // Interacciones con leads
-        Route::apiResource('leads.interactions', \App\Http\Controllers\Api\V1\LeadInteractionController::class)
-            ->shallow();
-        
-        // Tareas de leads
-        Route::apiResource('leads.tasks', \App\Http\Controllers\Api\V1\LeadTaskController::class)
-            ->shallow();
+// ============================================================
+// API Pública — Blog
+// ============================================================
+Route::prefix('blog')->group(function () {
+    Route::get('posts', 'App\Http\Controllers\BlogController@index');
+    Route::get('posts/{slug}', 'App\Http\Controllers\BlogController@show');
+    Route::get('categories', 'App\Http\Controllers\BlogCategoryController@index');
+    Route::get('categories/{slug}', 'App\Http\Controllers\BlogCategoryController@show');
+});
+
+// ============================================================
+// API ADMIN — CRUD de blog (autenticado)
+// ============================================================
+Route::prefix('admin/blog')->middleware('auth')->group(function () {
+    Route::get('/', 'App\Http\Controllers\BlogController@adminIndex');
+    Route::post('/', 'App\Http\Controllers\BlogController@store');
+    Route::get('{id}', 'App\Http\Controllers\BlogController@showAdmin');
+    Route::put('{id}', 'App\Http\Controllers\BlogController@update');
+    Route::delete('{id}', 'App\Http\Controllers\BlogController@destroy');
+});
+
+// ============================================================
+// API ADMIN — Autenticación + panel (dashboard y leads CRM)
+// ============================================================
+Route::post('admin/login', 'App\Http\Controllers\AuthController@login');
+
+// Registro público + confirmación (controlados por admin_settings)
+Route::get('settings/public', 'App\Http\Controllers\SettingsController@publicPolicy');
+Route::post('register', 'App\Http\Controllers\RegisterController@register');
+Route::get('register/confirm', 'App\Http\Controllers\RegisterController@confirm');
+
+// Endpoints de contacto y newsletter públicos (soportan tanto /contact como /api/contact)
+Route::post('contact', 'App\Http\Controllers\ContactController@store');
+Route::post('api/contact', 'App\Http\Controllers\ContactController@store');
+
+Route::post('newsletter', 'App\Http\Controllers\NewsletterController@store');
+Route::post('api/newsletter', 'App\Http\Controllers\NewsletterController@store');
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('dashboard/stats', 'App\Http\Controllers\DashboardController@stats');
+
+    Route::prefix('leads')->group(function () {
+        // Debe registrarse ANTES de {lead} para no ser capturado por el wildcard.
+        Route::get('stats', 'App\Http\Controllers\LeadController@stats');
+        Route::get('/', 'App\Http\Controllers\LeadController@index');
+        Route::get('{lead}', 'App\Http\Controllers\LeadController@show');
     });
+
+    // Configuración global del panel
+    Route::get('settings', 'App\Http\Controllers\SettingsController@show');
+    Route::put('settings', 'App\Http\Controllers\SettingsController@update');
+
+    // Gestión de usuarios (creación condicionada por registration_enabled)
+    Route::get('users', 'App\Http\Controllers\UserController@index');
+    Route::post('users', 'App\Http\Controllers\UserController@store');
+    Route::patch('users/{user}/status', 'App\Http\Controllers\UserController@toggleStatus');
 });
