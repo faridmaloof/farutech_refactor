@@ -1,4 +1,13 @@
-```
+# =============================================================================
+# FaruTech Monorepo — .gitignore raíz
+# =============================================================================
+# Reglas generales que aplican a TODOS los subproyectos del repositorio.
+# Cada proyecto (apps/*, packages/*, tests/*, infrastructure/*) añade además
+# sus reglas específicas en su propio .gitignore.
+#
+# NOTA: los archivos .env.example SÍ se versionan y NO deben ser ignorados.
+# =============================================================================
+
 # Dependencies
 node_modules/
 venv/
@@ -22,7 +31,8 @@ build/
 *.out
 
 # Editor/IDE files
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo
@@ -31,9 +41,14 @@ build/
 # System files
 .DS_Store
 Thumbs.db
+# Variables de entorno — nunca versionar secretos (los .env.example sí se versionan)
 .env
 .env.local
-*.env.*
+.env.*.local
+.env.backup
+.env.development
+.env.staging
+.env.production
 
 # Logs
 *.log
@@ -66,4 +81,3 @@ htmlcov/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
-```

@@ -1,0 +1,11 @@
+# ==============================================================================
+# FaruTech Infra — .gitignore
+# ==============================================================================
+# Configuración local real / overrides (NUNCA versionar credenciales reales)
+.env
+.env.local
+
+# Overrides locales de orquestación
+*.local.yml
+*.local.yaml
+docker-compose.override.yml
