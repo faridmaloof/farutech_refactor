@@ -201,10 +201,13 @@ Agregar al `/etc/hosts`:
 ### 2. Levantar Infraestructura
 
 ```bash
-cd infra
+cd infrastructure
 cp .env.example .env
+# Editar .env y establecer contraseñas seguras (NO usar defaults)
 docker-compose up -d
 ```
+
+> **⚠️ IMPORTANTE**: El directorio `infra/` fue eliminado en TASK-000A. Todo está consolidado en `infrastructure/`.
 
 ### 3. Configurar Backend API
 
@@ -217,23 +220,20 @@ php artisan migrate
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
-### 4. Iniciar Workers
+> **⚠️ NOTA**: Los workers aún no están implementados (FASE 5 pendiente). El comando de queue:work se habilitará cuando se complete la implementación de workers.
 
-```bash
-cd apps/api
-php artisan queue:work redis --queue=default,find-opportunities,newssenders
-```
-
-### 5. Configurar Admin App
+### 4. Configurar Admin App
 
 ```bash
 cd apps/admin
 npm install
-npm link ../../packages/design-system-source
+# npm link ../../packages/design-system-source # Pendiente: build del Design System
 npm run dev
 ```
 
-### 6. Configurar Website
+> **⚠️ NOTA**: La Admin App está en desarrollo (FASE 3 pendiente). El directorio `apps/admin/` existe pero está vacío. Se implementará después de completar el Backend API.
+
+### 5. Configurar Website
 
 ```bash
 cd apps/website
@@ -241,7 +241,9 @@ npm install
 npm run dev
 ```
 
-### 7. Acceder a las Aplicaciones
+> **⚠️ NOTA**: El Website está en desarrollo (FASE 4 pendiente). Actualmente el frontend público está en `apps/web/apps/frontend/` y será migrado a `apps/website/` con Next.js 14.
+
+### 6. Acceder a las Aplicaciones
 
 | Aplicación | URL |
 |------------|-----|
@@ -266,16 +268,18 @@ La documentación completa está disponible en el directorio [`docs/`](docs/):
 
 ## 📊 Estado del Proyecto
 
-| Fase | Estado | Progreso |
-|------|--------|----------|
-| **FASE 1**: Reorganización | ✅ Completada | 100% |
-| **FASE 2**: Design System | ✅ Completada | 100% |
-| **FASE 3**: Backend API | ✅ Completada | 100% |
-| **FASE 4**: Workers | ✅ Completada | 100% |
-| **FASE 5**: Admin App | ✅ Completada | 100% |
-| **FASE 6**: Website | ✅ Completada | 100% |
-| **FASE 7**: Documentación | ✅ Completada | 100% |
-| **TOTAL** | 🎉 **COMPLETADO** | **100%** |
+| Fase | Estado | Progreso Real | Documentado |
+|------|--------|---------------|-------------|
+| **FASE 0**: Consolidación | 🔄 En progreso | 50% | 100% |
+| **FASE 1**: Backend API | ⚠️ Pendiente | 60% | 100% |
+| **FASE 2**: Design System | ✅ Completada | 95% | 100% |
+| **FASE 3**: Admin App | ❌ No iniciada | 0% | 100% |
+| **FASE 4**: Website | ⚠️ Parcial | 50% | 100% |
+| **FASE 5**: Workers | ❌ No iniciada | 0% | 100% |
+| **FASE 6**: Infraestructura | ⚠️ En consolidación | 50% | 100% |
+| **TOTAL** | 🎯 **EN EJECUCIÓN** | **42%** | **100%** |
+
+> **⚠️ NOTA IMPORTANTE**: El README anterior mostraba 100% de completitud pero la auditoría profunda reveló que solo el 42% está realmente implementado. Este documento refleja el estado REAL validado archivo por archivo. Ver [`docs/30_AUDITORIA_PROFUNDA_Y_ESTADO_REAL.md`](docs/30_AUDITORIA_PROFUNDA_Y_ESTADO_REAL.md) para detalles completos.
 
 ---
 
