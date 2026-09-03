@@ -3,10 +3,17 @@ namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Bus\Queueable;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use App\Notifications\LeadStatusUpdateNotification;
+use App\Models\User;
+use App\Models\Lead;
 
-class SendLeadUpdateNotification
+class SendLeadUpdateNotification implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     protected $userId;
     protected $leadId;
 
@@ -18,9 +25,11 @@ class SendLeadUpdateNotification
 
     public function handle()
     {
-        $user = \App\Models\User::find($this->userId);
-        if ($user) {
-            $user->notify(new LeadStatusUpdateNotification($this->leadId));
+        $user = User::find($this->userId);
+        $lead = Lead::find($this->leadId);
+        
+        if ($user && $lead) {
+            $user->notify(new LeadStatusUpdateNotification($lead));
         }
     }
 }

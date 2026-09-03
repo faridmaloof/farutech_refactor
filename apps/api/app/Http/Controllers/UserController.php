@@ -100,7 +100,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => strtolower($data['email']),
-            'password' => password_hash($data['password'], PASSWORD_BCRYPT),
+            'password' => \Illuminate\Support\Facades\Hash::make($data['password']),
             'role' => $data['role'],
             'is_active' => true,
             'email_verified_at' => now(),

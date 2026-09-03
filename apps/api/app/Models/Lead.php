@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
 {
+    public const STATUS_NEW = 'new';
+
     protected $fillable = [
         'name', 'email', 'phone', 'company', 'position', 
         'service_id', 'location_id', 'message', 'status', 
@@ -27,7 +29,7 @@ class Lead extends Model
 
     public function service()
     {
-        return $this->belongsTo('App\Models\ApplicationType', 'service_id');
+        return $this->belongsTo(\App\Models\Service::class, 'service_id');
     }
 
     public function location()

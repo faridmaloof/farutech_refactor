@@ -32,11 +32,11 @@ class DashboardController extends Controller
     public function stats(Request $request)
     {
         $totalLeads = Lead::count();
-        $wonLeads = Lead::where('status', 'WON')->count();
+        $wonLeads = Lead::where('status', 'closed_won')->count();
 
         return response()->json([
             'totalLeads' => $totalLeads,
-            'newLeads' => Lead::where('status', 'NEW')->count(),
+            'newLeads' => Lead::where('status', 'new')->count(),
             'activeProjects' => 0,
             'conversionRate' => $totalLeads > 0 ? round(($wonLeads / $totalLeads) * 100, 1) : 0,
             'recentLeads' => Lead::query()

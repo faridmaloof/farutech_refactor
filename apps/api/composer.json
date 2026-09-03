@@ -11,8 +11,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "darkaonline/l5-swagger": "^8.5",
-        "symfony/mailer": "^6.4",
-        "twilio/sdk": "^8.12"
+        "symfony/mailer": "^6.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

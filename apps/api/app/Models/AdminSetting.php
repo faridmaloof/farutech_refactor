@@ -27,7 +27,7 @@ class AdminSetting extends Model
         return Cache::remember(
             'admin_settings',
             60,
-            fn () => self::query()->firstOr(fn () => tap(new self, fn ($s) => $s->save()))
+            fn () => self::query()->firstOrFail()
         );
     }
 

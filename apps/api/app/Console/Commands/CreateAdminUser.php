@@ -19,14 +19,19 @@ class CreateAdminUser extends Command
     public function handle(): int
     {
         $email = (string) env('ADMIN_EMAIL', 'admin@farutech.dev');
-        $password = (string) env('ADMIN_PASSWORD', 'admin123');
+        $password = (string) env('ADMIN_PASSWORD');
         $name = (string) env('ADMIN_NAME', 'Administrador FaruTech');
+
+        if (empty($password)) {
+            $this->error('ADMIN_PASSWORD environment variable is required.');
+            return self::FAILURE;
+        }
 
         $user = User::updateOrCreate(
             ['email' => $email],
             [
                 'name' => $name,
-                'password' => password_hash($password, PASSWORD_BCRYPT),
+                'password' => \Illuminate\Support\Facades\Hash::make($password),
                 'role' => 'admin',
                 'is_active' => true,
             ]

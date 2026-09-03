@@ -335,14 +335,14 @@ $post->update($this->normalizePayload($request));
             $data['slug'] = (string) Str::uuid();
         }
 
-        // A falta de autenticaci├│n completa (JWT llega en Feature 4),
+        // A falta de autenticación completa (JWT llega en Feature 4),
         // asigna el autor por defecto (admin seed) o el primer usuario activo.
         $data['author_id'] = $this->getDefaultAuthorId();
 
         $data['tags'] = $request->input('tags', []);
         $data['seo_meta'] = $request->input('seo_meta', []);
 
-        // L├│gica de publicaci├│n seg├║n el plan:
+        // Lógica de publicación según el plan:
         // - published_at NULL  -> Borrador
         // - published_at futuro -> Programado (el Job lo publica)
         // - published_at pasado/presente -> Publicado

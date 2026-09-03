@@ -77,7 +77,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $email,
-            'password' => password_hash($request->input('password'), PASSWORD_BCRYPT),
+            'password' => \Illuminate\Support\Facades\Hash::make($request->input('password')),
             'role' => 'viewer',
             'is_active' => true,
             'email_verified_at' => $needsConfirmation ? null : now(),
@@ -85,12 +85,18 @@ class RegisterController extends Controller
         ]);
 
         if ($needsConfirmation) {
-            // TODO(producción): enviar por email. En dev se devuelve el enlace.
-            return response()->json([
+            $user->notify(new \App\Notifications\RegistrationConfirmationNotification($user->confirmation_token));
+            
+            $response = [
                 'message' => 'Cuenta creada. Requiere confirmación por correo.',
                 'requires_confirmation' => true,
-                'confirmation_url_dev' => url('/api/register/confirm?token='.$user->confirmation_token),
-            ], 201);
+            ];
+            
+            if (!app()->environment('production')) {
+                $response['confirmation_url_dev'] = url('/api/register/confirm?token='.$user->confirmation_token);
+            }
+
+            return response()->json($response, 201);
         }
 
         return response()->json([

@@ -46,7 +46,7 @@ Route::prefix('blog')->group(function () {
 // ============================================================
 // API ADMIN — CRUD de blog (autenticado)
 // ============================================================
-Route::prefix('admin/blog')->middleware('auth')->group(function () {
+Route::prefix('admin/blog')->middleware('auth:sanctum')->group(function () {
     Route::get('/', 'App\Http\Controllers\BlogController@adminIndex');
     Route::post('/', 'App\Http\Controllers\BlogController@store');
     Route::get('{id}', 'App\Http\Controllers\BlogController@showAdmin');
@@ -57,7 +57,7 @@ Route::prefix('admin/blog')->middleware('auth')->group(function () {
 // ============================================================
 // API ADMIN — Autenticación + panel (dashboard y leads CRM)
 // ============================================================
-Route::post('admin/login', 'App\Http\Controllers\AuthController@login');
+// Route eliminada por duplicación (ya existe POST /login)
 
 // Registro público + confirmación (controlados por admin_settings)
 Route::get('settings/public', 'App\Http\Controllers\SettingsController@publicPolicy');
@@ -66,12 +66,10 @@ Route::get('register/confirm', 'App\Http\Controllers\RegisterController@confirm'
 
 // Endpoints de contacto y newsletter públicos (soportan tanto /contact como /api/contact)
 Route::post('contact', 'App\Http\Controllers\ContactController@store');
-Route::post('api/contact', 'App\Http\Controllers\ContactController@store');
 
 Route::post('newsletter', 'App\Http\Controllers\NewsletterController@store');
-Route::post('api/newsletter', 'App\Http\Controllers\NewsletterController@store');
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::get('dashboard/stats', 'App\Http\Controllers\DashboardController@stats');
 
     Route::prefix('leads')->group(function () {
