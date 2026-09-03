@@ -1,32 +1,62 @@
 ```
-# Laravel-specific ignores
-bootstrap/cache/
-storage/framework/cache/
-storage/framework/sessions/
-storage/framework/views/
-vendor/
+# Dependencies
+node_modules/
 
-# PHP-related
-*.php~
-*.swp
-.php_cs.cache
+# Build artifacts
+dist/
+build/
+target/
 
-# Tests
-.tests/
-.phpunit.result.cache
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.ENV
+.python-version
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+*.tmp
 
-# Environment
-.env
-.env.local
-.env.*
-!.env.example
+# TypeScript/JavaScript
+*.tsbuildinfo
+*.js.map
+*.jsx.map
+*.ts.map
 
 # IDE
 .vscode/
 .idea/
-*.tmp
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+*.env.*
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Archives
+*.zip
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.gz
+*.rar
+*.7z
 ```
