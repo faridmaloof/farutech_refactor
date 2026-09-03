@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,6 +12,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return 'FaruTech API - Laravel '.app()->version();
+});
+
+// ============================================================
+// Autenticación con Sanctum
+// ============================================================
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+Route::post('tokens', [AuthController::class, 'createToken'])->middleware('auth:sanctum');
+Route::delete('tokens/{id}', [AuthController::class, 'revokeToken'])->middleware('auth:sanctum');
+
+// ============================================================
+// Usuarios CRUD (protegido)
+// ============================================================
+Route::middleware('auth:sanctum')->prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('{user}', [UserController::class, 'show']);
+    Route::put('{user}', [UserController::class, 'update']);
+    Route::delete('{user}', [UserController::class, 'destroy']);
 });
 
 // ============================================================
