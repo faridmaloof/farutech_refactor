@@ -1,22 +1,30 @@
 ```
-# Dependencies
+# Laravel-specific ignores
+bootstrap/cache/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
 vendor/
-composer.lock
 
-# Logs
-*.log
+# PHP-related
+*.php~
+*.swp
+.php_cs.cache
+
+# Tests
+.tests/
+.phpunit.result.cache
 
 # Environment
 .env
 .env.local
 .env.*
-
-# Tests
-.phpunit.result.cache
+!.env.example
 
 # IDE
 .vscode/
 .idea/
+*.tmp
 
 # OS
 .DS_Store
