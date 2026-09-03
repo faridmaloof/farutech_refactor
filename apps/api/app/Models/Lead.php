@@ -1,105 +1,47 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lead extends Model
 {
-    use HasFactory, SoftDeletes;
-
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'company',
-        'position',
-        'city',
-        'state',
-        'country',
-        'service_interest',
-        'source',
-        'utm_source',
-        'utm_medium',
-        'utm_campaign',
-        'utm_term',
-        'utm_content',
-        'status',
-        'quality_score',
-        'notes',
-        'contacted_at',
-        'converted_at',
-        'assigned_to',
-        'is_internal_search',
-        'search_params',
-        'external_url',
-        'social_profiles',
+        'name', 'email', 'phone', 'company', 'position', 
+        'service_id', 'location_id', 'message', 'status', 
+        'priority', 'assigned_to', 'source', 'last_contact_at', 
+        'next_follow_up_at', 'conversion_value', 'privacy_accepted', 
+        'marketing_accepted', 'metadata'
     ];
 
     protected $casts = [
-        'quality_score' => 'integer',
-        'contacted_at' => 'datetime',
-        'converted_at' => 'datetime',
-        'search_params' => 'array',
-        'social_profiles' => 'array',
-        'is_internal_search' => 'boolean',
+        'privacy_accepted' => 'boolean',
+        'marketing_accepted' => 'boolean',
+        'metadata' => 'array',
+        'conversion_value' => 'decimal:2'
     ];
 
-    const STATUS_NEW = 'new';
-    const STATUS_CONTACTED = 'contacted';
-    const STATUS_QUALIFIED = 'qualified';
-    const STATUS_PROPOSAL = 'proposal';
-    const STATUS_NEGOTIATION = 'negotiation';
-    const STATUS_WON = 'won';
-    const STATUS_LOST = 'lost';
+    protected $enumCastable = [
+        'status' => 'string',
+        'priority' => 'string'
+    ];
 
-    public static function getStatuses(): array
+    public function service()
     {
-        return [
-            self::STATUS_NEW,
-            self::STATUS_CONTACTED,
-            self::STATUS_QUALIFIED,
-            self::STATUS_PROPOSAL,
-            self::STATUS_NEGOTIATION,
-            self::STATUS_WON,
-            self::STATUS_LOST,
-        ];
+        return $this->belongsTo('App\Models\ApplicationType', 'service_id');
     }
 
-    public function scopeActive($query)
+    public function location()
     {
-        return $query->where('status', '!=', self::STATUS_LOST);
+        return $this->belongsTo('App\Models\Location', 'location_id');
     }
 
-    public function scopeQualified($query)
+    public function user()
     {
-        return $query->whereIn('status', [self::STATUS_QUALIFIED, self::STATUS_PROPOSAL, self::STATUS_NEGOTIATION]);
+        return $this->belongsTo('App\Models\User', 'assigned_to');
     }
 
-    public function scopeInternalSearch($query)
+    public function notes()
     {
-        return $query->where('is_internal_search', true);
-    }
-
-    public function scopeByQuality($query, $minScore = 70)
-    {
-        return $query->where('quality_score', '>=', $minScore);
-    }
-
-    public function interactions()
-    {
-        return $this->hasMany(LeadInteraction::class);
-    }
-
-    public function tasks()
-    {
-        return $this->hasMany(LeadTask::class);
-    }
-
-    public function assignee()
-    {
-        return $this->belongsTo(User::class, 'assigned_to');
+        return $this->hasMany('App\Models\LeadNote');
     }
 }

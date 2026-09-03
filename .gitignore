@@ -1,83 +1,32 @@
-# =============================================================================
-# FaruTech Monorepo — .gitignore raíz
-# =============================================================================
-# Reglas generales que aplican a TODOS los subproyectos del repositorio.
-# Cada proyecto (apps/*, packages/*, tests/*, infrastructure/*) añade además
-# sus reglas específicas en su propio .gitignore.
-#
-# NOTA: los archivos .env.example SÍ se versionan y NO deben ser ignorados.
-# =============================================================================
+```
+# Laravel-specific ignores
+bootstrap/cache/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+vendor/
 
-# Dependencies
-node_modules/
-venv/
-.venv/
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-target/
-.gradle/
-
-# Build artifacts
-dist/
-build/
-*.pyc
-*.o
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.out
-
-# Editor/IDE files
-.vscode/*
-!.vscode/extensions.json
-.idea/
+# PHP-related
+*.php~
 *.swp
-*.swo
-*.tmp
+.php_cs.cache
 
-# System files
-.DS_Store
-Thumbs.db
-# Variables de entorno — nunca versionar secretos (los .env.example sí se versionan)
+# Tests
+.tests/
+.phpunit.result.cache
+
+# Environment
 .env
 .env.local
-.env.*.local
-.env.backup
-.env.development
-.env.staging
-.env.production
+.env.*
+!.env.example
 
-# Logs
-*.log
+# IDE
+.vscode/
+.idea/
+*.tmp
 
-# Coverage
-coverage/
-htmlcov/
-.coverage
-
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
+# OS
+.DS_Store
+Thumbs.db
+```

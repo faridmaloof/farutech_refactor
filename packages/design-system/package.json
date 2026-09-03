@@ -1,0 +1,129 @@
+{
+  "name": "@farutech/design-system",
+  "version": "1.0.0",
+  "description": "Sistema de diseño de Farutech - Componentes UI reutilizables para website, admin, intranet y futuras aplicaciones",
+  "author": {
+    "name": "Farid Maloof Suarez",
+    "company": "FaruTech"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./components/ui": {
+      "import": "./dist/components/ui/index.js",
+      "types": "./dist/components/ui/index.d.ts"
+    },
+    "./components/crud": {
+      "import": "./dist/components/crud/index.js",
+      "types": "./dist/components/crud/index.d.ts"
+    },
+    "./components/layout": {
+      "import": "./dist/components/layout/index.js",
+      "types": "./dist/components/layout/index.d.ts"
+    },
+    "./auth-screens": {
+      "import": "./dist/auth-screens/index.js",
+      "types": "./dist/auth-screens/index.d.ts"
+    },
+    "./tokens": {
+      "import": "./dist/tokens/index.js",
+      "types": "./dist/tokens/index.d.ts"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@farutech",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Farutech/design-system.git"
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "ui-components",
+    "farutech",
+    "tailwindcss",
+    "typescript"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc && vite build",
+    "build:lib": "npm run build:components && npm run build:styles",
+    "build:components": "tsc --project tsconfig.lib.json",
+    "build:styles": "tailwindcss -i ./src/styles/index.css -o ./dist/styles.css --minify",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.10",
+    "@heroicons/react": "^2.2.0",
+    "@hookform/resolvers": "^5.9.1",
+    "@tanstack/react-query": "^5.102.6",
+    "@tanstack/react-table": "^8.21.3",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
+    "framer-motion": "^13.1.1",
+    "react-hook-form": "^7.86.0",
+    "react-router-dom": "^7.18.2",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.15"
+  },
+  "optionalDependencies": {
+    "chart.js": "^4.5.1",
+    "react-chartjs-2": "^5.3.1",
+    "recharts": "^3.10.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^26.3.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "^6.1.0",
+    "autoprefixer": "^10.5.4",
+    "eslint": "^10.9.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.5",
+    "globals": "^17.11.0",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.68.0",
+    "vite": "^8.2.2",
+    "vite-plugin-dts": "^4.5.0",
+    "vitest": "^3.2.4"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}
+
+
+
