@@ -1,120 +1,129 @@
-# 🚀 Farutech Ecosystem - Guía de Implementación Real y Plan de Ejecución
+# Farutech Ecosystem — Guía de Implementación (estado 2026-09-03)
 
-## 🎯 Visión General (Estado Real Post-Auditoría 2026-09-03)
+Monorepo consolidado. Backend API en **`apps/api/src/`** (Laravel 10); tests automatizados en
+.**NET** en `apps/<app>/test/` sobre un `Framework.Core` compartido.
+Solución maestra raíz: **`Framework.Automation.sln`** (Framework.Core + 4 apps de test).
 
-Este repositorio contiene el ecosistema completo de Farutech consolidado. Tras una auditoría exhaustiva, se ha determinado que el progreso real NO es del 100% como se indicaba anteriormente, sino de aproximadamente un 70%, con varios problemas críticos de seguridad y código roto.
-
-- **Backend API**: Laravel 10 (Faltan archivos core, fallos de auth y seguridad)
-- **Admin App**: SPA en progreso
-- **Website**: Next.js/Vite en progreso
-- **Design System**: @farutech/design-system (Falta build y publicación)
-- **Infraestructura**: Docker Compose con PostgreSQL, Redis, Gateway (Consolidada pero con configs hardcodeados)
-
-### ⚠️ Limitación Importante
-Debe mantenerse el backend y frontend **lo más limpio posible** (código óptimo, sin archivos basura o dependencias no utilizadas como `twilio/sdk`) para evitar sobrepasar los límites de inodos.
+> ✅ Última validación (03-09-2026): `dotnet build Framework.Automation.sln` compila los 5 proyectos con **0 errores** (solo warnings de vulnerabilidades transitivas). API contract restaurado: `logout`, `/user`, `/tokens`, `/tokens/{id}`, CRUD `/admin/users`, rutas `/locations` y CRUD `/admin/leads`.
 
 ---
 
-## 🚀 Plan de Implementación Activo (Ejecución en Progreso)
+## Estado por fase
 
-Este plan corrige las vulnerabilidades y fallos críticos descubiertos, además de completar la integración de Sanctum.
+| 0 | Checkpoint + limpieza (apps/api→src, apps/web→docs/archive/) | ✅ | 100% |
+| 1 | Scaffolding .NET tests → 4 apps (namespaces renombrados) | ✅ | 100% |
+| 2 | Backend API (Laravel 10, Sanctum, modelos, rutas) | ✅ | ~95% |
+| 3 | Design System (@farutech/design-system; sin dist/ build) | ✅ | estructura 100% · build pte. |
+| 4 | Admin App — scaffold React+Vite creado + tests | 🔄 | scaffold ✓ · tests ✓ |
+| 5 | Intranet App — scaffold React+Vite creado + tests | 🔄 | scaffold ✓ · tests ✓ |
+| 6 | Website cleanup (doble src/src/ + pages admin dentro de web) | ⬜ | pendiente |
+| 7 | Infraestructura (Docker Compose + HAProxy) | ✅ | ~95% |
+| 8 | Test Automation (27 features+steps, hooks, ScreenPlay) | ✅ | build ✓ · runtime pte. |
+| 9 | Documentación | 🔄 | en curso |
 
-### ESTADO DEL PROYECTO (TRACKER VIVO)
+## Stack
 
-| Bloque | Descripción | Estado |
-|--------|-------------|--------|
-| **BLOQUE 0** | Bloqueadores Absolutos (Archivos Kernel/Handler) | ✅ Completado |
-| **BLOQUE 1** | Seguridad Crítica (Passwords, Auth) | ✅ Completado |
-| **BLOQUE 2** | Correcciones de Modelo y Datos | ✅ Completado |
-| **BLOQUE 3** | Clases Faltantes (Notifications, Requests) | ✅ Completado |
-| **BLOQUE 4** | Limpieza y Código Muerto | ✅ Completado |
-| **BLOQUE 5** | Features Pendientes | ✅ Completado |
-| **BLOQUE 6** | Tests y Validación | ✅ Completado |
+- **Backend**: Laravel 10.10 / PHP 8.1+ / Sanctum 3.3 / l5-swagger / MySQL·Postgres·Mongo.
+- **Tests**: .NET 10 / Reqnroll / ScreenPlay / RestSharp / Playwright / xUnit / FluentAssertions / Allure.
+- **Frontend**: React 18 / TS 5 / Vite 8 / TailwindCSS v4.
+- **Infra**: Docker Compose / HAProxy / Postgres 16 / Redis 7 / MySQL / Mongo / Mailhog / PgAdmin.
 
----
-
-### DETALLE DE TAREAS Y EJECUCIÓN
-
-#### BLOQUE 0 — BLOQUEADORES ABSOLUTOS (sin estos, nada arranca)
-- [x] B0-01: Crear `app/Http/Kernel.php` (El núcleo HTTP de Laravel)
-- [x] B0-02: Crear `app/Exceptions/Handler.php` (Manejo de errores)
-- [x] B0-03: Crear `app/Http/Middleware/` (Middlewares básicos)
-- [x] B0-04: Crear Events (`BlogPostViewed`, `BlogPostPublished`)
-- [x] B0-05: Crear Listeners (`TrackBlogStats`)
-- [x] B0-06: Decisión Auth: Implementar **Sanctum completo** (eliminar HMAC custom, proteger rutas admin).
-
-#### BLOQUE 1 — SEGURIDAD CRÍTICA
-- [x] B1-01: SEC-01 — Eliminar password default 'admin123' en `CreateAdminUser.php`
-- [x] B1-02: SEC-02 — Eliminar password hardcodeada de `redis.conf` (Prioridad en compose `REDIS_PASSWORD`)
-- [x] B1-03: SEC-03 — Migrar uso de `password_hash()` a `Hash::make()` / `Hash::check()`
-- [x] B1-04: SEC-04 — Configurar middleware Auth Sanctum correctamente para rutas admin
-- [x] B1-05: SEC-07 — Implementar `max_login_attempts` en AuthController
-
-#### BLOQUE 2 — CORRECCIONES DE MODELO Y DATOS
-- [x] B2-01: DISC-01 — Corregir `Lead::service()` para apuntar a `Service::class` (no `ApplicationType`)
-- [x] B2-02: ROTO-06/07/08 — Completar modelo `Location` (añadir scopes, relaciones `parent`/`children`, y accessors)
-- [x] B2-03: ROTO-09 — Agregar constante `Lead::STATUS_NEW` o referenciar string literal en `LeadSearchService`
-- [x] B2-04: ROTO-15 — En `DashboardController`: Corregir estado 'WON' a 'closed_won'
-- [x] B2-05: ROTO-16 — Crear migración `lead_interactions` (la feature está planeada)
-
-#### BLOQUE 3 — CLASES FALTANTES
-- [x] B3-01: Crear `Notifications/LeadNotification.php`
-- [x] B3-02: Crear `Notifications/LeadStatusUpdateNotification.php`
-- [x] B3-03: Crear `Http/Requests/StoreLeadRequest.php`
-- [x] B3-04: Crear `Http/Requests/UpdateLeadRequest.php`
-- [x] B3-05: Corregir `SendLeadUpdateNotification.php` (implementar interface `ShouldQueue`)
-- [x] B3-06: Corregir typo de namespace `Illuminate\queue\` -> `Illuminate\Queue\` en `SendLeadNotification.php`
-
-#### BLOQUE 4 — LIMPIEZA Y CÓDIGO MUERTO (Reducción de Inodes)
-- [x] B4-01: Eliminar `ExampleController.php`
-- [x] B4-02: Eliminar `ExampleJob.php`
-- [x] B4-03: Remover `twilio/sdk` del `composer.json` y actualizar vendor.
-- [x] B4-04: Modificar `LeadSearchService`: Mantener SOLO la búsqueda local de Location + Nomiatim/OSM. **Eliminar por completo el scraping de Google**.
-- [x] B4-05: Limpiar rutas duplicadas (`/api/contact`, `/api/newsletter`)
-- [x] B4-06: Eliminar ruta `/admin/login` duplicada
-- [x] B4-07: Limpiar variables Vite/Pusher sin uso del `.env.example` en la API
-- [x] B4-08: Corregir comentarios con encoding UTF-8 roto en `BlogController.php`
-
-#### BLOQUE 5 — FEATURES PENDIENTES
-- [x] B5-01: SEC-05 — Exponer `confirmation_url_dev` SOLO si `APP_ENV` no es production.
-- [x] B5-02: SEC-06 — Hacer más robusta la creación de `AdminSetting::current()` usando `firstOrFail()` si es apropiado, apoyado en el seeder.
-- [x] B5-03: PF-16 — Implementar el email real de confirmación de registro.
-- [x] B5-04: PF-17 — Añadir columnas de `latitude`, `longitude` a migración `locations`.
-- [x] B5-05: Crear `UserFactory.php` (y otros factories si se necesitan para los tests).
-
-#### BLOQUE 6 — TESTS Y VALIDACIÓN
-- [x] B6-01: Ejecutar tests y corregir fallos resultantes de la refactorización.
-- [x] B6-02: Validar la base de datos (migraciones completan sin error).
-- [x] B6-03: Actualizar Documentación API (Scalar).
-- [x] B6-04: Confirmar la reducción de dependencias/código inútil.
-
----
-
-## 🏗️ Arquitectura del Sistema Consolidado
+## Árbol de carpetas (referencia)
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        GATEWAY (Nginx/HAProxy)                  │
-│  api.farutech.local │ admin.farutech.local │ farutech.local    │
-└──────────────┬──────────────────────┬─────────────────┬────────┘
-               │                      │                 │
-    ┌──────────▼──────────┐ ┌────────▼────────┐ ┌─────▼────────┐
-    │   Backend API       │ │   Admin App     │ │   Website    │
-    │   Laravel 10        │ │   React/Vite    │ │   Next.js/TS │
-    │   + Scalar Docs     │ │   + Design Sys  │ │              │
-    │   + Sanctum Auth    │ │                 │ │              │
-    └──────────┬──────────┘ └─────────────────┘ └──────────────┘
-               │
-    ┌──────────▼──────────────────────────────────────────────┐
-    │                   INFRAESTRUCTURA                        │
-    │  ┌──────────────┐  ┌──────────────┐  ┌───────────────┐  │
-    │  │  PostgreSQL  │  │    Redis     │  │  MySQL/Mongo  │  │
-    └───────────────────────────────────────────────────────────┘
+farutech_refactor/
+├── apps/
+│   ├── api/        ├── src/  (Laravel: app/, routes/, config/, database/, bootstrap/, artisan, composer.json, .env.example, phpunit.xml)
+│   │               └── test/ (.NET: Farutech.Api.Tests.csproj → Framework.Core)
+│   ├── admin/      ├── src/  (React+Vite scaffold)
+│   │               └── test/ (.NET)
+│   ├── intranet/   ├── src/  (React+Vite scaffold)
+│   │               └── test/ (.NET)
+│   └── website/    ├── src/  (React+Vite + SSR/prerender)
+│                   └── test/ (.NET)
+├── packages/design-system/        # @farutech/design-system (fuente; dist/ no publicado)
+├── infrastructure/                # docker-compose.yml, gateway/haproxy.cfg, .env.example
+├── tests/framework-automation/    # Framework.Core (src/) — único, referenciado por las apps
+├── Framework.Automation.sln       # 🔗 Solución maestra raíz
+├── docs/                          # tasks/, archive/, implementation-log/, *.md de planificación
+├── IMPLEMENTATION_GUIDE.md        # ← este archivo
+├── README.md
+└── QUICK_START.md
 ```
 
-## ⚠️ Requisitos para el Refactor y Limpieza
+## Test Automation (.NET / Reqnroll)
+- `Framework.Core` es único y compartido (no se copia): `ProjectReference` a
+  `tests/framework-automation/src/Framework.Core/Framework.Core.csproj`.
+- Patrón ScreenPlay: `Actor.AttemptsToAsync(...)` + preguntas `Is*`
+  (`Framework.Core.ScreenPlay.{Api,Web}`). Hooks globales gestionan browser y cleanup.
+- Solución maestra `Framework.Automation.sln` referencia: Framework.Core,
+  Farutech.Api.Tests, Farutech.Website.Tests, Farutech.Admin.Tests, Farutech.Intranet.Tests.
+- **Build** (valida T8-10/T8-11/T8-12): `dotnet build Framework.Automation.sln` → **0 errores**.
+- **Gherkin (T8-11)**: keywords en inglés (`Feature:`, `Scenario:`, `Given/When/Then/And`)
+  y steps en español → bindeo por texto (evita el bug del dialecto `#language: es` de Reqnroll).
+- **Cobertura** (27 features): API (Auth, UsersApi, BlogApi, ContactNewsletterApi, SettingsApi, LeadsApi);
+  Website (Home, Services, Newsletter); Admin (Login, Dashboard); Intranet (Login, Dashboard).
 
-Para optimizar recursos y mantener limpio el entorno (restricciones de inodes):
-1. Todo código que no se use (como ExampleController) debe ser borrado.
-2. Todo paquete inútil (Twilio) debe removerse del `composer.json` y del `composer.lock`.
-3. No añadir lógica de scaffolding innecesaria. Solo los archivos exactos para que funcione Laravel.
+## Backend API (Laravel 10)
+Arranque local:
+```bash
+cd apps/api/src
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate          # testing: SQLite :memory: (phpunit.xml)
+php artisan serve --host=0.0.0.0 --port=8000
+```
+
+**Contrato REST (Sanctum) — Auth:** `POST /login` (rate-limit, email-confirmation gate, role=admin) ·
+`POST /logout` · `GET /user` · `POST /tokens` · `DELETE /tokens/{id}`.
+
+| Recurso | Endpoints | Auth |
+|---------|-----------|------|
+| Users | `GET /users`, `GET /users/{u}`, `POST /users`, `PUT /users/{u}`, `DELETE /users/{u}`, `PATCH /users/{u}/status` | admin (store: registration_enabled) |
+| Leads | `GET/POST /admin/leads`, `GET/PUT/DELETE /admin/leads/{l}`, `GET /admin/leads/stats` | admin |
+| Locations | `GET /locations/search`, `GET /locations/{id}`, `GET /locations/{id}/hierarchy` | público |
+| Blog | `GET /blog/posts`, `GET /blog/posts/{slug}`, `GET /blog/categories`, `GET /blog/categories/{slug}` (+ CRUD admin) | parcial admin |
+| Contact/Newsletter | `POST /contact`, `POST /newsletter` | público |
+| Settings | `GET /settings/public`, `GET/PUT /admin/settings`, `GET /admin/dashboard/stats` | mixto |
+
+**Fixes aplicados en esta sesión (FASE 2):** `AuthController` → `logout`, `user`, `createToken`,
+`revokeToken`; `UserController` → `show`, `update`, `destroy` (guardas de auto-edición/auto-borrado
+y feature-flag `registration_enabled`); en `routes/api.php` → rutas `/locations/{search|id|hierarchy}`
+y CRUD completo de `/admin/leads` (orden correcto respeto a wildcards).
+
+## Frontend (React+Vite)
+```bash
+cd apps/admin/src    && npm install && npm run dev   # :5174
+cd apps/intranet/src && npm install && npm run dev   # :5175
+cd apps/website/src  && npm install && npm run dev   # :3000
+```
+Los tres consumen `http://api.farutech.local` (config. vía `.env`).
+
+## Infraestructura
+```bash
+cd infrastructure
+cp .env.example .env
+docker compose up -d
+```
+Exponemos: `api.farutech.local`, `admin.farutech.local`, `farutech.local`, PgAdmin `:5050`, MailHog `:8025`.
+
+## Deuda técnica
+- ⚠️ `packages/framework-automation/` es una **copia no trackeada** de Framework.Core (vs. la
+  canónica `tests/framework-automation/`). Consolidar a una sola copia.
+- ⚠️ `apps/website/src/` tiene doble anidación `src/src/` y páginas `/admin/*` dentro del website →
+  pendiente FASE 6 (limpieza/website).
+- ℹ️ `@farutech/design-system` sin `dist/` publicado (`npm install && npm run build` pendiente).
+- ℹ️ Warnings de vulnerabilidad transitiva (`OpenTelemetry.Api`, `SharpCompress`, `Snappier`) en
+  dependencias de Framework.Core; actualizar en próxima ronda de paquetes.
+
+## Cómo validar
+```bash
+dotnet build Framework.Automation.sln                              # ✓ 0 errores
+cd apps/api/src && composer install && php artisan test          # PHP (runtime)
+```
+Ver también: `docs/README.md` (índice) y `docs/implementation-log/refactor-progress.md`.
+
+---
+© 2026 Farutech — refactor checkpoint 2026-09-03.
+

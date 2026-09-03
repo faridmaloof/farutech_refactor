@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4.svg?logo=php)](https://php.net)
-[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20.svg?logo=laravel)](https://laravel.com)
+ [![Laravel](https://img.shields.io/badge/Laravel-10-FF2D20.svg?logo=laravel)](https://laravel.com)
 [![React](https://img.shields.io/badge/React-18-61DAFB.svg?logo=react)](https://react.dev)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg?logo=typescript)](https://www.typescriptlang.org)
@@ -231,7 +231,10 @@ npm install
 npm run dev
 ```
 
-> **⚠️ NOTA**: La Admin App está en desarrollo (FASE 3 pendiente). El directorio `apps/admin/` existe pero está vacío. Se implementará después de completar el Backend API.
+> **🔄 NOTA**: La Admin App incluye un scaffold funcional de React+Vite+TS+Tailwind
+> (`apps/admin/src/` con auth y dashboard) y su suite de tests .NET
+> (`apps/admin/test/`). Falta integrar el front con el API y publicar el
+> design-system. Ver [`IMPLEMENTATION_GUIDE.md`](IMPLEMENTATION_GUIDE.md).
 
 ### 5. Configurar Website
 
@@ -241,7 +244,9 @@ npm install
 npm run dev
 ```
 
-> **⚠️ NOTA**: El Website está en desarrollo (FASE 4 pendiente). Actualmente el frontend público está en `apps/web/apps/frontend/` y será migrado a `apps/website/` con Next.js 14.
+> **🔄 NOTA**: El Website está implementado en `apps/website/src/` con React 18 + Vite +
+> TailwindCSS v4 (SSR/prerender incluido). El frontend público legacy
+> (`apps/web/`) está archivado en `docs/archive/`.
 
 ### 6. Acceder a las Aplicaciones
 
@@ -270,16 +275,22 @@ La documentación completa está disponible en el directorio [`docs/`](docs/):
 
 | Fase | Estado | Progreso Real | Documentado |
 |------|--------|---------------|-------------|
-| **FASE 0**: Consolidación | 🔄 En progreso | 50% | 100% |
-| **FASE 1**: Backend API | ⚠️ Pendiente | 60% | 100% |
-| **FASE 2**: Design System | ✅ Completada | 95% | 100% |
-| **FASE 3**: Admin App | ❌ No iniciada | 0% | 100% |
-| **FASE 4**: Website | ⚠️ Parcial | 50% | 100% |
-| **FASE 5**: Workers | ❌ No iniciada | 0% | 100% |
-| **FASE 6**: Infraestructura | ⚠️ En consolidación | 50% | 100% |
-| **TOTAL** | 🎯 **EN EJECUCIÓN** | **42%** | **100%** |
+| **FASE 0**: Checkpoint + limpieza | ✅ | 100% | ✅ |
+| **FASE 1**: Scaffolding tests .NET | ✅ | 100% | ✅ |
+| **FASE 2**: Backend API (Laravel 10) | ✅ | ~95% | ✅ |
+| **FASE 3**: Design System | ✅ | estructura 100% · build pte. | ✅ |
+| **FASE 4**: Admin App | 🔄 | scaffold + tests | ⚠️ parcial |
+| **FASE 5**: Intranet App | 🔄 | scaffold + tests | ⚠️ parcial |
+| **FASE 6**: Website cleanup | ⬜ | pendiente | ✅ plan |
+| **FASE 7**: Infraestructura | ✅ | ~95% | ✅ |
+| **FASE 8**: Test Automation | ✅ | build ✓ · runtime pte. | ✅ |
+| **FASE 9**: Documentación | 🔄 | en curso | 🔄 |
+| **TOTAL** | 🎯 **EN EJECUCIÓN** | **~75% estructura** | **100% plano** |
 
-> **⚠️ NOTA IMPORTANTE**: El README anterior mostraba 100% de completitud pero la auditoría profunda reveló que solo el 42% está realmente implementado. Este documento refleja el estado REAL validado archivo por archivo. Ver [`docs/30_AUDITORIA_PROFUNDA_Y_ESTADO_REAL.md`](docs/30_AUDITORIA_PROFUNDA_Y_ESTADO_REAL.md) para detalles completos.
+> **ℹ️ NOTA**: El estado real validado archivo por archivo está en
+> [`IMPLEMENTATION_GUIDE.md`](IMPLEMENTATION_GUIDE.md). Esta sección resume la
+> tabla de progreso; para detalle de tareas vea `docs/09_MASTER_IMPLEMENTATION_PLAN...md`
+> y `docs/30_AUDITORIA_PROFUNDA_Y_ESTADO_REAL.md`.
 
 ---
 

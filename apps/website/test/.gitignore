@@ -1,0 +1,20 @@
+# Build artifacts
+bin/
+obj/
+*.user
+
+# Reqnroll generated code (regenerated on build)
+*.feature.cs
+
+# Test results & evidence
+TestResults/
+allure-results/
+allure-report/
+evidence/
+
+# Local settings overrides
+appsettings.Local.json
+
+# Secrets
+.env
+.env.local
