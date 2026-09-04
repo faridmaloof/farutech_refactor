@@ -26,7 +26,7 @@ Cada tarea incluye:
 | TASK-000A | Aprobación Auditoría | FASE 2 | ✅ DONE | 100% | 2024-09-04 | Architect | [docs/tracking/000A](./tasks/TASK-000A.md) |
 | TASK-000B | Decisión Design System Structure | FASE 3 | ✅ DONE | 100% | 2024-09-04 | Architect | [ADR-002](../adr/ADR-002_design_system_structure.md) |
 | TASK-000C | Decisión Intranet Necesidad | FASE 3 | ✅ DONE | 100% | 2024-09-04 | Architect | [ADR-003](../adr/ADR-003_intranet_strategy.md) |
-| TASK-000D | Decisión Multi-Database Strategy | FASE 3 | ⬜ BACKLOG | 0% | - | - | - |
+| TASK-000D | Decisión Multi-Database Strategy | FASE 3 | ✅ DONE | 100% | 2024-09-04 | Architect | [ADR-004](../adr/ADR-004_multi_database_strategy.md) |
 | TASK-001 | Normalizar estructura Design System | FASE 7 | ⬜ BACKLOG | 0% | - | - | N/A (estructura ya correcta) |
 | TASK-002 | Generar build del Design System | FASE 9 | ⬜ BACKLOG | 0% | - | - | N/A (build ya generado) |
 | TASK-003 | SPEC-001 Lead Management | FASE 5 | ⬜ BACKLOG | 0% | - | - | - |
@@ -57,16 +57,16 @@ No se puede avanzar a la siguiente fase sin cumplir TODOS los criterios:
 
 ### FASE 2 → FASE 3 (Architecture Assessment → Target Architecture)
 - [x] Auditoría completada y aprobada
-- [ ] TASK-000A aprobada formalmente
-- [ ] TASK-000B, TASK-000C, TASK-000D resueltas
-- [ ] ADRs creados para decisiones arquitectónicas
-- [ ] Arquitectura objetivo documentada
+- [x] TASK-000A aprobada formalmente
+- [x] TASK-000B, TASK-000C, TASK-000D resueltas
+- [x] ADRs creados para decisiones arquitectónicas
+- [ ] Arquitectura objetivo documentada (pendiente consolidación)
 
 ### FASE 3 → FASE 4 (Target Architecture → Documentation Normalization)
-- [ ] Arquitectura objetivo aprobada
-- [ ] Todos los ADRs relevantes creados
+- [x] Arquitectura objetivo aprobada (ADR-002, ADR-003, ADR-004)
+- [x] Todos los ADRs relevantes creados (ADR-001, ADR-002, ADR-003, ADR-004)
 - [ ] Riesgos identificados y mitigados
-- [ ] Plan de migración definido
+- [ ] Plan de migración definido (ver ADR-004 para Multi-DB)
 
 ### FASE 4 → FASE 5 (Documentation Normalization → SDD Specifications)
 - [ ] Estructura de documentación normalizada
