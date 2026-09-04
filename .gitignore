@@ -1,32 +1,157 @@
-```
-# Laravel-specific ignores
-bootstrap/cache/
-storage/framework/cache/
-storage/framework/sessions/
-storage/framework/views/
-vendor/
+# ==============================================================================
+# ARCHIVOS DE SISTEMA (OS)
+# Ignora archivos temporales generados por los sistemas operativos.
+# ==============================================================================
+.DS_Store
+.AppleDouble
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
 
-# PHP-related
-*.php~
-*.swp
-.php_cs.cache
+# ==============================================================================
+# VISUAL STUDIO CODE (VS Code)
+# Ignora la configuración local del editor, pero permite compartir configuraciones
+# de depuración y extensiones recomendadas para el equipo.
+# ==============================================================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
 
-# Tests
-.tests/
-.phpunit.result.cache
+# ==============================================================================
+# .NET / C#
+# Ignora binarios compilados, caché de Visual Studio y paquetes NuGet.
+# ==============================================================================
+## Archivos específicos de usuario y opciones de VS
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-# Environment
+## Resultados de compilación (Debug/Release)
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Carpeta oculta de Visual Studio
+.vs/
+
+## Paquetes NuGet (si usas el modelo antiguo de packages.config)
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+*.nupkg
+*.snupkg
+
+## Perfiles de publicación de .NET
+**/[Pp]ublish[Pp]rofiles/
+
+# ==============================================================================
+# NODE.JS / REACT / VITE / TYPESCRIPT
+# Ignora dependencias, caché de Vite, compilaciones y logs de npm/yarn/pnpm.
+# ==============================================================================
+## Dependencias de Node
+node_modules/
+jspm_packages/
+
+## Carpeta de compilación de Vite / React
+dist/
+build/
+.vite/
+
+## Caché de TypeScript
+*.tsbuildinfo
+
+## Logs de ejecutores de paquetes
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+## Archivos de coverage (Cobertura de pruebas de JS/TS)
+coverage/
+*.lcov
+
+# ==============================================================================
+# LARAVEL / PHP
+# Ignora dependencias de Composer, caché, logs y archivos de almacenamiento.
+# ==============================================================================
+## Dependencias de Composer
+/vendor/
+composer.phar
+
+## Archivos de Homestead / Vagrant (si los usas)
+Homestead.json
+Homestead.yaml
+
+## Storage y Cache de Laravel (¡Muy importante!)
+/storage/*.key
+/public/storage
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+
+## Bootstrap cache de Laravel
+/bootstrap/cache/*
+
+# ==============================================================================
+# PLAYWRIGHT
+# Ignora reportes de pruebas, capturas de pantalla y archivos de trazas.
+# ==============================================================================
+## Resultados y reportes de ejecución
+/test-results/
+/playwright-report/
+/blob-report/
+
+## Caché interna de Playwright
+/playwright/.cache/
+
+## Archivos de trazas (traces) y videos generados en fallos
+*.trace.zip
+*.webm
+
+# ==============================================================================
+# VARIABLES DE ENTORNO Y SECRETOS (GLOBAL)
+# ¡CRÍTICO! Nunca subas contraseñas, API Keys o tokens al repositorio.
+# ==============================================================================
 .env
 .env.local
-.env.*
-!.env.example
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+*.pem
+*.key
+*.p12
+*.cer
 
-# IDE
-.vscode/
+# ==============================================================================
+# OTROS / VARIOS
+# Archivos temporales de editores y herramientas de terceros.
+# ==============================================================================
 .idea/
-*.tmp
-
-# OS
-.DS_Store
-Thumbs.db
-```
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
