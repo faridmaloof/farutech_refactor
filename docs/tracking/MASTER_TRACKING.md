@@ -35,6 +35,10 @@ Cada tarea incluye:
 | TASK-006 | Admin — Opportunity Search | FASE 11 | ⬜ BACKLOG | 0% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-006.md](./tasks/TASK-006.md) |
 | TASK-007 | Actualizar README con estado real | FASE 4 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-007.md](./tasks/TASK-007.md) |
 | TASK-008 | Normalizar documentación | FASE 4 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-008.md](./tasks/TASK-008.md) |
+| TASK-009 | Estructura de Directorios Base para Admin | FASE 7 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-009.md](./tasks/TASK-009.md) |
+| TASK-010 | Integración Design System en Admin | FASE 9 | ⬜ BACKLOG | 0% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-010.md](./tasks/TASK-010.md) |
+| TASK-011 | Capa de Servicios API (Client) | FASE 7 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-011.md](./tasks/TASK-011.md) |
+| TASK-012 | Configuración de Testing E2E y Unitario | FASE 13 | ⬜ BACKLOG | 0% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-012.md](./tasks/TASK-012.md) |
 
 ### Leyenda de Estados
 
@@ -387,16 +391,16 @@ Antes de marcar como DONE, verificar:
 | FASE 3 | 4 | 4 ✅ | 0 | 0 | 0 | 0 |
 | FASE 4 | 2 | 0 | 0 | 0 | 2 🔄 | 0 |
 | FASE 5 | 2 | 0 | 0 | 0 | 2 🔄 | 0 |
-| FASE 7 | 1 | 0 | 0 | 0 | 0 | 1 ⬜ |
-| FASE 9 | 1 | 0 | 0 | 0 | 0 | 1 ⬜ |
-| FASE 11 | 2 | 0 | 0 | 0 | 0 | 2 ⬜ |
-| **TOTAL** | **13** | **5** | **0** | **0** | **4** | **4** |
+| FASE 7 | 3 | 0 | 0 | 0 | 2 🔄 | 1 ⬜ |
+| FASE 9 | 2 | 0 | 0 | 0 | 0 | 2 ⬜ |
+| FASE 13 | 1 | 0 | 0 | 0 | 0 | 1 ⬜ |
+| **TOTAL** | **16** | **5** | **0** | **0** | **6** | **5** |
 
-**Progreso General:** 5/13 tareas completadas (38%) | 4 listas para comenzar (31%) | 4 en backlog (31%)
+**Progreso General:** 5/16 tareas completadas (31%) | 6 listas para comenzar (38%) | 5 en backlog (31%)
 
 ---
 
-## 🎯 PRÓXIMAS TAREAS CRÍTICAS (TOP 5)
+## 🎯 PRÓXIMAS TAREAS CRÍTICAS (TOP 6)
 
 1. **TASK-007** — Actualizar README con estado real (FASE 4)
    - Estado: 🔄 READY
@@ -408,20 +412,25 @@ Antes de marcar como DONE, verificar:
    - Impacto: Alto (reduce ambigüedad, mejora navegación)
    - Dependencias: TASK-007 recomendada primero
 
-3. **TASK-004** — SPEC-002 Opportunity Search (FASE 5)
+3. **TASK-009** — Estructura de Directorios Base para Admin (FASE 7)
+   - Estado: 🔄 READY
+   - Impacto: Crítico (habilita toda la implementación del Admin)
+   - Dependencias: TASK-007, TASK-008 recomendadas
+
+4. **TASK-011** — Capa de Servicios API (Client) (FASE 7)
+   - Estado: 🔄 READY
+   - Impacto: Crítico (comunicación con backend, autenticación)
+   - Dependencias: TASK-009
+
+5. **TASK-004** — SPEC-002 Opportunity Search (FASE 5)
    - Estado: 🔄 READY
    - Impacto: Crítico (habilita implementación de búsqueda de oportunidades)
    - Dependencias: TASK-003 (SPEC-001 ya está READY)
 
-4. **TASK-005** — Admin Leads Page (FASE 11)
+6. **TASK-010** — Integración Design System en Admin (FASE 9)
    - Estado: ⬜ BACKLOG
-   - Depende de: TASK-003 ✅, TASK-002 ⬜, TASK-007 ⬜, TASK-008 ⬜
-   - Impacto: Crítico (primera feature funcional del MiniCRM)
-
-5. **TASK-006** — Admin Opportunity Search (FASE 11)
-   - Estado: ⬜ BACKLOG
-   - Depende de: TASK-004 ⬜, TASK-002 ⬜, TASK-005 ⬜ (recomendada)
-   - Impacto: Crítico (segunda feature del MiniCRM, adquisición proactiva de leads)
+   - Depende de: TASK-002 ⬜
+   - Impacto: Alto (UI consistente en todo el Admin)
 
 ---
 
