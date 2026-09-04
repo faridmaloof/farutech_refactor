@@ -24,11 +24,11 @@ Cada tarea incluye:
 | ID | Tarea | Fase | Estado | % Completado | Última Act. | Responsable | Evidencia |
 |----|-------|------|--------|--------------|-------------|-------------|-----------|
 | TASK-000A | Aprobación Auditoría | FASE 2 | ✅ DONE | 100% | 2024-09-04 | Architect | [docs/tracking/000A](./tasks/TASK-000A.md) |
-| TASK-000B | Decisión Design System Structure | FASE 3 | ⬜ BACKLOG | 0% | - | - | - |
-| TASK-000C | Decisión Intranet Necesidad | FASE 3 | ⬜ BACKLOG | 0% | - | - | - |
+| TASK-000B | Decisión Design System Structure | FASE 3 | ✅ DONE | 100% | 2024-09-04 | Architect | [ADR-002](../adr/ADR-002_design_system_structure.md) |
+| TASK-000C | Decisión Intranet Necesidad | FASE 3 | ✅ DONE | 100% | 2024-09-04 | Architect | [ADR-003](../adr/ADR-003_intranet_strategy.md) |
 | TASK-000D | Decisión Multi-Database Strategy | FASE 3 | ⬜ BACKLOG | 0% | - | - | - |
-| TASK-001 | Normalizar estructura Design System | FASE 7 | ⬜ BACKLOG | 0% | - | - | - |
-| TASK-002 | Generar build del Design System | FASE 9 | ⬜ BACKLOG | 0% | - | - | - |
+| TASK-001 | Normalizar estructura Design System | FASE 7 | ⬜ BACKLOG | 0% | - | - | N/A (estructura ya correcta) |
+| TASK-002 | Generar build del Design System | FASE 9 | ⬜ BACKLOG | 0% | - | - | N/A (build ya generado) |
 | TASK-003 | SPEC-001 Lead Management | FASE 5 | ⬜ BACKLOG | 0% | - | - | - |
 | TASK-004 | SPEC-002 Opportunity Search | FASE 5 | ⬜ BACKLOG | 0% | - | - | - |
 | TASK-005 | Admin — Leads Page | FASE 11 | ⬜ BACKLOG | 0% | - | - | - |

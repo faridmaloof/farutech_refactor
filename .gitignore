@@ -1,5 +1,1 @@
-```
-# Docs tracking files
-docs/tracking/metrics/.gitkeep
-docs/tracking/sprints/.gitkeep
-```
+Nothing should be ignored based on the provided file changes. The only modified file is a documentation markdown file (`docs/tracking/MASTER_TRACKING.md`), which is a source/config file and should not be added to .gitignore.
