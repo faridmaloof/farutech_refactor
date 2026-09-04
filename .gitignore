@@ -1,5 +1,79 @@
 ```
-# Documentation tracking files
-docs/tracking/tasks/
-docs/tracking/change-log/
+# Environment and configuration
+.env
+.env.local
+.env.*
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Build artifacts from docs structure (if any get generated)
+_build/
+_site/
+*.pdf
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+
+# Archive files that might be created
+*.bak
+*.backup
+
+# IDE specific files that might apply broadly
+.vscode/
+.idea/
+
+# Python cache (though seems to be doc-only now, preserving for safety)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node modules (though seems to be doc-only now, preserving for safety)
+node_modules/
+
+# Virtual environments (though seems to be doc-only now, preserving for safety)
+venv/
+.venv/
+
+# Build directories (though seems to be doc-only now, preserving for safety)
+dist/
+build/
+target/
+
+# MyPy cache (though seems to be doc-only now, preserving for safety)
+.mypy_cache/
 ```
