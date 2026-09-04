@@ -23,7 +23,7 @@ export default function AdminLeadsPage() {
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const token = localStorage.getItem('auth_token');
+        const token = localStorage.getItem('admin_token');
         const response = await fetch(`${API_BASE_URL}/admin/leads`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -32,7 +32,7 @@ export default function AdminLeadsPage() {
         });
 
         if (response.status === 401) {
-          localStorage.removeItem('auth_token');
+          localStorage.removeItem('admin_token');
           localStorage.removeItem('auth_user');
           navigate('/admin/login', { replace: true });
           return;

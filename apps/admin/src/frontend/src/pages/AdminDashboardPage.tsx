@@ -19,7 +19,7 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const token = localStorage.getItem('auth_token');
+        const token = localStorage.getItem('admin_token');
         const response = await fetch(`${API_BASE_URL}/admin/dashboard/stats`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -28,8 +28,8 @@ export default function AdminDashboardPage() {
         });
 
         if (response.status === 401) {
-          localStorage.removeItem('auth_token');
-          localStorage.removeItem('auth_user');
+          localStorage.removeItem('admin_token');
+          ;
           navigate('/admin/login', { replace: true });
           return;
         }

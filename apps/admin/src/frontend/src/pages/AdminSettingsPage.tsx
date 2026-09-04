@@ -21,7 +21,7 @@ interface Settings {
 }
 
 const authHeaders = () => ({
-  Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+  Authorization: `Bearer ${localStorage.getItem('admin_token')}`,
   'Content-Type': 'application/json',
 });
 
@@ -41,7 +41,7 @@ export default function AdminSettingsPage() {
           fetch(`${API_BASE_URL}/admin/users`, { headers: authHeaders() }),
         ]);
         if (sRes.status === 401 || uRes.status === 401) {
-          localStorage.removeItem('auth_token');
+          localStorage.removeItem('admin_token');
           localStorage.removeItem('auth_user');
           navigate('/admin/login', { replace: true });
           return;

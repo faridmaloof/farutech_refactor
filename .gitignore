@@ -1,1 +1,10 @@
-(docs/implementation/TASK-010-website-cleanup.md)
+# Dependencies
+node_modules/
+
+# Editors
+.vscode/
+
+# Environment
+.env
+.env.local
+*.env.*

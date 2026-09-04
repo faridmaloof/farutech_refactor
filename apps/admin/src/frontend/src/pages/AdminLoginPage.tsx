@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect, FormEvent } from 'react';
 import { API_BASE_URL } from '../lib/api';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+
 
 interface Policy {
   registration_enabled: boolean;
@@ -18,7 +18,7 @@ export default function AdminLoginPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [policy, setPolicy] = useState<Policy | null>(null);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/settings/public`)
@@ -52,20 +52,20 @@ export default function AdminLoginPage() {
         return;
       }
 
-      const response = await fetch(`${API_BASE_URL}/admin/login`, {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (!response.ok) {
+      if (!res.ok) {
         throw new Error(data.message || 'Error en autenticaciÃ³n');
       }
 
       // Guardar token y usuario
-      login(data.token, data.user);
+      localStorage.setItem('admin_token', data.token);
 
       // Redirigir al dashboard
       navigate('/admin/dashboard');
