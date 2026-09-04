@@ -30,9 +30,9 @@ Cada tarea incluye:
 | TASK-001 | Normalizar estructura Design System | FASE 7 | ⬜ BACKLOG | 0% | - | - | N/A (estructura ya correcta) |
 | TASK-002 | Generar build del Design System | FASE 9 | ⬜ BACKLOG | 0% | - | - | N/A (build ya generado) |
 | TASK-003 | SPEC-001 Lead Management | FASE 5 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-003.md](./tasks/TASK-003.md) |
-| TASK-004 | SPEC-002 Opportunity Search | FASE 5 | ⬜ BACKLOG | 0% | - | - | - |
-| TASK-005 | Admin — Leads Page | FASE 11 | ⬜ BACKLOG | 0% | - | - | - |
-| TASK-006 | Admin — Opportunity Search | FASE 11 | ⬜ BACKLOG | 0% | - | - | - |
+| TASK-004 | SPEC-002 Opportunity Search | FASE 5 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-004.md](./tasks/TASK-004.md) |
+| TASK-005 | Admin — Leads Page | FASE 11 | ⬜ BACKLOG | 0% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-005.md](./tasks/TASK-005.md) |
+| TASK-006 | Admin — Opportunity Search | FASE 11 | ⬜ BACKLOG | 0% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-006.md](./tasks/TASK-006.md) |
 | TASK-007 | Actualizar README con estado real | FASE 4 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-007.md](./tasks/TASK-007.md) |
 | TASK-008 | Normalizar documentación | FASE 4 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-008.md](./tasks/TASK-008.md) |
 
@@ -381,40 +381,47 @@ Antes de marcar como DONE, verificar:
 
 ### Estado por Fase
 
-| Fase | Total Tasks | Done | In Progress | Blocked | Backlog |
-|------|-------------|------|-------------|---------|---------|
-| FASE 2 | 1 | 1 | 0 | 0 | 0 |
-| FASE 3 | 3 | 0 | 0 | 0 | 3 |
-| FASE 4 | 2 | 0 | 0 | 0 | 2 |
-| FASE 5 | 2 | 0 | 0 | 0 | 2 |
-| FASE 7 | 1 | 0 | 0 | 0 | 1 |
-| FASE 9 | 1 | 0 | 0 | 0 | 1 |
-| FASE 11 | 2 | 0 | 0 | 0 | 2 |
-| **TOTAL** | **12** | **1** | **0** | **0** | **11** |
+| Fase | Total Tasks | Done | In Progress | Blocked | Ready | Backlog |
+|------|-------------|------|-------------|---------|-------|---------|
+| FASE 2 | 1 | 1 ✅ | 0 | 0 | 0 | 0 |
+| FASE 3 | 4 | 4 ✅ | 0 | 0 | 0 | 0 |
+| FASE 4 | 2 | 0 | 0 | 0 | 2 🔄 | 0 |
+| FASE 5 | 2 | 0 | 0 | 0 | 2 🔄 | 0 |
+| FASE 7 | 1 | 0 | 0 | 0 | 0 | 1 ⬜ |
+| FASE 9 | 1 | 0 | 0 | 0 | 0 | 1 ⬜ |
+| FASE 11 | 2 | 0 | 0 | 0 | 0 | 2 ⬜ |
+| **TOTAL** | **13** | **5** | **0** | **0** | **4** | **4** |
+
+**Progreso General:** 5/13 tareas completadas (38%) | 4 listas para comenzar (31%) | 4 en backlog (31%)
 
 ---
 
 ## 🎯 PRÓXIMAS TAREAS CRÍTICAS (TOP 5)
 
-1. **TASK-000B** — Decisión Design System Structure (FASE 3)
-   - Bloquea: TASK-001, TASK-002
-   - Impacto: Diseño System no usable sin resolución
+1. **TASK-007** — Actualizar README con estado real (FASE 4)
+   - Estado: 🔄 READY
+   - Impacto: Alto (mejora onboarding y transparencia)
+   - Dependencias: Ninguna
 
-2. **TASK-000C** — Decisión Intranet Necesidad (FASE 3)
-   - Bloquea: FASE 12 completa
-   - Impacto: Posible eliminación de app innecesaria
+2. **TASK-008** — Normalizar documentación (FASE 4)
+   - Estado: 🔄 READY
+   - Impacto: Alto (reduce ambigüedad, mejora navegación)
+   - Dependencias: TASK-007 recomendada primero
 
-3. **TASK-000D** — Decisión Multi-Database Strategy (FASE 3)
-   - Bloquea: FASE 14 (Infraestructura)
-   - Impacto: Complejidad operativa vs flexibilidad
+3. **TASK-004** — SPEC-002 Opportunity Search (FASE 5)
+   - Estado: 🔄 READY
+   - Impacto: Crítico (habilita implementación de búsqueda de oportunidades)
+   - Dependencias: TASK-003 (SPEC-001 ya está READY)
 
-4. **TASK-001** — Normalizar estructura Design System (FASE 7)
-   - Depende de: TASK-000B
-   - Impacto: Claridad para desarrolladores
+4. **TASK-005** — Admin Leads Page (FASE 11)
+   - Estado: ⬜ BACKLOG
+   - Depende de: TASK-003 ✅, TASK-002 ⬜, TASK-007 ⬜, TASK-008 ⬜
+   - Impacto: Crítico (primera feature funcional del MiniCRM)
 
-5. **TASK-002** — Generar build del Design System (FASE 9)
-   - Depende de: TASK-001
-   - Impacto: Componentes utilizables por apps
+5. **TASK-006** — Admin Opportunity Search (FASE 11)
+   - Estado: ⬜ BACKLOG
+   - Depende de: TASK-004 ⬜, TASK-002 ⬜, TASK-005 ⬜ (recomendada)
+   - Impacto: Crítico (segunda feature del MiniCRM, adquisición proactiva de leads)
 
 ---
 

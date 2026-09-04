@@ -180,3 +180,102 @@ El sistema de tracking fue creado para cumplir con los requisitos del **FARUTECH
 **© 2024 Farutech — Change Log del Tracking System**  
 **Versión:** 1.0  
 **Última Actualización:** 2024-09-04
+
+---
+
+## 2024-09-04 — Expansión del Sistema de Tracking (Tareas 004-006)
+
+**Autor:** Software Architect  
+**Tipo de Cambio:** Mejora de Documentación  
+**Impacto:** Alto
+
+### Resumen
+
+Se completó la documentación detallada de 3 tareas críticas adicionales del plan de implementación:
+
+- **TASK-004:** SPEC-002 Opportunity Search System (FASE 5)
+- **TASK-005:** Admin Panel — Leads Management Page (FASE 11)
+- **TASK-006:** Admin Panel — Opportunity Search Implementation (FASE 11)
+
+### Tareas Creadas
+
+| ID | Nombre | Fase | Estado | Líneas |
+|----|--------|------|--------|--------|
+| TASK-004 | SPEC-002 Opportunity Search | FASE 5 | 🔄 READY | 288 |
+| TASK-005 | Admin Leads Page | FASE 11 | ⬜ BACKLOG | 322 |
+| TASK-006 | Admin Opportunity Search | FASE 11 | ⬜ BACKLOG | 341 |
+
+### Características Comunes
+
+Cada tarea incluye:
+- ✅ 20+ secciones exhaustivas cubriendo todos los aspectos
+- ✅ Criterios de aceptación binarios y verificables
+- ✅ Pruebas requeridas (API, Integration, E2E, Unit)
+- ✅ Validaciones obligatorias antes de DONE
+- ✅ Dependencias explícitamente mapeadas
+- ✅ Riesgos identificados con mitigación
+- ✅ Evidencia requerida para completado
+- ✅ Historial de cambios auditables
+
+### Métricas de Calidad
+
+**TASK-004 (SPEC-002):**
+- 23 secciones de especificación definidas
+- 5 endpoints API contract documentados
+- 30+ criterios de aceptación funcionales
+- Estrategia de testing completa (API + Integration + E2E)
+
+**TASK-005 (Leads Page):**
+- 14 componentes frontend especificados
+- 10 endpoints API cubiertos
+- 37 criterios de aceptación funcionales
+- 5 flujos E2E definidos en Gherkin
+
+**TASK-006 (Opportunity Search):**
+- 16 componentes frontend especificados
+- 8 endpoints API cubiertos
+- 40+ criterios de aceptación funcionales
+- 5 flujos E2E definidos en Gherkin
+- Consideraciones legales de scraping documentadas
+
+### Actualizaciones Relacionadas
+
+- `docs/tracking/MASTER_TRACKING.md` actualizado con:
+  - Nueva tabla de estado (13 tareas totales)
+  - Progreso general: 5/13 DONE (38%), 4 READY (31%), 4 BACKLOG (31%)
+  - Top 5 de próximas tareas críticas actualizado
+  - Estado por fase desglosado con columna Ready
+
+### Próximo Orden de Ejecución Recomendado
+
+1. **TASK-007** (READY) — Actualizar README
+2. **TASK-008** (READY) — Normalizar documentación
+3. **TASK-004** (READY) — Crear SPEC-002 completa
+4. **TASK-005** (BACKLOG → depende de TASK-002, 007, 008) — Implementar Leads Page
+5. **TASK-006** (BACKLOG → depende de TASK-004, 002, 005) — Implementar Opportunity Search
+
+### Impacto en el Proyecto
+
+- **Trazabilidad:** 100% de las tareas críticas documentadas con criterios claros
+- **Cero Ambigüedad:** Cada tarea tiene definición binaria de DONE
+- **Quality Gates:** Ninguna tarea puede marcarse DONE sin pruebas pasando
+- **Dependencias Mapeadas:** Se sabe exactamente qué bloquea qué
+- **Riesgos Gestionados:** Mitigación definida proactivamente para cada riesgo conocido
+
+### Archivos Modificados
+
+- `docs/tracking/tasks/TASK-004.md` (creado, 288 líneas)
+- `docs/tracking/tasks/TASK-005.md` (creado, 322 líneas)
+- `docs/tracking/tasks/TASK-006.md` (creado, 341 líneas)
+- `docs/tracking/MASTER_TRACKING.md` (actualizado)
+- `docs/tracking/change-log/CHANGELOG.md` (este entry)
+
+### Total Acumulado
+
+- **Tareas documentadas:** 10/13 (77%)
+- **Tareas completadas:** 5/13 (38%)
+- **Tareas listas para comenzar:** 4 (TASK-003, 004, 007, 008)
+- **Documentación generada:** ~3,500 líneas de especificación técnica
+
+---
+

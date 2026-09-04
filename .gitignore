@@ -1,5 +1,3 @@
-```
-# Documentation tracking files
-docs/tracking/tasks/
-docs/tracking/change-log/
-```
+# Examples and documentation files
+docs/tracking/MASTER_TRACKING.md
+docs/tracking/change-log/CHANGELOG.md
