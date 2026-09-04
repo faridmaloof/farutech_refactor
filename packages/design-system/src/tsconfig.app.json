@@ -10,7 +10,7 @@
 
     /* Path mapping — baseUrl eliminado en TypeScript 7 (TS 5.4+ soporta paths sin él) */
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"]
     },
 
     /* Bundler mode */
@@ -29,5 +29,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["."]
 }

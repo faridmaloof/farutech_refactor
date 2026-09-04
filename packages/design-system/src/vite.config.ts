@@ -10,18 +10,18 @@ export default defineConfig({
     dts({
       tsconfigPath: './tsconfig.lib.json',
       outDir: './dist',
-      include: ['src/**/*.ts', 'src/**/*.tsx'],
-      exclude: ['**/*.test.ts', '**/*.test.tsx'],
+      include: ['**/*.ts', '**/*.tsx'],
+      exclude: ['**/*.test.ts', '**/*.test.tsx', 'docs/**'],
     })
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, '.'),
     },
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      entry: path.resolve(__dirname, 'index.ts'),
       name: 'FarutechDesignSystem',
       fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
       formats: ['es', 'cjs'],
