@@ -1,5 +1,8 @@
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import AdminLoginPage from "./pages/AdminLoginPage";
+import { LoginScreen } from "@farutech/design-system/auth-screens";
+import { MainLayout } from "@farutech/design-system/components/layout";
+
+// Páginas Admin (pendientes de migrar al Design System)
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminLeadsPage from "./pages/AdminLeadsPage";
 import AdminSettingsPage from "./pages/AdminSettingsPage";
@@ -12,12 +15,24 @@ function RequireAuth() {
 export default function App() {
   return (
     <Routes>
-      <Route path="/admin/login" element={<AdminLoginPage />} />
+      <Route path="/admin/login" element={<LoginScreen />} />
       <Route element={<RequireAuth />}>
         <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-        <Route path="/admin/leads" element={<AdminLeadsPage />} />
-        <Route path="/admin/settings" element={<AdminSettingsPage />} />
+        <Route path="/admin/dashboard" element={
+          <MainLayout>
+            <AdminDashboardPage />
+          </MainLayout>
+        } />
+        <Route path="/admin/leads" element={
+          <MainLayout>
+            <AdminLeadsPage />
+          </MainLayout>
+        } />
+        <Route path="/admin/settings" element={
+          <MainLayout>
+            <AdminSettingsPage />
+          </MainLayout>
+        } />
       </Route>
       <Route path="*" element={<Navigate to="/admin" replace />} />
     </Routes>

@@ -1,6 +1,10 @@
-﻿import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../lib/api';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { StatsCard, StatsCardGroup } from '@farutech/design-system/components/ui';
+import { DataTable } from '@farutech/design-system/components/ui';
+import { Card, CardHeader } from '@farutech/design-system/components/ui';
+import { EmptyState } from '@farutech/design-system/components/ui';
+import { API_BASE_URL } from '../lib/api';
 
 interface DashboardStats {
   totalLeads: number;
@@ -29,18 +33,17 @@ export default function AdminDashboardPage() {
 
         if (response.status === 401) {
           localStorage.removeItem('admin_token');
-          ;
           navigate('/admin/login', { replace: true });
           return;
         }
         if (!response.ok) {
-          throw new Error('Error al cargar estadÃ­sticas');
+          throw new Error('Error al cargar estadísticas');
         }
 
         const data = await response.json();
         setStats(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Error de conexiÃ³n');
+        setError(err instanceof Error ? err.message : 'Error de conexión');
       } finally {
         setLoading(false);
       }
@@ -59,139 +62,142 @@ export default function AdminDashboardPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-red-600">{error}</div>
-      </div>
+      <EmptyState
+        type="error"
+        title="Error al cargar el dashboard"
+        description={error}
+        actionLabel="Reintentar"
+        onAction={() => window.location.reload()}
+      />
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Resumen general del sistema
-          </p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Leads</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {stats?.totalLeads || 0}
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Nuevos Leads</div>
-            <div className="mt-2 text-3xl font-bold text-green-600">
-              {stats?.newLeads || 0}
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Proyectos Activos</div>
-            <div className="mt-2 text-3xl font-bold text-blue-600">
-              {stats?.activeProjects || 0}
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Tasa de ConversiÃ³n</div>
-            <div className="mt-2 text-3xl font-bold text-purple-600">
-              {stats?.conversionRate || 0}%
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link
-            to="/admin/leads"
-            className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Gestionar Leads</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Ver y administrar todos los leads del CRM
-            </p>
-          </Link>
-
-          <Link
-            to="/admin/blog"
-            className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Blog</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Gestionar publicaciones del blog
-            </p>
-          </Link>
-
-          <Link
-            to="/admin/settings"
-            className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">ConfiguraciÃ³n</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Ajustes del sistema y notificaciones
-            </p>
-          </Link>
-        </div>
-
-        {/* Recent Leads Table */}
-        {stats?.recentLeads && stats.recentLeads.length > 0 && (
-          <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Leads Recientes</h3>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-900">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Nombre
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Estado
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Fecha
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {stats.recentLeads.map((lead: any) => (
-                    <tr key={lead.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                        {lead.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {lead.email}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          lead.status === 'NEW' ? 'bg-green-100 text-green-800' :
-                          lead.status === 'CONTACTED' ? 'bg-blue-100 text-blue-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {lead.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(lead.created_at).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Resumen general del sistema
+        </p>
       </div>
+
+      {/* Stats Grid con StatsCard del Design System */}
+      <StatsCardGroup>
+        <StatsCard
+          title="Total Leads"
+          value={stats?.totalLeads || 0}
+          icon="users"
+          trend={{ value: stats?.newLeads || 0, label: 'nuevos este mes' }}
+          color="blue"
+        />
+        <StatsCard
+          title="Nuevos Leads"
+          value={stats?.newLeads || 0}
+          icon="user-plus"
+          trend={{ value: '+15%', label: 'vs mes anterior' }}
+          color="green"
+        />
+        <StatsCard
+          title="Proyectos Activos"
+          value={stats?.activeProjects || 0}
+          icon="briefcase"
+          trend={{ value: '85%', label: 'tasa de ocupación' }}
+          color="purple"
+        />
+        <StatsCard
+          title="Tasa de Conversión"
+          value={`${stats?.conversionRate || 0}%`}
+          icon="trending-up"
+          trend={{ value: '+2.5%', label: 'mejora mensual' }}
+          color="orange"
+        />
+      </StatsCardGroup>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <CardHeader>
+            <Link to="/admin/leads" className="block">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Gestionar Leads</h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-400">
+                Ver y administrar todos los leads del CRM
+              </p>
+            </Link>
+          </CardHeader>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <CardHeader>
+            <Link to="/admin/blog" className="block">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Blog</h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-400">
+                Gestionar publicaciones del blog
+              </p>
+            </Link>
+          </CardHeader>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <CardHeader>
+            <Link to="/admin/settings" className="block">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Configuración</h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-400">
+                Ajustes del sistema y notificaciones
+              </p>
+            </Link>
+          </CardHeader>
+        </Card>
+      </div>
+
+      {/* Recent Leads Table con DataTable del Design System */}
+      {stats?.recentLeads && stats.recentLeads.length > 0 ? (
+        <Card>
+          <CardHeader>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Leads Recientes</h3>
+          </CardHeader>
+          <DataTable
+            columns={[
+              { key: 'name', label: 'Nombre', sortable: true },
+              { key: 'email', label: 'Email', sortable: true },
+              { 
+                key: 'status', 
+                label: 'Estado', 
+                sortable: true,
+                render: (value: string) => {
+                  const colors: any = {
+                    NEW: 'bg-green-100 text-green-800',
+                    CONTACTED: 'bg-blue-100 text-blue-800',
+                    QUALIFIED: 'bg-purple-100 text-purple-800',
+                    CONVERTED: 'bg-yellow-100 text-yellow-800',
+                  };
+                  return (
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${colors[value] || 'bg-gray-100 text-gray-800'}`}>
+                      {value}
+                    </span>
+                  );
+                }
+              },
+              { 
+                key: 'created_at', 
+                label: 'Fecha', 
+                sortable: true,
+                render: (value: string) => new Date(value).toLocaleDateString()
+              },
+            ]}
+            data={stats.recentLeads}
+            pagination={{ pageSize: 5, showTotal: false }}
+            searchable={false}
+          />
+        </Card>
+      ) : (
+        <EmptyState
+          type="info"
+          title="No hay leads recientes"
+          description="Los leads nuevos aparecerán aquí"
+          actionLabel="Crear lead manual"
+          onAction={() => navigate('/admin/leads?action=create')}
+        />
+      )}
     </div>
   );
 }
