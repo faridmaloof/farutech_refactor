@@ -1,62 +1,35 @@
-```
 # Dependencies
+vendor/
 node_modules/
 
-# Build artifacts
-dist/
-build/
-target/
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-.ENV
-.python-version
-pip-log.txt
-pip-delete-this-directory.txt
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.log
-*.tmp
-
-# TypeScript/JavaScript
-*.tsbuildinfo
-*.js.map
-*.jsx.map
-*.ts.map
-
-# IDE
-.vscode/
-.idea/
+# PHP specific
+*.php~
+*.php.bak
 *.swp
 *.swo
 
 # Environment
 .env
 .env.local
-*.env.*
+.env.*
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.tmp
+
+# Cache
+.cache/
+.php_cs.cache
+
+# Build artifacts
+build/
+dist/
+target/
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Archives
-*.zip
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.gz
-*.rar
-*.7z
-```
