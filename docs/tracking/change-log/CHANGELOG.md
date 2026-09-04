@@ -4,6 +4,76 @@ Este documento registra todos los cambios realizados al sistema de tracking del 
 
 ---
 
+## [2024-09-04] — Actualización: ADR-003 Creado (Intranet Strategy)
+
+**Tipo:** 🆕 NEW ADR  
+**Responsable:** Software Architect
+
+### Cambios Realizados
+
+#### Nuevo ADR Creado
+- ✅ **ADR-003** — Intranet Strategy
+  - 4 alternativas analizadas exhaustivamente
+  - Decisión: Alternativa D (Congelar hasta definición de PO)
+  - Plan de acción en 3 fases (Congelamiento, Seguimiento, Ejecución)
+  - Criterios claros para descongelar
+  - Time-box: 2 semanas para respuesta de PO
+  - Riesgos y mitigación documentados
+
+#### Contexto de la Decisión
+**Problema:** Ambigüedad sobre necesidad real de Intranet como aplicación independiente.
+
+**Evidencia Encontrada:**
+- [VERIFICADO — CÓDIGO] `apps/intranet/` existe con scaffold funcional (Login + Dashboard)
+- [VERIFICADO — TESTS] BDD features implementadas (Login.feature, Dashboard.feature)
+- [VERIFICADO — DOCUMENTACIÓN] Docs mencionan "alcance TBD" sin casos de uso concretos
+- [CONFLICTO] Tarea TASK-000C decía "pendiente" pero ya hay código implementado
+
+**Alternativas Evaluadas:**
+1. **A:** Aplicación Independiente (`intranet.farutech.com`) — Alto costo, sin justificación
+2. **B:** Módulo de Admin — Menor mantenimiento, requiere refactor
+3. **C:** Eliminar — Máxima simplificación, pérdida de trabajo existente
+4. **D:** Híbrida (SELECCIONADA) — Congelar hasta que PO defina casos de uso únicos
+
+**Decisión Final:** Alternativa D — Mantener scaffold pero CONGELAR implementación por 2 semanas.
+
+#### Actualización de TASK-000C
+- Estado cambiado: ⏸️ BLOCKED → ✅ DONE (decisión tomada)
+- Evidencia agregada: Link a ADR-003
+- Criterio de aceptación cumplido: Decisión documentada con análisis exhaustivo
+
+### Impacto
+
+**Inmediato:**
+- ✅ Claridad sobre estado de Intranet (no trabajar sin autorización)
+- ✅ Prevención de desarrollo innecesario ("por si acaso")
+- ✅ Preservación de trabajo existente (scaffold + tests)
+- ✅ Continuidad de tareas no bloqueadas (Admin Leads, Opportunity Search)
+
+**A Mediano Plazo:**
+- ⏳ Revisión en 2 semanas (2024-09-18)
+- ⏳ Decisión final basada en evidencia de negocio
+- ⏳ Posible eliminación si no hay justificación
+
+### Archivos Modificados/Creados
+
+**Creados:**
+- `docs/adr/ADR-003_intranet_strategy.md` (274 líneas)
+
+**Actualizados:**
+- `docs/tracking/MASTER_TRACKING.md` — Referencia a ADR-003 agregada
+- `docs/tracking/tasks/TASK-000C.md` — Estado actualizado a DONE
+
+### Métricas
+
+- **Tiempo de Análisis:** 2 horas
+- **Alternativas Evaluadas:** 4
+- **Criterios de Decisión:** 5
+- **Plan de Acción:** 3 fases con 15+ tareas definidas
+- **Time-box para Revisión:** 14 días
+
+---
+
 ## [2024-09-04] — Actualización: Tareas FASE 4 y FASE 5 Creadas
 
 **Tipo:** 🔄 UPDATE  
