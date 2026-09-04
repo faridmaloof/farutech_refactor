@@ -1,1 +1,5 @@
-(docs/adr/ADR-004_multi_database_strategy.md, docs/tracking/MASTER_TRACKING.md, docs/tracking/tasks/TASK-000D.md)
+```
+# Documentation tracking files
+docs/tracking/tasks/
+docs/tracking/change-log/
+```

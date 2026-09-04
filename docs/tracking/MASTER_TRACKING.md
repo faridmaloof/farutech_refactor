@@ -29,12 +29,12 @@ Cada tarea incluye:
 | TASK-000D | Decisión Multi-Database Strategy | FASE 3 | ✅ DONE | 100% | 2024-09-04 | Architect | [ADR-004](../adr/ADR-004_multi_database_strategy.md) |
 | TASK-001 | Normalizar estructura Design System | FASE 7 | ⬜ BACKLOG | 0% | - | - | N/A (estructura ya correcta) |
 | TASK-002 | Generar build del Design System | FASE 9 | ⬜ BACKLOG | 0% | - | - | N/A (build ya generado) |
-| TASK-003 | SPEC-001 Lead Management | FASE 5 | ⬜ BACKLOG | 0% | - | - | - |
+| TASK-003 | SPEC-001 Lead Management | FASE 5 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-003.md](./tasks/TASK-003.md) |
 | TASK-004 | SPEC-002 Opportunity Search | FASE 5 | ⬜ BACKLOG | 0% | - | - | - |
 | TASK-005 | Admin — Leads Page | FASE 11 | ⬜ BACKLOG | 0% | - | - | - |
 | TASK-006 | Admin — Opportunity Search | FASE 11 | ⬜ BACKLOG | 0% | - | - | - |
-| TASK-007 | Actualizar README con estado real | FASE 4 | ⬜ BACKLOG | 0% | - | - | - |
-| TASK-008 | Normalizar documentación | FASE 4 | ⬜ BACKLOG | 0% | - | - | - |
+| TASK-007 | Actualizar README con estado real | FASE 4 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-007.md](./tasks/TASK-007.md) |
+| TASK-008 | Normalizar documentación | FASE 4 | 🔄 READY | 100% | 2024-09-04 | Architect | [docs/tracking/tasks/TASK-008.md](./tasks/TASK-008.md) |
 
 ### Leyenda de Estados
 
