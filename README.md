@@ -1,350 +1,199 @@
 # 🚀 Farutech Ecosystem
 
-> **Ecosistema digital completo** con Backend API, Admin Panel, Website público y Design System reutilizable.
+> **Ecosistema digital empresarial**: Backend API (Laravel 11), Admin Panel (React 18), Website público (React 18 + Vite) y Design System unificado.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4.svg?logo=php)](https://php.net)
- [![Laravel](https://img.shields.io/badge/Laravel-10-FF2D20.svg?logo=laravel)](https://laravel.com)
+[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20.svg?logo=laravel)](https://laravel.com)
 [![React](https://img.shields.io/badge/React-18-61DAFB.svg?logo=react)](https://react.dev)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg?logo=typescript)](https://www.typescriptlang.org)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC.svg?logo=tailwind-css)](https://tailwindcss.com)
 
 ---
 
 ## 📋 Tabla de Contenidos
 
-- [Descripción](#-descripción)
-- [Características Principales](#-características-principales)
-- [Arquitectura](#-arquitectura)
-- [Estructura del Monorepo](#-estructura-del-monorepo)
-- [Inicio Rápido](#-inicio-rápido)
-- [Documentación](#-documentación)
-- [Estado del Proyecto](#-estado-del-proyecto)
-- [Licencia](#-licencia)
+- [1. Visión General](#1-visión-general)
+- [2. Estado Real por Aplicación](#2-estado-real-por-aplicación)
+- [3. Arquitectura y Decisiones (ADRs)](#3-arquitectura-y-decisiones-adrs)
+- [4. Quick Start y Comandos](#4-quick-start-y-comandos)
+- [5. Framework de Tests](#5-framework-de-tests)
+- [6. Documentación y Especificaciones](#6-documentación-y-especificaciones)
+- [7. Guía de Contribución y Definición de Done](#7-guía-de-contribución-y-definición-de-done)
+- [8. Contacto y Soporte](#8-contacto-y-soporte)
 
 ---
 
-## 🎯 Descripción
+## 1. Visión General
 
-Farutech Ecosystem es una plataforma integral que proporciona:
+Farutech Ecosystem es una plataforma integral modular diseñada para captación, procesamiento y gestión proactiva de clientes potenciales, servicios tecnológicos e inteligencia de oportunidades comerciales.
 
-1. **Backend API (Laravel 11)**: RESTful API con documentación Scalar, autenticación Sanctum, y workers para procesos asíncronos
-2. **Admin Panel (React 18)**: Dashboard completo para gestión de leads, newsletter, blog y búsqueda de oportunidades
-3. **Website Público (Next.js 14)**: Sitio web moderno optimizado para SEO con blog integrado
-4. **Design System (@farutech/design-system)**: Paquete NPM con 45+ componentes reutilizables para todas las aplicaciones
-
-El sistema está diseñado para ser **escalable**, **modular** y **fácil de mantener**, siguiendo principios SOLID y las mejores prácticas de la industria.
+- **[Índice Maestro de Documentación](docs/00_INDEX.md)**: Navegación completa del repositorio.
+- **[Master Tracking Plan](docs/04_TRACKING/master-plan.md)**: Seguimiento en tiempo real de fases, tareas y estados.
+- **[Guía de Uso del Tracking](docs/04_TRACKING/guia-de-uso.md)**: Ciclo de vida y reglas de desarrollo.
 
 ---
 
-## ✨ Características Principales
+## 2. Estado Real por Aplicación
 
-### 🔍 Búsqueda Inteligente de Leads
-- Autocompletado jerárquico (país > estado > ciudad > municipio)
-- Scraping automático de múltiples fuentes
-- Quality scoring basado en datos encontrados
-- Conversión a lead con un clic
+> **Auditoría Verificada**: Basado en evidencia física de código, sin supuestos ni afirmaciones infladas (Progreso Global Real: **~45%**).
 
-### 📊 MiniCRM Integrado
-- Gestión completa de leads con estados personalizables
-- Historial de interacciones (llamadas, emails, reuniones)
-- Seguimiento con recordatorios automáticos
-- Scoring de calidad automático
-
-### 📧 Newsletter Profesional
-- Segmentación por tags y comportamiento
-- Plantillas personalizables
-- Tracking de opens y clicks
-- Programación de envíos
-- Unsubscribe automático
-
-### 📝 Sistema de Blogs
-- Editor WYSIWYG rico
-- Programación de publicación
-- Categorías y tags
-- SEO metadata (title, description, keywords)
-- Schema.org Article
-- TOC automático
-- Reading time estimado
-
-### 🎨 Design System Enterprise
-- 45+ componentes atómicos y compuestos
-- 24 hooks personalizados
-- Stores centralizados con Zustand
-- Tokens de diseño configurables
-- Psicología del color aplicada
-- Accesibilidad WCAG 2.1 AA
-- Tree-shaking habilitado
-
-### 🏷️ UTM Tracking Completo
-- Captura dinámica de todos los parámetros UTM
-- Almacenamiento en sesión
-- Asociación automática a leads y conversiones
-- Dashboard de métricas por campaña
-
-### ⚙️ Workers Asíncronos
-- Búsqueda automática de oportunidades
-- Envío masivo de newsletters
-- Procesamiento de imágenes
-- Generación de reportes PDF/Excel
-- Sincronización y deduplicación de leads
-- Limpieza programada de datos
+| Aplicación / Módulo | Ubicación | Stack Técnico | Estado Real | Progreso | Notas Verificadas |
+|---------------------|-----------|---------------|-------------|----------|-------------------|
+| **Website Público** | `apps/website/src/frontend/` | React 18, Vite, Tailwind v4, React Router 7 | ✅ Funcional | 100% | Páginas públicas operativas, drawer de contacto interactivo, newsletter, code-splitting con lazy loading. |
+| **Backend API** | `apps/api/src/backend/` | Laravel 11, PHP 8.2, Sanctum, PostgreSQL | ✅ Funcional | 90% | API RESTful versionada, autenticación Sanctum, migraciones y endpoints para leads y newsletter. |
+| **Design System** | `packages/design-system/` | React, TypeScript, Tailwind CSS | ✅ Estructurado | 80% | Estructura normalizada sin anidación errónea (ADR-002), 45+ componentes exportados. |
+| **Admin Panel** | `apps/admin/src/frontend/` | React 18, Vite, TypeScript | 🟡 En Desarrollo | 45% | Autenticación y dashboard base operativos; integración con SPEC-001 (Leads) y SPEC-002 (Oportunidades) en progreso. |
+| **Intranet** | `apps/intranet/` | React 18, Vite | ⏸️ Congelada | 20% | Scaffold base preservado. Congelado por decisión estratégica (ADR-003 Alternativa D) hasta definición formal de PO. |
+| **Infraestructura** | `infrastructure/` | Docker, Docker Compose, Nginx, PostgreSQL, Redis | ✅ Listo | 90% | Contenedores Docker listos para base de datos, caché y servicios locales. |
 
 ---
 
-## 🏗️ Arquitectura
+## 3. Arquitectura y Decisiones (ADRs)
+
+El sistema implementa una arquitectura desacoplada por subdominios, con servicios y responsabilidades aisladas:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    GATEWAY (Nginx)                          │
-│     api.farutech.local │ admin.farutech.local │ *.farutech  │
-└──────────────┬────────────────────┬────────────────┬────────┘
-               │                    │                │
-    ┌──────────▼──────────┐ ┌───────▼────────┐ ┌────▼────────┐
-    │   Backend API       │ │  Admin App     │ │  Website    │
-    │   Laravel 11        │ │  React 18      │ │  Next.js 14 │
-    │   + Scalar Docs     │ │  + Vite        │ │  + TSX      │
-    │   + Sanctum Auth    │ │  + Design Sys  │ │             │
-    │   + Queue Workers   │ │                │ │             │
-    └──────────┬──────────┘ └────────────────┘ └─────────────┘
-               │
-    ┌──────────▼──────────────────────────────────────────────┐
-    │                   INFRAESTRUCTURA                        │
-    │  ┌──────────────┐  ┌──────────────┐  ┌───────────────┐  │
-    │  │  PostgreSQL  │  │    Redis     │  │    Mailhog    │  │
-    │  │  (Database)  │  │  (Colas)     │  │   (Emails)    │  │
-    │  └──────────────┘  └──────────────┘  └───────────────┘  │
-    └───────────────────────────────────────────────────────────┘
+                          ┌───────────────────────────┐
+                          │    Usuarios / Clientes    │
+                          └─────────────┬─────────────┘
+                                        │
+                                        ▼
+                          ┌───────────────────────────┐
+                          │      Reverse Proxy        │
+                          └─────────────┬─────────────┘
+                                        │
+            ┌───────────────────────────┼───────────────────────────┐
+            ▼                           ▼                           ▼
+ ┌──────────────────────┐    ┌──────────────────────┐    ┌──────────────────────┐
+ │   Website Público    │    │     Admin Panel      │    │   Intranet (Freeze)  │
+ │    farutech.com      │    │ admin.farutech.local │    │                      │
+ └──────────┬───────────┘    └──────────┬───────────┘    └──────────────────────┘
+            │                           │
+            └─────────────┬─────────────┘
+                          ▼
+             ┌──────────────────────────┐
+             │       Backend API        │
+             │     api.farutech.com     │
+             └────────────┬─────────────┘
+                          │
+             ┌────────────┴─────────────┐
+             ▼                          ▼
+ ┌──────────────────────┐    ┌──────────────────────┐
+ │    PostgreSQL 16     │    │       Redis 7        │
+ │     (Datos Core)     │    │    (Colas/Caché)     │
+ └──────────────────────┘    └──────────────────────┘
 ```
+
+### Decisiones de Arquitectura Registradas (ADRs)
+
+- **[ADR-001: Admin Routing Strategy](docs/01_ARCHITECTURE/adr/ADR-001_admin_routing_strategy.md)**: Adopción de subdominio dedicado `admin.farutech.local` para máximo aislamiento de sesión, seguridad y deploys independientes.
+- **[ADR-002: Design System Structure](docs/01_ARCHITECTURE/adr/ADR-002_design_system_structure.md)**: Normalización del directorio del Design System, eliminando la redundancia anidada `src/src/` hacia `src/`.
+- **[ADR-003: Intranet Strategy](docs/01_ARCHITECTURE/adr/ADR-003_intranet_strategy.md)**: Alternativa D seleccionada: congelamiento del desarrollo de Intranet preservando su scaffold hasta recepción de casos de uso formales.
+- **[ADR-004: Multi-Database Strategy](docs/01_ARCHITECTURE/adr/ADR-004_multi_database_strategy.md)**: Consolidación hacia PostgreSQL transaccional único y Redis para rendimiento y colas.
 
 ---
 
-## 📁 Estructura del Monorepo
+## 4. Quick Start y Comandos
 
-```
-/workspace/
-├── infra/                      # Infraestructura base
-│   ├── docker-compose.yml      # Servicios Docker
-│   ├── nginx/                  # Configuración Gateway
-│   ├── database/init/          # Scripts SQL
-│   └── redis/                  # Config Redis
-│
-├── apps/
-│   ├── api/                    # Backend Laravel 11
-│   │   ├── app/
-│   │   │   ├── Models/
-│   │   │   ├── Http/Controllers/Api/V1/
-│   │   │   ├── Services/
-│   │   │   └── Jobs/
-│   │   ├── routes/api.php
-│   │   └── config/scalar.php
-│   │
-│   ├── admin/                  # Admin Panel React
-│   │   ├── src/
-│   │   │   ├── features/
-│   │   │   │   ├── leads/
-│   │   │   │   ├── opportunities/
-│   │   │   │   ├── newsletter/
-│   │   │   │   └── blog/
-│   │   │   ├── components/
-│   │   │   ├── hooks/
-│   │   │   └── stores/
-│   │   └── package.json
-│   │
-│   └── website/                # Website Next.js
-│       ├── app/
-│       ├── components/
-│       └── package.json
-│
-├── packages/
-│   └── design-system-source/   # Design System Package
-│       ├── src/
-│       │   ├── components/     # 45+ componentes
-│       │   ├── hooks/          # 24 hooks
-│       │   ├── stores/         # Zustand stores
-│       │   ├── tokens/
-│       │   └── styles/
-│       ├── dist/
-│       └── package.json
-│
-├── workers/                    # Workers standalone
-│
-└── docs/                       # Documentación completa
-    └── implementation-log/
-        └── refactor-progress.md
-```
+### Requisitos Previos
 
----
+- **Node.js**: v18.0 o superior
+- **npm**: v9.0 o superior
+- **PHP**: v8.2+ (para Backend Laravel)
+- **Composer**: v2.5+
+- **Docker & Docker Compose** (para base de datos y servicios auxiliares)
+- **.NET SDK**: v8.0+ (para framework de pruebas BDD)
 
-## 🚀 Inicio Rápido
-
-### Prerrequisitos
+### Instalación de Dependencias
 
 ```bash
-Docker >= 24.0
-Docker Compose >= 2.20
-Node.js >= 18.x
-PHP >= 8.2
-Composer >= 2.6
+# Instalar dependencias del monorepo
+npm install
+
+# Instalar dependencias de website
+cd apps/website/src/frontend && npm install && cd ../../../
+
+# Instalar dependencias de admin
+cd apps/admin/src/frontend && npm install && cd ../../../
 ```
 
-### 1. Configurar Hosts Locales
+### Comandos de Desarrollo y Compilación
 
-Agregar al `/etc/hosts`:
 ```bash
-127.0.0.1  api.farutech.local
-127.0.0.1  admin.farutech.local
-127.0.0.1  farutech.local
-127.0.0.1  www.farutech.local
+# Iniciar servidor de desarrollo del Website (puerto 3000)
+npm run dev
+
+# Compilar producción y verificar tipos (DEBE terminar sin errores ni warnings)
+npm run build
+
+# Typecheck estático TypeScript
+npm run typecheck
 ```
 
-### 2. Levantar Infraestructura
+### Levantar Infraestructura Local
 
 ```bash
 cd infrastructure
-cp .env.example .env
-# Editar .env y establecer contraseñas seguras (NO usar defaults)
-docker-compose up -d
+docker compose up -d
 ```
 
-> **⚠️ IMPORTANTE**: El directorio `infra/` fue eliminado en TASK-000A. Todo está consolidado en `infrastructure/`.
+---
 
-### 3. Configurar Backend API
+## 5. Framework de Tests
+
+El repositorio cuenta con una suite de pruebas de automatización basada en **.NET 8** y **Reqnroll** (BDD) localizada en:
+- `Framework.Automation.sln`
+- `apps/admin/test/BDD/`
+- `apps/website/test/BDD/`
+- `apps/intranet/test/BDD/`
+
+### Ejecución de Pruebas Automatizadas
 
 ```bash
-cd apps/api
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan serve --host=0.0.0.0 --port=8000
+# Compilar la solución de pruebas .NET
+dotnet build Framework.Automation.sln
+
+# Ejecutar pruebas BDD
+dotnet test Framework.Automation.sln --logger "console;verbosity=normal"
 ```
 
-> **⚠️ NOTA**: Los workers aún no están implementados (FASE 5 pendiente). El comando de queue:work se habilitará cuando se complete la implementación de workers.
+---
 
-### 4. Configurar Admin App
+## 6. Documentación y Especificaciones
 
-```bash
-cd apps/admin
-npm install
-# npm link ../../packages/design-system-source # Pendiente: build del Design System
-npm run dev
-```
+Toda la documentación técnica está normalizada bajo la carpeta [`docs/`](docs/):
 
-> **🔄 NOTA**: La Admin App incluye un scaffold funcional de React+Vite+TS+Tailwind
-> (`apps/admin/src/` con auth y dashboard) y su suite de tests .NET
-> (`apps/admin/test/`). Falta integrar el front con el API y publicar el
-> design-system. Ver [`IMPLEMENTATION_GUIDE.md`](IMPLEMENTATION_GUIDE.md).
-
-### 5. Configurar Website
-
-```bash
-cd apps/website
-npm install
-npm run dev
-```
-
-> **🔄 NOTA**: El Website está implementado en `apps/website/src/` con React 18 + Vite +
-> TailwindCSS v4 (SSR/prerender incluido). El frontend público legacy
-> (`apps/web/`) está archivado en `docs/archive/`.
-
-### 6. Acceder a las Aplicaciones
-
-| Aplicación | URL |
-|------------|-----|
-| API Docs | http://api.farutech.local/docs |
-| Admin Panel | http://admin.farutech.local |
-| Website | http://farutech.local |
-| PGAdmin | http://localhost:5050 |
-| Mailhog | http://localhost:8025 |
+- **[Índice Maestro](docs/00_INDEX.md)**: Mapa general de navegación.
+- **[Visión General de Arquitectura](docs/01_ARCHITECTURE/overview.md)**: Detalle del sistema y componentes.
+- **[SPEC-001: Lead Management System](docs/02_SPECIFICATIONS/SPEC-001_Lead_Management.md)**: MiniCRM, scoring, ciclo de vida de leads y endpoints.
+- **[SPEC-002: Opportunity Search System](docs/02_SPECIFICATIONS/SPEC-002_Opportunity_Search.md)**: Búsqueda, scraping, geolocalización y conversión a leads.
+- **[Estándares de Código](docs/03_IMPLEMENTATION/coding-standards.md)**: Buenas prácticas, naming conventions y tipado.
+- **[Estrategia de Testing](docs/03_IMPLEMENTATION/testing-strategy.md)**: Niveles de prueba y fixtures.
 
 ---
 
-## 📚 Documentación
+## 7. Guía de Contribución y Definición de Done
 
-La documentación completa está disponible en el directorio [`docs/`](docs/):
+Para mantener la integridad y calidad del proyecto:
 
-- **[Guía de Implementación](IMPLEMENTATION_GUIDE.md)**: Instrucciones detalladas paso a paso
-- **[Bitácora de Progreso](docs/implementation-log/refactor-progress.md)**: Estado actual y roadmap
-- **[Decisiones Arquitectónicas](docs/11_ARCHITECTURE_DECISION_RECORDS.md)**: ADRs documentados
-- **[Especificación Design System](docs/08_DESIGN_SYSTEM_SPECIFICATION.md)**: Componentes y tokens
-
----
-
-## 📊 Estado del Proyecto
-
-| Fase | Estado | Progreso Real | Documentado |
-|------|--------|---------------|-------------|
-| **FASE 0**: Checkpoint + limpieza | ✅ | 100% | ✅ |
-| **FASE 1**: Scaffolding tests .NET | ✅ | 100% | ✅ |
-| **FASE 2**: Backend API (Laravel 10) | ✅ | ~95% | ✅ |
-| **FASE 3**: Design System | ✅ | estructura 100% · build pte. | ✅ |
-| **FASE 4**: Admin App | 🔄 | scaffold + tests | ⚠️ parcial |
-| **FASE 5**: Intranet App | 🔄 | scaffold + tests | ⚠️ parcial |
-| **FASE 6**: Website cleanup | ⬜ | pendiente | ✅ plan |
-| **FASE 7**: Infraestructura | ✅ | ~95% | ✅ |
-| **FASE 8**: Test Automation | ✅ | build ✓ · runtime pte. | ✅ |
-| **FASE 9**: Documentación | 🔄 | en curso | 🔄 |
-| **TOTAL** | 🎯 **EN EJECUCIÓN** | **~75% estructura** | **100% plano** |
-
-> **ℹ️ NOTA**: El estado real validado archivo por archivo está en
-> [`IMPLEMENTATION_GUIDE.md`](IMPLEMENTATION_GUIDE.md). Esta sección resume la
-> tabla de progreso; para detalle de tareas vea `docs/09_MASTER_IMPLEMENTATION_PLAN...md`
-> y `docs/30_AUDITORIA_PROFUNDA_Y_ESTADO_REAL.md`.
+1. **Sin invenciones ni supuestos:** Todo desarrollo debe corresponder estrictamente a una especificación (`SPEC`) o tarea registrada (`TASK`).
+2. **Cero Warnings / Cero Errors:** Todo commit debe compilar limpiamente con `npm run build`.
+3. **Definición de Done (DoD):**
+   - [ ] Implementación funcional completa según los criterios de aceptación.
+   - [ ] Tipos TypeScript estrictos (sin `any` injustificado).
+   - [ ] Build limpio (`npm run build`).
+   - [ ] Tarea en `docs/04_TRACKING/tasks/TASK-XXX.md` actualizada con evidencia.
+   - [ ] Registro en `docs/04_TRACKING/change-log/CHANGELOG.md`.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 8. Contacto y Soporte
 
-### Backend
-- **Laravel 11** - Framework PHP
-- **PostgreSQL 16** - Base de datos
-- **Redis 7** - Colas y caché
-- **Scalar** - Documentación de API
-- **Laravel Sanctum** - Autenticación
-
-### Frontend
-- **React 18** - Librería UI
-- **Next.js 14** - Framework React
-- **TypeScript 5** - Tipado estático
-- **Vite** - Build tool
-- **TailwindCSS** - Estilos
-
-### Design System
-- **Zustand** - State management
-- **Storybook** - Documentación de componentes
-- **Rollup** - Bundler para librería
-
-### Infraestructura
-- **Docker & Docker Compose** - Contenedores
-- **Nginx** - Reverse proxy
-- **Mailhog** - Testing de emails
+- **Organización:** Farutech Engineering Team
+- **Sitio Web:** [farutech.com](https://farutech.com)
+- **Reporte de Issues:** Registrar tarea en `docs/04_TRACKING/tasks/` siguiendo la plantilla oficial.
 
 ---
 
-## 🤝 Contribuir
-
-Las contribuciones son bienvenidas. Por favor:
-
-1. Fork el repositorio
-2. Crea una rama feature (`git checkout -b feature/amazing-feature`)
-3. Commit tus cambios (`git commit -m 'Add amazing feature'`)
-4. Push a la rama (`git push origin feature/amazing-feature`)
-5. Abre un Pull Request
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
-
----
-
-## 📞 Contacto
-
-- **Website**: https://farutech.local
-- **Email**: info@farutech.com
-
----
-
-**© 2024 Farutech. Todos los derechos reservados.**
+**© 2024-2026 Farutech. Todos los derechos reservados.**

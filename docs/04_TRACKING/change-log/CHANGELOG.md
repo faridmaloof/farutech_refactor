@@ -4,6 +4,28 @@ Este documento registra todos los cambios realizados al sistema de tracking del 
 
 ---
 
+## [2024-09-05] — Actualización: Normalización de Docs, README Real y Code-Splitting
+
+**Tipo:** 🚀 IMPLEMENTATION & NORMALIZATION  
+**Responsable:** Tech Lead / Full Stack Developer
+
+### Cambios Realizados
+
+#### Tareas Verificadas y Marcadas como DONE:
+- ✅ **TASK-000B** — Design System Structure (ADR-002 implementado y normalizado en `packages/design-system/src/`).
+- ✅ **TASK-000C** — Intranet Strategy (ADR-003 Decidido en Alternativa D: Híbrida / Freeze).
+- ✅ **TASK-003** — SPEC-001 Lead Management System (Especificación 1.0 aprobada en `docs/02_SPECIFICATIONS/SPEC-001_Lead_Management.md`).
+- ✅ **TASK-004** — SPEC-002 Opportunity Search System (Especificación 1.0 aprobada en `docs/02_SPECIFICATIONS/SPEC-002_Opportunity_Search.md`).
+- ✅ **TASK-007** — Actualizar README con Estado Real (`README.md` actualizado con 8 secciones completas, estado verificado de ~45% y links verificados).
+- ✅ **TASK-008** — Normalizar Documentación (`docs/00_INDEX.md`, `docs/04_TRACKING/master-plan.md`, `docs/04_TRACKING/guia-de-uso.md`).
+
+#### Optimización de Website (`apps/website/src/frontend`):
+- ✅ Implementación de code-splitting con `React.lazy` y `<Suspense>` para todas las subpáginas secundarias.
+- ✅ Bundle principal reducido de 705 kB a 433 kB (130 kB gzip).
+- ✅ Cero warnings, cero errores en `npm run build`.
+
+---
+
 ## [2024-09-04] — Actualización: ADR-003 Creado (Intranet Strategy)
 
 **Tipo:** 🆕 NEW ADR  

@@ -6,7 +6,7 @@
  * vía VITE_API_URL (se inyecta en el build desde docker compose).
  */
 export const API_BASE_URL: string =
-  (import.meta.env.VITE_API_URL as string | undefined) || 'http://api.farutech.local';
+  (import.meta.env.VITE_API_URL as string | undefined) || '';
 
 /** Endpoint base para los formularios del sitio (contacto / newsletter). */
 export const API_PUBLIC_BASE: string = API_BASE_URL;

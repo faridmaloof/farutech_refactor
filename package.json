@@ -1,0 +1,13 @@
+{
+  "name": "farutech-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/website/src/frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=farutech-web",
+    "build": "npm run build --workspace=farutech-web && mkdir -p dist && cp -r apps/website/src/frontend/dist/* dist/",
+    "preview": "npm run preview --workspace=farutech-web",
+    "lint": "npm run typecheck --workspace=farutech-web"
+  }
+}
