@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Framework.Core.ScreenPlay.Interfaces;
 
-namespace Farutech.Api.Tests.ScreenPlay.Api.Questions;
+namespace Farutech.Website.Tests.ScreenPlay.Api.Questions;
 
 /// <summary>
 /// Obtiene el token de autorización del cuerpo de la última respuesta JSON

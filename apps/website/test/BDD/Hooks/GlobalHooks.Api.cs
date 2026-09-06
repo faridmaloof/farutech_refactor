@@ -1,11 +1,11 @@
 using Framework.Core.Configuration;
 using Framework.Core.ScreenPlay;
 using Framework.Core.ScreenPlay.Interfaces;
-using Farutech.Api.Tests.ScreenPlay.Api.Interactions;
+using Farutech.Website.Tests.ScreenPlay.Api.Interactions;
 using Framework.Core.BDD;
 using Reqnroll;
 
-namespace Farutech.Api.Tests.BDD.Hooks;
+namespace Farutech.Website.Tests.BDD.Hooks;
 
 /// <summary>
 /// Hooks globales del ciclo de vida de los tests de API Farutech.

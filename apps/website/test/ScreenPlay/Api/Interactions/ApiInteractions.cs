@@ -2,7 +2,7 @@ using Framework.Core.ScreenPlay;
 using Framework.Core.ScreenPlay.Interfaces;
 using RestSharp;
 
-namespace Farutech.Api.Tests.ScreenPlay.Api.Interactions;
+namespace Farutech.Website.Tests.ScreenPlay.Api.Interactions;
 
 /// <summary>
 /// Habilidad que otorga al actor la capacidad de llamar APIs usando RestSharp.

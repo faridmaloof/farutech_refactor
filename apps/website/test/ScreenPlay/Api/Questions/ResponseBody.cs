@@ -1,6 +1,6 @@
 using Framework.Core.ScreenPlay.Interfaces;
 
-namespace Farutech.Api.Tests.ScreenPlay.Api.Questions;
+namespace Farutech.Website.Tests.ScreenPlay.Api.Questions;
 
 /// <summary>
 /// Gets the response body from the last API response.
@@ -23,3 +23,4 @@ public class ResponseBody : IQuestion<string>
         return Task.FromResult(body);
     }
 }
+

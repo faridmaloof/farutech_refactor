@@ -1,6 +1,6 @@
 using Framework.Core.ScreenPlay.Interfaces;
 
-namespace Farutech.Api.Tests.ScreenPlay.Api.Questions;
+namespace Farutech.Website.Tests.ScreenPlay.Api.Questions;
 
 /// <summary>
 /// Verifies that the API response body is valid JSON.
@@ -59,3 +59,4 @@ public class ResponseBodyContainsField : IQuestion<bool>
         return !string.IsNullOrEmpty(body) && body.Contains($"\"{_fieldName}\"");
     }
 }
+

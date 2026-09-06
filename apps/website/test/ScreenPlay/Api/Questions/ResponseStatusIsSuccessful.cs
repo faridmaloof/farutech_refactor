@@ -1,6 +1,6 @@
 using Framework.Core.ScreenPlay.Interfaces;
 
-namespace Farutech.Api.Tests.ScreenPlay.Api.Questions;
+namespace Farutech.Website.Tests.ScreenPlay.Api.Questions;
 
 /// <summary>
 /// Verifies that the API response status code indicates success (2xx).
@@ -24,3 +24,4 @@ public class ResponseStatusIsSuccessful : IQuestion<bool>
         return status >= 200 && status < 300;
     }
 }
+

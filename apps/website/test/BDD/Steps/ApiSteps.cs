@@ -1,5 +1,5 @@
-using Farutech.Api.Tests.ScreenPlay.Api.Interactions;
-using Farutech.Api.Tests.ScreenPlay.Api.Questions;
+using Farutech.Website.Tests.ScreenPlay.Api.Interactions;
+using Farutech.Website.Tests.ScreenPlay.Api.Questions;
 using FluentAssertions;
 using Framework.Core.BDD;
 using Framework.Core.Configuration;
@@ -8,7 +8,7 @@ using Framework.Core.ScreenPlay.Interfaces;
 using Framework.Core.Tools.Database;
 using Reqnroll;
 
-namespace Farutech.Api.Tests.BDD.Steps;
+namespace Farutech.Website.Tests.BDD.Steps;
 
 /// <summary>
 /// Step definitions para las features de la API de Farutech.
