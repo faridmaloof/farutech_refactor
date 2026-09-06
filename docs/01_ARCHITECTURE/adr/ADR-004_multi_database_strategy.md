@@ -1,8 +1,12 @@
 # ADR-004 — Multi-Database Strategy
 
 **Fecha:** 2024-09-04  
-**Estado:** ✅ DECIDIDO  
+**Estado:** ✅ DECIDIDO — ⚠️ NO EJECUTADO (ver nota) — Re-alcanzado por [ADR-007](ADR-007_platform_scope_separation.md)  
 **Responsable:** Software Architect / DevOps Engineer  
+
+> ⚠️ **Nota de auditoría (2026-09-05):** esta decisión fue aprobada pero **nunca se ejecutó**. `infrastructure/docker-compose.yml` sigue levantando MySQL + PostgreSQL + MongoDB + Redis (4 motores), contradiciendo la Alternativa D decidida aquí. Se crea **TASK-017** para ejecutar el plan de migración de la sección correspondiente, o para reabrir esta decisión si ha cambiado el criterio del equipo.
+>
+> ⚠️ **Nota de alcance (ADR-007):** esta decisión aplica exclusivamente al **Website Ecosystem** (admin, leads, oportunidades, blog, newsletter — ver ADR-005). No debe interpretarse como una decisión de base de datos válida para la futura `platform` multi-tenant (ver [ADR-007](ADR-007_platform_scope_separation.md) y [SPEC-003](../../02_SPECIFICATIONS/SPEC-003_Platform_Vision.md)), que definirá su propia estrategia de datos cuando ese proyecto inicie.
 
 ---
 

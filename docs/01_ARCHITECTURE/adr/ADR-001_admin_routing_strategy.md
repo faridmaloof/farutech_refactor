@@ -1,8 +1,12 @@
 # ADR-001 — Admin Routing Strategy
 
 **Fecha:** 2024-09-03  
-**Estado:** ✅ DECIDIDO  
+**Estado:** ⚠️ SUPERSEDED por [ADR-006 — Admin Routing Strategy v2](ADR-006_admin_routing_strategy_v2.md) (2026-09-05)  
 **Responsable:** Technical Lead
+
+> ⚠️ **Este ADR quedó sin efecto.** Por mandato explícito de producto, el Admin Panel debe ser accesible **obligatoriamente** vía el path `/admin` sobre el mismo dominio del website, y no debe existir acceso posible desde un dominio o subdominio distinto. La Alternativa A (subdominio) decidida aquí **nunca se implementó** en infraestructura y queda formalmente descartada. Ver [ADR-006](ADR-006_admin_routing_strategy_v2.md) para la decisión vigente y el detalle técnico de implementación (Vite `base`, `basename` de React Router, reglas de path en el gateway).
+>
+> Este documento se conserva únicamente como registro histórico de la discusión original (las ventajas/desventajas de aislamiento por subdominio siguen siendo válidas como referencia conceptual, aunque no se adoptaron).
 
 ---
 

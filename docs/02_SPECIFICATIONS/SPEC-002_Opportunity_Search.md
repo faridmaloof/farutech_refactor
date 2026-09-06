@@ -572,12 +572,65 @@ npm run build            # Build de producción
 
 ---
 
-## 16. HISTORIAL DE CAMBIOS
+## 16. ADENDO v1.1 — Señales de Negocio Reales (tipo Google Business Profile) y Corrección de Modelo de Datos
+
+**Fecha:** 2026-09-05
+**Motivo:** Auditoría del código encontró que `FindOpportunitiesJob.php` es un stub: `fetchFromLinkedIn()` y `fetchFromIndustryDirectories()` retornan arrays vacíos, y `fetchFromGoogleMaps()` solo consulta Google Places Nearby Search sin evaluar ninguna de las señales de negocio necesarias para ofrecer un servicio de valor (creación de sitio, mejora de conversión, etc.). Además, **las tablas `opportunities` y `scraping_jobs` que esta spec define en la sección 4 nunca se crearon** — los resultados se insertan directamente como `Lead`, saltándose el modelo de Opportunity, el Quality Score y el flujo de revisión/conversión descritos en las secciones 5 y 6.
+
+### 16.1 Corrección obligatoria de modelo de datos
+
+Antes de continuar cualquier desarrollo sobre este job, deben crearse las migraciones faltantes:
+
+- `opportunities` (según la interface `Opportunity` de la sección 4)
+- `scraping_jobs` (según la interface `ScrapingJob` de la sección 4)
+
+El flujo correcto es: **scraping → `Opportunity` (con Quality Score) → revisión/conversión manual o automática → `Lead`**, no una inserción directa a `Lead` como ocurre hoy.
+
+### 16.2 Señales de negocio a evaluar por oportunidad detectada
+
+Para que la herramienta sirva su propósito real (identificar comercios a quienes ofrecer un servicio específico — creación de sitio, mejora de conversión, presencia digital, etc.), cada `Opportunity` detectada debe evaluar y almacenar, además de los campos ya definidos, las siguientes señales:
+
+```typescript
+interface OpportunityBusinessSignals {
+  hasWebsite: boolean;
+  websiteUrl?: string;
+  hasCustomDomain: boolean;          // dominio propio vs. perfil en red social/marketplace únicamente
+  contactChannels: ('phone' | 'whatsapp' | 'email' | 'form' | 'social_dm')[];
+  hasPhysicalLocation: boolean;      // infraestructura física (local, oficina) vs. solo digital
+  hasMobileApp: boolean;
+  estimatedConversionGaps?: string[]; // ej. "sin CTA visible", "sin formulario de contacto", "sitio no responsivo"
+  recommendedService: 'website_creation' | 'website_redesign' | 'conversion_optimization' | 'digital_presence' | 'other';
+}
+```
+
+Estas señales determinan `recommendedService`, que es el dato clave para que el equipo comercial sepa **qué ofrecerle** a ese comercio antes de contactarlo — hoy esa lógica no existe en el código.
+
+### 16.3 Fuentes de datos a evaluar (reemplazo de los stubs vacíos)
+
+| Fuente actual | Estado real | Acción requerida |
+|---|---|---|
+| `fetchFromLinkedIn()` | Retorna `[]` (no implementado) | Definir si se mantiene (requiere revisión legal estricta de ToS de LinkedIn, ver sección 14) o se elimina de la lista de fuentes activas hasta tener criterio legal claro |
+| `fetchFromGoogleMaps()` | Parcialmente funcional, pero solo trae nombre/dirección/rating, sin evaluar señales de negocio | Extender: tras obtener el resultado de Nearby Search, hacer una consulta adicional a **Place Details** (que sí expone `website`, `formatted_phone_number`, `international_phone_number`) para poblar `hasWebsite`, `websiteUrl`, `contactChannels` |
+| `fetchFromIndustryDirectories()` | Retorna `[]` (no implementado) | Definir directorios objetivo según los servicios que se estén ofreciendo en cada campaña de prospección antes de implementar |
+
+> Nota de producto: el nombre "Google Business Profile" que se mencionó como referencia corresponde a la plataforma donde los comercios *administran* su propia ficha (`business.google.com`), no a una API pública de descubrimiento masivo de terceros. La API relevante para este caso de uso es **Google Places API (Nearby Search + Place Details)**, ya parcialmente integrada. Se deja esta aclaración para evitar buscar una integración que no existe con ese nombre.
+
+### 16.4 Criterios de Aceptación Adicionales
+
+- [ ] CA017: Toda oportunidad creada pasa primero por la tabla `opportunities`, nunca directo a `leads`
+- [ ] CA018: El Quality Score considera las señales de negocio (sección 16.2), no solo completitud de contacto
+- [ ] CA019: Cada oportunidad expone `recommendedService` de forma visible en `OpportunityCard`
+- [ ] CA020: `fetchFromGoogleMaps()` consulta Place Details y puebla `hasWebsite`/`contactChannels` correctamente
+
+---
+
+## 17. HISTORIAL DE CAMBIOS
 
 | Versión | Fecha | Cambio | Autor |
 |---------|-------|--------|-------|
 | 1.0 | 2024-09-04 | Creación inicial aprobada | Architect |
+| 1.1 | 2026-09-05 | Adendo: corrección de modelo de datos faltante + señales de negocio reales | Technical Lead |
 
 ---
 
-**© 2024 Farutech — SPEC-002 v1.0**
+**© 2024-2026 Farutech — SPEC-002 v1.1**
