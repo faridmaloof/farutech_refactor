@@ -1,0 +1,1491 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Framework.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Framework.Core.BDD.ScenarioActor">
+            <summary>
+            Helper for accessing Actor from Reqnroll ScenarioContext.
+            Provides type-safe actor retrieval for step definitions.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.BDD.ScenarioActor.Get(Reqnroll.ScenarioContext)">
+            <summary>
+            Gets the actor from the scenario context.
+            Throws if actor is not initialized (BeforeScenario hook must run first).
+            </summary>
+            <param name="scenarioContext">The Reqnroll scenario context.</param>
+            <returns>The initialized actor.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when actor is not initialized.</exception>
+        </member>
+        <member name="M:Framework.Core.BDD.ScenarioActor.GetOrCreate(Reqnroll.ScenarioContext,System.String,System.Func{Framework.Core.ScreenPlay.Interfaces.IActor})">
+            <summary>
+            Gets an API actor from the scenario context.
+            Creates if not exists.
+            </summary>
+            <param name="scenarioContext">The Reqnroll scenario context.</param>
+            <param name="actorKey">The key to store/retrieve the actor.</param>
+            <param name="actorFactory">Factory to create the actor if not exists.</param>
+            <returns>The initialized actor.</returns>
+        </member>
+        <member name="M:Framework.Core.BDD.ScenarioActor.Clear">
+            <summary>
+            Clears the cached actor (for cleanup).
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.AllureSettings">
+            <summary>
+            Allure reporting configuration.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.AllureSettings.ResultsDirectory">
+            <summary>
+            Gets or sets the Allure results directory.
+            Default: allure-results
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.AllureSettings.ProjectName">
+            <summary>
+            Gets or sets the project name.
+            Default: Enterprise Automation Framework
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.AllureSettings.AutoOpenReport">
+            <summary>
+            Gets or sets whether to auto-open the Allure report after test execution.
+            Default: false
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.AllureSettings.ReportPort">
+            <summary>
+            Gets or sets the Allure report port.
+            Default: 56789
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.AllureSettings.AllureCliPath">
+            <summary>
+            Gets or sets the Allure CLI path (if not in PATH).
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.BrowserType">
+            <summary>
+            Browser type enumeration with full support for all major browsers.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Chromium">
+            <summary>
+            Chromium browser (open-source base for Chrome, Edge, etc.).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Chrome">
+            <summary>
+            Google Chrome browser.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Edge">
+            <summary>
+            Microsoft Edge browser (Chromium-based).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Firefox">
+            <summary>
+            Mozilla Firefox browser.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Safari">
+            <summary>
+            Apple Safari browser (WebKit).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.InternetExplorer">
+            <summary>
+            Internet Explorer (legacy, via Edge IE mode).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.WebKit">
+            <summary>
+            WebKit browser (open-source base for Safari).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Thorium">
+            <summary>
+            Thorium browser (optimized Chromium fork).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Brave">
+            <summary>
+            Brave browser (Chromium-based with privacy features).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.BrowserType.Opera">
+            <summary>
+            Opera browser (Chromium-based).
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.ScreenshotMode">
+            <summary>
+            Screenshot capture mode enumeration.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ScreenshotMode.Disabled">
+            <summary>
+            No screenshots.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ScreenshotMode.OnFailure">
+            <summary>
+            Capture only on failure.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ScreenshotMode.PreStep">
+            <summary>
+            Capture before each step.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ScreenshotMode.PostStep">
+            <summary>
+            Capture after each step.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ScreenshotMode.PreAndPost">
+            <summary>
+            Capture before and after each step.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ScreenshotMode.Always">
+            <summary>
+            Always capture (Pre + Post + OnFailure).
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.VideoMode">
+            <summary>
+            Video recording mode enumeration.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.VideoMode.Disabled">
+            <summary>
+            No video recording.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.VideoMode.OnFailure">
+            <summary>
+            Record only on failure.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.VideoMode.Always">
+            <summary>
+            Always record video.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.ObservabilityMode">
+            <summary>
+            Observability mode for metrics and tracing.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ObservabilityMode.Disabled">
+            <summary>
+            Observability disabled.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ObservabilityMode.Direct">
+            <summary>
+            Direct export to Prometheus/OpenTelemetry.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ObservabilityMode.Queue">
+            <summary>
+            Queue-based export (aggregated events).
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Configuration.ObservabilityMode.Console">
+            <summary>
+            Console output (development mode).
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.TimeoutSettings">
+            <summary>
+            Timeout settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.TimeoutSettings.GlobalTimeoutSeconds">
+            <summary>
+            Gets or sets the global timeout in seconds.
+            Default: 30
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.TimeoutSettings.NavigationTimeoutSeconds">
+            <summary>
+            Gets or sets the navigation timeout in seconds.
+            Default: 30
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.TimeoutSettings.ActionTimeoutSeconds">
+            <summary>
+            Gets or sets the action timeout in seconds.
+            Default: 10
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.EvidenceSettings">
+            <summary>
+            Evidence collection settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.EvidenceSettings.Screenshot">
+            <summary>
+            Gets or sets the screenshot capture mode.
+            Default: PreAndPost
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.EvidenceSettings.Video">
+            <summary>
+            Gets or sets the video recording mode.
+            Default: OnFailure
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.EvidenceSettings.Trace">
+            <summary>
+            Gets or sets whether to enable trace recording.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.EvidenceSettings.StoragePath">
+            <summary>
+            Gets or sets the evidence storage path.
+            Default: ./evidence
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.ParallelismSettings">
+            <summary>
+            Parallelism settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ParallelismSettings.MaxWorkers">
+            <summary>
+            Gets or sets the maximum number of parallel workers.
+            Default: 4
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ParallelismSettings.EnableSharding">
+            <summary>
+            Gets or sets whether to enable sharding for CI.
+            Default: false
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.DeviceSettings">
+            <summary>
+            Device/browser settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.DeviceSettings.Browser">
+            <summary>
+            Gets or sets the browser type.
+            Default: Chromium
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.DeviceSettings.Headless">
+            <summary>
+            Gets or sets whether to run in headless mode.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.DeviceSettings.ViewportWidth">
+            <summary>
+            Gets or sets the viewport width.
+            Default: 1920
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.DeviceSettings.ViewportHeight">
+            <summary>
+            Gets or sets the viewport height.
+            Default: 1080
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.DeviceSettings.Viewport">
+            <summary>
+            Gets the viewport as an array.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.FrameworkSettings">
+            <summary>
+            Main framework settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.FrameworkSettings.Environment">
+            <summary>
+            Gets or sets the environment name.
+            Default: Development
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.FrameworkSettings.Culture">
+            <summary>
+            Gets or sets the culture.
+            Default: en-US
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.FrameworkSettings.Headless">
+            <summary>
+            Gets or sets whether to run in headless mode.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.FrameworkSettings.Timeouts">
+            <summary>
+            Gets or sets the timeout settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.FrameworkSettings.Evidence">
+            <summary>
+            Gets or sets the evidence settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.FrameworkSettings.Parallelism">
+            <summary>
+            Gets or sets the parallelism settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.FrameworkSettings.Observability">
+            <summary>
+            Gets or sets the observability settings.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.IFrameworkSettings">
+            <summary>
+            Framework settings interface.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IFrameworkSettings.Environment">
+            <summary>
+            Gets the environment name.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IFrameworkSettings.Culture">
+            <summary>
+            Gets the culture.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IFrameworkSettings.Headless">
+            <summary>
+            Gets whether to run in headless mode.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.IDeviceSettings">
+            <summary>
+            Device settings interface.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IDeviceSettings.Browser">
+            <summary>
+            Gets the browser type.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IDeviceSettings.Headless">
+            <summary>
+            Gets whether to run in headless mode.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IDeviceSettings.ViewportWidth">
+            <summary>
+            Gets the viewport width.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IDeviceSettings.ViewportHeight">
+            <summary>
+            Gets the viewport height.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.IEvidenceSettings">
+            <summary>
+            Evidence settings interface.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IEvidenceSettings.Screenshot">
+            <summary>
+            Gets the screenshot capture mode.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IEvidenceSettings.Video">
+            <summary>
+            Gets the video recording mode.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IEvidenceSettings.Trace">
+            <summary>
+            Gets whether to enable trace recording.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.IEvidenceSettings.StoragePath">
+            <summary>
+            Gets the evidence storage path.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.ObservabilitySettings">
+            <summary>
+            Observability settings for metrics, tracing, and dashboards.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.Mode">
+            <summary>
+            Gets or sets the observability mode.
+            Default: Console (development mode)
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.EnableMetrics">
+            <summary>
+            Gets or sets whether to enable metrics collection.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.EnableTracing">
+            <summary>
+            Gets or sets whether to enable distributed tracing.
+            Default: false
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.PrometheusEndpoint">
+            <summary>
+            Gets or sets the Prometheus endpoint URL.
+            Default: http://localhost:9090
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.GrafanaEndpoint">
+            <summary>
+            Gets or sets the Grafana endpoint URL.
+            Default: http://localhost:3000
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.OtlpEndpoint">
+            <summary>
+            Gets or sets the OpenTelemetry OTLP endpoint URL.
+            Default: http://localhost:4317
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.ExportIntervalSeconds">
+            <summary>
+            Gets or sets the metrics export interval in seconds.
+            Default: 60
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.ObservabilitySettings.AutoOpenGrafana">
+            <summary>
+            Gets or sets whether to auto-open Grafana dashboards after test run.
+            Default: false
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Configuration.SettingsManager">
+            <summary>
+            Manages framework configuration loading.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.SettingsManager.Configuration">
+            <summary>
+            Gets the configuration root.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.SettingsManager.FrameworkSettings">
+            <summary>
+            Gets the framework settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.SettingsManager.DeviceSettings">
+            <summary>
+            Gets the device settings.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Configuration.SettingsManager.AllureSettings">
+            <summary>
+            Gets the Allure settings.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Configuration.SettingsManager.LoadFrom(System.String)">
+            <summary>
+            Loads configuration from the specified path.
+            </summary>
+            <param name="basePath">The base path for configuration files.</param>
+        </member>
+        <member name="T:Framework.Core.Exceptions.AbilityNotFoundException">
+            <summary>
+            Exception thrown when an actor doesn't have a required ability.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Exceptions.AbilityNotFoundException"/> class.
+            </remarks>
+            <param name="abilityName">The name of the missing ability.</param>
+            <param name="actorName">The name of the actor.</param>
+        </member>
+        <member name="M:Framework.Core.Exceptions.AbilityNotFoundException.#ctor(System.String,System.String)">
+            <summary>
+            Exception thrown when an actor doesn't have a required ability.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Exceptions.AbilityNotFoundException"/> class.
+            </remarks>
+            <param name="abilityName">The name of the missing ability.</param>
+            <param name="actorName">The name of the actor.</param>
+        </member>
+        <member name="P:Framework.Core.Exceptions.AbilityNotFoundException.AbilityName">
+            <summary>
+            Gets the name of the missing ability.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Exceptions.AbilityNotFoundException.ActorName">
+            <summary>
+            Gets the name of the actor.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Exceptions.FrameworkException">
+            <summary>
+            Base exception for all framework exceptions.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Exceptions.FrameworkException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.Exceptions.FrameworkException"/> class.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Exceptions.FrameworkException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.Exceptions.FrameworkException"/> class with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Framework.Core.Exceptions.FrameworkException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.Exceptions.FrameworkException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+            <param name="innerException">The exception that is the cause of the current exception.</param>
+        </member>
+        <member name="T:Framework.Core.POM.BasePage">
+            <summary>
+            Base class for page locators.
+            All page locator classes should inherit from this.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.POM.BasePage.PageUrl">
+            <summary>
+            Gets the page URL.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.POM.BasePage.PageTitle">
+            <summary>
+            Gets the page title.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.POM.PomHelpers">
+            <summary>
+            Helper methods for POM operations.
+            Provides common wait and interaction utilities.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.POM.PomHelpers.WaitForElementVisibleAsync(Microsoft.Playwright.ILocator,System.Int32)">
+            <summary>
+            Waits for an element to be visible with custom timeout.
+            </summary>
+            <param name="locator">The element locator.</param>
+            <param name="timeoutMs">Timeout in milliseconds (default: 30000).</param>
+        </member>
+        <member name="M:Framework.Core.POM.PomHelpers.WaitForElementHiddenAsync(Microsoft.Playwright.ILocator,System.Int32)">
+            <summary>
+            Waits for an element to be hidden with custom timeout.
+            </summary>
+            <param name="locator">The element locator.</param>
+            <param name="timeoutMs">Timeout in milliseconds (default: 30000).</param>
+        </member>
+        <member name="M:Framework.Core.POM.PomHelpers.ClickWithRetryAsync(Microsoft.Playwright.ILocator,System.Int32)">
+            <summary>
+            Clicks an element with retry logic.
+            </summary>
+            <param name="locator">The element locator.</param>
+            <param name="maxRetries">Maximum retry attempts (default: 3).</param>
+        </member>
+        <member name="M:Framework.Core.POM.PomHelpers.EnterTextAsync(Microsoft.Playwright.ILocator,System.String)">
+            <summary>
+            Enters text with clear and wait.
+            </summary>
+            <param name="locator">The element locator.</param>
+            <param name="text">The text to enter.</param>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Actor">
+            <summary>
+            Represents an actor in the ScreenPlay Pattern.
+            The actor is the central entity that performs tasks and asks questions.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Actor"/> class.
+            </remarks>
+            <param name="name">The actor's name (e.g., "John", "Admin User", "Customer").</param>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.#ctor(System.String)">
+            <summary>
+            Represents an actor in the ScreenPlay Pattern.
+            The actor is the central entity that performs tasks and asks questions.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Actor"/> class.
+            </remarks>
+            <param name="name">The actor's name (e.g., "John", "Admin User", "Customer").</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Actor.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Actor.CorrelationId">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.WhoCan``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.AbilityTo``1">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.Can``1">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.AttemptsToAsync(Framework.Core.ScreenPlay.Interfaces.IAction[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.AsksForAsync``1(Framework.Core.ScreenPlay.Interfaces.IQuestion{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.Remember(System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.Remembered``1(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.HasRemembered(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Actor.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.ActorBuilder">
+            <summary>
+            Fluent builder for creating actors with abilities.
+            Makes actor creation more readable and maintainable.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.ActorBuilder"/> class.
+            </remarks>
+            <param name="name">The actor's name (e.g., "John", "Admin", "Customer").</param>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.ActorBuilder.#ctor(System.String)">
+            <summary>
+            Fluent builder for creating actors with abilities.
+            Makes actor creation more readable and maintainable.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.ActorBuilder"/> class.
+            </remarks>
+            <param name="name">The actor's name (e.g., "John", "Admin", "Customer").</param>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.ActorBuilder.WithAbility``1(``0)">
+            <summary>
+            Adds an ability to the actor.
+            </summary>
+            <typeparam name="TAbility">The type of ability.</typeparam>
+            <param name="ability">The ability instance.</param>
+            <returns>The builder for chaining.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.ActorBuilder.Build">
+            <summary>
+            Builds the actor with all registered abilities.
+            </summary>
+            <returns>The configured actor.</returns>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.ScreenTask">
+            <summary>
+            Base class for tasks providing common functionality.
+            Tasks represent business-level actions that an actor can perform.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.ScreenTask.TaskName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.ScreenTask.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.ScreenTask.PerformAsAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.ScreenInteraction">
+            <summary>
+            Base class for interactions providing common functionality.
+            Interactions are atomic actions like clicking or typing.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.ScreenInteraction.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.ScreenInteraction.PerformAsAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.ScreenQuestion`1">
+            <summary>
+            Base class for questions providing common functionality.
+            Questions query the state of the system.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.ScreenQuestion`1.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.ScreenQuestion`1.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.BrowseTheWeb">
+            <summary>
+            Ability that grants an actor the capability to browse the web using Playwright.
+            This is a standard ability available to all projects.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.BrowseTheWeb"/> class.
+            </remarks>
+            <param name="page">The Playwright page.</param>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.BrowseTheWeb.#ctor(Microsoft.Playwright.IPage)">
+            <summary>
+            Ability that grants an actor the capability to browse the web using Playwright.
+            This is a standard ability available to all projects.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.BrowseTheWeb"/> class.
+            </remarks>
+            <param name="page">The Playwright page.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.BrowseTheWeb.DisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.BrowseTheWeb.Page">
+            <summary>
+            Gets the Playwright page.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.BrowseTheWeb.With(Microsoft.Playwright.IPage)">
+            <summary>
+            Creates a new instance of <see cref="T:Framework.Core.ScreenPlay.BrowseTheWeb"/> with the specified page.
+            </summary>
+            <param name="page">The Playwright page.</param>
+            <returns>A new BrowseTheWeb ability.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.BrowseTheWeb.DisposeAsync">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interactions.ClickElement">
+            <summary>
+            Interaction to click on an element.
+            Reusable across all web automation projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interactions.ClickElement.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Interactions.ClickElement"/> class.
+            </summary>
+            <param name="selector">The element selector.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interactions.ClickElement.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interactions.ClickElement.PerformAsAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interactions.ClickElement.On(System.String)">
+            <summary>
+            Fluent factory method.
+            </summary>
+            <param name="selector">The element selector.</param>
+            <returns>A new ClickElement interaction.</returns>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interactions.EnterText">
+            <summary>
+            Interaction to enter text into an input field.
+            Reusable across all web automation projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interactions.EnterText.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Interactions.EnterText"/> class.
+            </summary>
+            <param name="text">The text to enter.</param>
+            <param name="selector">The element selector.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interactions.EnterText.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interactions.EnterText.PerformAsAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interactions.EnterText.Into(System.String,System.String)">
+            <summary>
+            Fluent factory method.
+            </summary>
+            <param name="text">The text to enter.</param>
+            <param name="selector">The element selector.</param>
+            <returns>A new EnterText interaction.</returns>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interfaces.IAbility">
+            <summary>
+            Marker interface for abilities that grant capabilities to an actor.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interfaces.IAbility.DisplayName">
+            <summary>
+            Gets the display name of this ability.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interfaces.IAction">
+            <summary>
+            Base interface for all actions that an actor can perform.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interfaces.IAction.Description">
+            <summary>
+            Gets the description of what this action does (for reporting).
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IAction.PerformAsAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <summary>
+            Performs this action as the specified actor.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interfaces.IActor">
+            <summary>
+            Represents an actor in the ScreenPlay Pattern who can perform tasks and answer questions.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interfaces.IActor.Name">
+            <summary>
+            Gets the actor's name.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interfaces.IActor.CorrelationId">
+            <summary>
+            Gets the actor's unique correlation ID for tracing.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.WhoCan``1(``0)">
+            <summary>
+            Registers an ability that the actor can use.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.AbilityTo``1">
+            <summary>
+            Retrieves an ability that the actor possesses.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.Can``1">
+            <summary>
+            Checks if the actor has a specific ability.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.AttemptsToAsync(Framework.Core.ScreenPlay.Interfaces.IAction[])">
+            <summary>
+            Attempts to perform one or more tasks or interactions.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.AsksForAsync``1(Framework.Core.ScreenPlay.Interfaces.IQuestion{``0})">
+            <summary>
+            Asks a question to get information about the system state.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.Remember(System.String,System.Object)">
+            <summary>
+            Stores a value in the actor's memory.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.Remembered``1(System.String)">
+            <summary>
+            Retrieves a value from the actor's memory.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IActor.HasRemembered(System.String)">
+            <summary>
+            Checks if a value is stored in the actor's memory.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interfaces.IInteraction">
+            <summary>
+            Represents a technical-level interaction with the system.
+            Interactions are atomic actions like clicking or typing.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interfaces.IQuestion`1">
+            <summary>
+            Represents a question about the system state that returns a result.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interfaces.IQuestion`1.Description">
+            <summary>
+            Gets the description of this question (for reporting).
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Interfaces.IQuestion`1.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <summary>
+            Answers this question using the specified actor.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Interfaces.ITask">
+            <summary>
+            Represents a business-level task that an actor can perform.
+            Tasks are composed of one or more interactions.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Interfaces.ITask.TaskName">
+            <summary>
+            Gets the business name of this task (for reporting).
+            </summary>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Classes.Interaction">
+            <summary>
+            Base class for interactions providing common functionality.
+            Interactions represent technical-level atomic actions.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Classes.Interaction.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Classes.Interaction.PerformAsAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Questions.VerifyContainsText">
+            <summary>
+            Verifies that a value contains the expected text.
+            This Question performs the assertion internally and throws if validation fails.
+            Reusable across all projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyContainsText.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Questions.VerifyContainsText"/> class.
+            </summary>
+            <param name="expectedText">The expected text.</param>
+            <param name="becauseMessage">The message to show if validation fails.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Questions.VerifyContainsText.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyContainsText.Text(System.String,System.String)">
+            <summary>
+            Creates a new VerifyContainsText question.
+            </summary>
+            <param name="expectedText">The expected text.</param>
+            <param name="because">The reason message.</param>
+            <returns>A new VerifyContainsText question.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyContainsText.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Questions.VerifyTrue">
+            <summary>
+            Verifies that a boolean condition is true.
+            This Question performs the assertion internally and throws if validation fails.
+            Reusable across all projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyTrue.#ctor(System.Func{System.Threading.Tasks.Task{System.Boolean}},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Questions.VerifyTrue"/> class.
+            </summary>
+            <param name="condition">The condition to verify.</param>
+            <param name="becauseMessage">The message to show if validation fails.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Questions.VerifyTrue.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyTrue.That(System.Func{System.Threading.Tasks.Task{System.Boolean}},System.String)">
+            <summary>
+            Creates a new VerifyTrue question.
+            </summary>
+            <param name="condition">The condition to verify.</param>
+            <param name="because">The reason message.</param>
+            <returns>A new VerifyTrue question.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyTrue.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Questions.VerifyGreaterThan">
+            <summary>
+            Verifies that a numeric value is greater than the expected minimum.
+            This Question performs the assertion internally and throws if validation fails.
+            Reusable across all projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyGreaterThan.#ctor(System.Func{System.Threading.Tasks.Task{System.Int32}},System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Questions.VerifyGreaterThan"/> class.
+            </summary>
+            <param name="getValue">The function to get the value.</param>
+            <param name="minimumValue">The minimum expected value.</param>
+            <param name="becauseMessage">The message to show if validation fails.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Questions.VerifyGreaterThan.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyGreaterThan.Value(System.Func{System.Threading.Tasks.Task{System.Int32}},System.Int32,System.String)">
+            <summary>
+            Creates a new VerifyGreaterThan question.
+            </summary>
+            <param name="getValue">The function to get the value.</param>
+            <param name="minimumValue">The minimum expected value.</param>
+            <param name="because">The reason message.</param>
+            <returns>A new VerifyGreaterThan question.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.VerifyGreaterThan.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Questions.GetPageUrl">
+            <summary>
+            Gets the current page URL.
+            Reusable across all web automation projects.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Questions.GetPageUrl.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.GetPageUrl.Value">
+            <summary>
+            Creates a new GetPageUrl question.
+            </summary>
+            <returns>A new GetPageUrl question.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.GetPageUrl.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Questions.IsElementVisible">
+            <summary>
+            Checks if an element is visible.
+            Reusable across all web automation projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.IsElementVisible.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Questions.IsElementVisible"/> class.
+            </summary>
+            <param name="selector">The element selector.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Questions.IsElementVisible.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.IsElementVisible.Element(System.String)">
+            <summary>
+            Creates a new IsElementVisible question.
+            </summary>
+            <param name="selector">The element selector.</param>
+            <returns>A new IsElementVisible question.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.IsElementVisible.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Questions.GetElementCount">
+            <summary>
+            Gets the count of elements matching a selector.
+            Reusable across all web automation projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.GetElementCount.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Questions.GetElementCount"/> class.
+            </summary>
+            <param name="selector">The element selector.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Questions.GetElementCount.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.GetElementCount.Of(System.String)">
+            <summary>
+            Creates a new GetElementCount question.
+            </summary>
+            <param name="selector">The element selector.</param>
+            <returns>A new GetElementCount question.</returns>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Questions.GetElementCount.AnsweredByAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.ScreenPlay.Tasks.NavigateToUrl">
+            <summary>
+            Task to navigate to a URL.
+            Reusable across all web automation projects.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Tasks.NavigateToUrl.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.ScreenPlay.Tasks.NavigateToUrl"/> class.
+            </summary>
+            <param name="url">The URL to navigate to.</param>
+            <param name="waitFor">Optional wait condition.</param>
+        </member>
+        <member name="P:Framework.Core.ScreenPlay.Tasks.NavigateToUrl.TaskName">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Tasks.NavigateToUrl.PerformAsAsync(Framework.Core.ScreenPlay.Interfaces.IActor)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.ScreenPlay.Tasks.NavigateToUrl.To(System.String,System.String)">
+            <summary>
+            Fluent factory method.
+            </summary>
+            <param name="url">The URL to navigate to.</param>
+            <param name="waitFor">Optional wait condition.</param>
+            <returns>A new NavigateToUrl task.</returns>
+        </member>
+        <member name="T:Framework.Core.Screenplay.DisposableAbility">
+            <summary>
+            Base class for abilities that require disposal.
+            Use this for abilities that manage resources (e.g., browser connections).
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Screenplay.DisposableAbility.DisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="M:Framework.Core.Screenplay.DisposableAbility.DisposeAsync">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.AllureReportHelper">
+            <summary>
+            Allure report helper.
+            Provides methods to generate and open Allure reports.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Tools.AllureReportHelper.OpenReport(System.String,System.Int32)">
+            <summary>
+            Opens the Allure report for the specified results directory.
+            </summary>
+            <param name="resultsDirectory">The Allure results directory.</param>
+            <param name="port">The port to serve the report on.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.AllureReportHelper.GenerateReport(System.String,System.String)">
+            <summary>
+            Generates the Allure report from results directory.
+            </summary>
+            <param name="resultsDirectory">The Allure results directory.</param>
+            <param name="reportDirectory">The output report directory.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.AllureReportHelper.IsWindows">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.DatabaseConnection">
+            <summary>
+            Base class for database connections.
+            Provides common database operations using Dapper.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.DatabaseConnection"/> class.
+            </remarks>
+            <param name="connectionString">The database connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.#ctor(System.String)">
+            <summary>
+            Base class for database connections.
+            Provides common database operations using Dapper.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.DatabaseConnection"/> class.
+            </remarks>
+            <param name="connectionString">The database connection string.</param>
+        </member>
+        <member name="F:Framework.Core.Tools.Database.DatabaseConnection.ConnectionString">
+            <summary>
+            Gets the connection string.
+            </summary>
+        </member>
+        <member name="F:Framework.Core.Tools.Database.DatabaseConnection._connection">
+            <summary>
+            Gets or sets the underlying database connection.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.CreateConnection">
+            <summary>
+            Gets or creates the database connection.
+            </summary>
+            <returns>The database connection.</returns>
+        </member>
+        <member name="P:Framework.Core.Tools.Database.DatabaseConnection.Connection">
+            <summary>
+            Gets the database connection (creates if null).
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.QueryAsync``1(System.String,System.Object)">
+            <summary>
+            Executes a query and returns the results.
+            </summary>
+            <typeparam name="T">The type of results.</typeparam>
+            <param name="sql">The SQL query.</param>
+            <param name="param">The query parameters.</param>
+            <returns>The query results.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.QueryFirstOrDefaultAsync``1(System.String,System.Object)">
+            <summary>
+            Executes a query and returns a single result.
+            </summary>
+            <typeparam name="T">The type of result.</typeparam>
+            <param name="sql">The SQL query.</param>
+            <param name="param">The query parameters.</param>
+            <returns>The query result, or default if not found.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.ExecuteAsync(System.String,System.Object)">
+            <summary>
+            Executes a command and returns the number of affected rows.
+            </summary>
+            <param name="sql">The SQL command.</param>
+            <param name="param">The command parameters.</param>
+            <returns>The number of affected rows.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.QueryInTransactionAsync``1(System.String,System.Object)">
+            <summary>
+            Executes a query within a transaction.
+            </summary>
+            <typeparam name="T">The type of results.</typeparam>
+            <param name="sql">The SQL query.</param>
+            <param name="param">The query parameters.</param>
+            <returns>The query results.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.Close">
+            <summary>
+            Closes the database connection.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.DatabaseConnection.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.MariaDbConnection">
+            <summary>
+            MariaDB database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.MariaDbConnection"/> class.
+            </remarks>
+            <param name="connectionString">The MariaDB connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MariaDbConnection.#ctor(System.String)">
+            <summary>
+            MariaDB database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.MariaDbConnection"/> class.
+            </remarks>
+            <param name="connectionString">The MariaDB connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MariaDbConnection.CreateConnection">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.MongoDbConnection">
+            <summary>
+            MongoDB NoSQL database connection.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.MongoDbConnection"/> class.
+            </summary>
+            <param name="connectionString">The MongoDB connection string.</param>
+            <param name="databaseName">The database name.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.GetCollection``1(System.String)">
+            <summary>
+            Gets a collection from the database.
+            </summary>
+            <typeparam name="TDocument">The document type.</typeparam>
+            <param name="collectionName">The collection name.</param>
+            <returns>The MongoDB collection.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.InsertOneAsync``1(System.String,``0)">
+            <summary>
+            Inserts a document into a collection.
+            </summary>
+            <typeparam name="TDocument">The document type.</typeparam>
+            <param name="collectionName">The collection name.</param>
+            <param name="document">The document to insert.</param>
+            <returns>The insert result.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.FindAsync``1(System.String,MongoDB.Driver.FilterDefinition{``0})">
+            <summary>
+            Finds documents in a collection.
+            </summary>
+            <typeparam name="TDocument">The document type.</typeparam>
+            <param name="collectionName">The collection name.</param>
+            <param name="filter">The filter to apply.</param>
+            <returns>The matching documents.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.FindOneAsync``1(System.String,MongoDB.Driver.FilterDefinition{``0})">
+            <summary>
+            Finds a single document in a collection.
+            </summary>
+            <typeparam name="TDocument">The document type.</typeparam>
+            <param name="collectionName">The collection name.</param>
+            <param name="filter">The filter to apply.</param>
+            <returns>The matching document, or null if not found.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.UpdateOneAsync``1(System.String,MongoDB.Driver.FilterDefinition{``0},MongoDB.Driver.UpdateDefinition{``0})">
+            <summary>
+            Updates documents in a collection.
+            </summary>
+            <typeparam name="TDocument">The document type.</typeparam>
+            <param name="collectionName">The collection name.</param>
+            <param name="filter">The filter to apply.</param>
+            <param name="update">The update to apply.</param>
+            <returns>The update result.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.DeleteOneAsync``1(System.String,MongoDB.Driver.FilterDefinition{``0})">
+            <summary>
+            Deletes documents from a collection.
+            </summary>
+            <typeparam name="TDocument">The document type.</typeparam>
+            <param name="collectionName">The collection name.</param>
+            <param name="filter">The filter to apply.</param>
+            <returns>The delete result.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MongoDbConnection.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.InsertOneResult">
+            <summary>
+            MongoDB insert result.
+            </summary>
+        </member>
+        <member name="P:Framework.Core.Tools.Database.InsertOneResult.IsAcknowledged">
+            <summary>
+            Gets or sets whether the operation was acknowledged.
+            </summary>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.MySqlConnection">
+            <summary>
+            MySQL database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.MySqlConnection"/> class.
+            </remarks>
+            <param name="connectionString">The MySQL connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MySqlConnection.#ctor(System.String)">
+            <summary>
+            MySQL database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.MySqlConnection"/> class.
+            </remarks>
+            <param name="connectionString">The MySQL connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.MySqlConnection.CreateConnection">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.OracleConnection">
+            <summary>
+            Oracle database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.OracleConnection"/> class.
+            </remarks>
+            <param name="connectionString">The Oracle connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.OracleConnection.#ctor(System.String)">
+            <summary>
+            Oracle database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.OracleConnection"/> class.
+            </remarks>
+            <param name="connectionString">The Oracle connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.OracleConnection.CreateConnection">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.PostgreSqlConnection">
+            <summary>
+            PostgreSQL database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.PostgreSqlConnection"/> class.
+            </remarks>
+            <param name="connectionString">The PostgreSQL connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.PostgreSqlConnection.#ctor(System.String)">
+            <summary>
+            PostgreSQL database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.PostgreSqlConnection"/> class.
+            </remarks>
+            <param name="connectionString">The PostgreSQL connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.PostgreSqlConnection.CreateConnection">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.RedisConnection">
+            <summary>
+            Redis NoSQL database connection.
+            </summary>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.RedisConnection.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.RedisConnection"/> class.
+            </summary>
+            <param name="connectionString">The Redis connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.RedisConnection.GetStringAsync(System.String)">
+            <summary>
+            Gets a string value from Redis.
+            </summary>
+            <param name="key">The key.</param>
+            <returns>The value, or null if not found.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.RedisConnection.SetStringAsync(System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            Sets a string value in Redis.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <param name="expiry">Optional expiry time.</param>
+            <returns>True if the value was set.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.RedisConnection.GetHashFieldAsync(System.String,System.String)">
+            <summary>
+            Gets a hash field from Redis.
+            </summary>
+            <param name="key">The hash key.</param>
+            <param name="field">The field name.</param>
+            <returns>The field value, or null if not found.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.RedisConnection.SetHashFieldAsync(System.String,System.String,System.String)">
+            <summary>
+            Sets a hash field in Redis.
+            </summary>
+            <param name="key">The hash key.</param>
+            <param name="field">The field name.</param>
+            <param name="value">The field value.</param>
+            <returns>True if the field was set.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.RedisConnection.DeleteAsync(System.String)">
+            <summary>
+            Deletes a key from Redis.
+            </summary>
+            <param name="key">The key to delete.</param>
+            <returns>True if the key was deleted.</returns>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.RedisConnection.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Framework.Core.Tools.Database.SqlServerConnection">
+            <summary>
+            SQL Server database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.SqlServerConnection"/> class.
+            </remarks>
+            <param name="connectionString">The SQL Server connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.SqlServerConnection.#ctor(System.String)">
+            <summary>
+            SQL Server database connection.
+            </summary>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Framework.Core.Tools.Database.SqlServerConnection"/> class.
+            </remarks>
+            <param name="connectionString">The SQL Server connection string.</param>
+        </member>
+        <member name="M:Framework.Core.Tools.Database.SqlServerConnection.CreateConnection">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

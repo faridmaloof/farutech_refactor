@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj": {}
+    "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj": {}
   },
   "projects": {
-    "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj": {
+    "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+        "projectUniqueName": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
         "projectName": "EnterpriseAutomation.Framework",
-        "projectPath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+        "projectPath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
         "packagesPath": "C:\\Users\\farid\\.nuget\\packages\\",
-        "outputPath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\obj\\",
+        "outputPath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

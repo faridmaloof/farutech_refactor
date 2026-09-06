@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "V8Y2aa9FWzg=",
+  "dgSpecHash": "t90fMLPk4ts=",
   "success": true,
-  "projectFilePath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+  "projectFilePath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\farid\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\farid\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
@@ -86,10 +86,10 @@
     {
       "code": "NU1902",
       "level": "Warning",
-      "message": "Package 'OpenTelemetry.Api' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g94r-2vxg-569j",
-      "projectPath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+      "message": "El paquete \"OpenTelemetry.Api\" 1.15.0 tiene una vulnerabilidad de gravedad moderada conocida, https://github.com/advisories/GHSA-g94r-2vxg-569j",
+      "projectPath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
       "warningLevel": 1,
-      "filePath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+      "filePath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
       "libraryId": "OpenTelemetry.Api",
       "targetGraphs": [
         "net10.0"
@@ -98,10 +98,10 @@
     {
       "code": "NU1902",
       "level": "Warning",
-      "message": "Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338",
-      "projectPath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+      "message": "El paquete \"SharpCompress\" 0.30.1 tiene una vulnerabilidad de gravedad moderada conocida, https://github.com/advisories/GHSA-6c8g-7p36-r338",
+      "projectPath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
       "warningLevel": 1,
-      "filePath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+      "filePath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
       "libraryId": "SharpCompress",
       "targetGraphs": [
         "net10.0"
@@ -110,10 +110,10 @@
     {
       "code": "NU1903",
       "level": "Warning",
-      "message": "Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx",
-      "projectPath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+      "message": "El paquete \"Snappier\" 1.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-pggp-6c3x-2xmx",
+      "projectPath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
       "warningLevel": 1,
-      "filePath": "d:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
+      "filePath": "D:\\Projects\\Farutech\\farutech_refactor\\packages\\framework-automation\\src\\Framework.Core\\Framework.Core.csproj",
       "libraryId": "Snappier",
       "targetGraphs": [
         "net10.0"
