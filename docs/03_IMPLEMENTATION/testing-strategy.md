@@ -209,8 +209,8 @@ Feature: Lead Management
 
 | Capa | Herramienta | Ubicación |
 |------|-------------|-----------|
-| **Unit Backend** | PHPUnit | `apps/api/src/backend/tests/` |
-| **Integration Backend** | PHPUnit + RefreshDatabase | `apps/api/src/backend/tests/` |
+| **Unit Backend** | PHPUnit | `apps/website/src/backend/tests/` |
+| **Integration Backend** | PHPUnit + RefreshDatabase | `apps/website/src/backend/tests/` |
 | **API Tests** | .NET Framework Automation | `tests/framework-automation/` |
 | **Unit Frontend** | Vitest + RTL | `apps/admin/src/**/*.test.tsx` |
 | **E2E** | Playwright (.NET) | `tests/framework-automation/` |

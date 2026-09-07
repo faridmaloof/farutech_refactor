@@ -5,7 +5,7 @@ export interface PushNotificationItem {
   title: string;
   message: string;
   icon?: string;
-  badge?: number;
+  badge?: string;
   timestamp: Date;
   read: boolean;
   onClick?: () => void;

@@ -188,15 +188,9 @@ export function useCRUD<T extends { id: string | number }>({
     );
   };
 
-  const selectAll = () => {
-    setSelectedIds(paginatedData.map(item => item.id));
-  };
-
   const clearSelection = () => {
     setSelectedIds([]);
   };
-
-  const isAllSelected = paginatedData.length > 0 && paginatedData.every(item => selectedIds.includes(item.id));
 
   // Search & Filter Logic
   const filteredData = useMemo(() => {
@@ -229,6 +223,15 @@ export function useCRUD<T extends { id: string | number }>({
     const start = (pagination.currentPage - 1) * pagination.pageSize;
     return filteredData.slice(start, start + pagination.pageSize);
   }, [filteredData, pagination.currentPage, pagination.pageSize]);
+
+  // Selection Logic - must be after paginatedData definition
+  const selectAll = () => {
+    setSelectedIds(paginatedData.map(item => item.id));
+  };
+
+  const isAllSelected = useMemo(() => {
+    return paginatedData.length > 0 && paginatedData.every(item => selectedIds.includes(item.id));
+  }, [paginatedData, selectedIds]);
 
   return {
     data,
