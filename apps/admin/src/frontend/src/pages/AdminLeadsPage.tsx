@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MainLayout } from '../../layouts/MainLayout';
+import { MainLayout } from '@farutech/design-system/components/layout';
 import { Card } from '@farutech/design-system/src/components/ui/Card';
 import { DataTable } from '@farutech/design-system/src/components/ui/DataTable';
 import { Badge } from '@farutech/design-system/src/components/ui/Badge';
