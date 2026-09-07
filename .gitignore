@@ -1,26 +1,83 @@
 ```
-# Build artifacts
-apps/website/src/frontend/dist/
-apps/admin/src/frontend/dist/
+# Visual Studio solution and project files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-# Dependencies
-node_modules/
-package-lock.json
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
 
-# Logs and temp files
-*.log
-*.tmp
-
-# Environment
-.env
-.env.local
-.env.*
-
-# Editors
+# Visual Studio Code
 .vscode/
-.idea/
 
-# OS generated files
-.DS_Store
-Thumbs.db
+# Visual Studio IDE
+.vs/
+
+# NuGet Packages
+*.nupkg
+packages/
+
+# Output directory
+bin/
+obj/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+```
+
+Wait, I need to reconsider this. The only modified file is `Framework.Automation.sln` which is a Visual Studio solution file. This appears to be a C#/Visual Studio project, so the standard Visual Studio ignore patterns would be appropriate. However, since there are no build artifacts, dependency directories, or temporary files in the change list, and only a solution file was modified, I should provide the standard Visual Studio ignore patterns.
+
+```
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio IDE
+.vs/
+
+# NuGet Packages
+*.nupkg
+packages/
+
+# Output directory
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
 ```

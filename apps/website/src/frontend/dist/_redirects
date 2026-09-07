@@ -1,0 +1,32 @@
+# FaruTech - 301 Redirects for legacy URLs
+# Format: from to status
+
+# Legacy Spanish service URLs -> canonical English
+/capacidades/desarrollo-software /services/software-development 301
+/capacidades/plataformas-saas /services/saas-platforms 301
+/capacidades/soluciones-empresariales /services/enterprise-solutions 301
+/capacidades/ia-automatizacion /services/ai-automation 301
+/capacidades/ux-engineering /services/ux-engineering 301
+/capacidades/modernizacion /services/modernization 301
+
+# Legacy page URLs
+/trabajo / 301
+/studio /about-us 301
+/metodologia /about-us 301
+/contacto / 301
+
+# Spanish routes -> English (canonical)
+/servicios /services 301
+/servicios/desarrollo-software /services/software-development 301
+/servicios/plataformas-saas /services/saas-platforms 301
+/servicios/soluciones-empresariales /services/enterprise-solutions 301
+/servicios/ia-automatizacion /services/ai-automation 301
+/servicios/ux-engineering /services/ux-engineering 301
+/servicios/modernizacion /services/modernization 301
+/casos-exito /case-studies 301
+/nosotros /about-us 301
+/privacidad /privacy 301
+/terminos /terms 301
+
+# SPA fallback (all other routes go to index.html)
+/* /index.html 200
