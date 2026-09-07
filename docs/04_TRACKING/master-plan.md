@@ -21,7 +21,7 @@
 | **FASE 11** | Implementación MiniCRM (Admin) | 🔄 EN PROGRESO | 30% | TASK-005 (Leads), TASK-006 (Opportunities) |
 | **FASE 13** | Testing & Calidad E2E | ⬜ BACKLOG | 15% | TASK-012 |
 | **FASE 14** | Corrección de Deuda Técnica (Auditoría 2026-09) | ⬜ BACKLOG | 0% | TASK-013 a TASK-017, TASK-023, TASK-024 |
-| **FASE 15** | Cierre de Brechas Funcionales (Requisito 6 completo) | ⬜ BACKLOG | 0% | TASK-018 a TASK-022 |
+| **FASE 15** | Cierre de Brechas Funcionales (Requisitos 1-6 completos) | ⬜ BACKLOG | 0% | TASK-018 a TASK-022, TASK-025, TASK-026 |
 
 ---
 
@@ -55,6 +55,8 @@
 | **TASK-022** | Mini CRM: Cotizaciones + Tarifas ("minipos") | FASE 15 | 🔴 CRÍTICO | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-022.md` (SPEC-006, Req. 6.5) |
 | **TASK-023** | Corregir JSON-LD ausente en prerender (SEO) | FASE 14 | 🟡 HIGH | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-023.md` |
 | **TASK-024** | Resolver estado de `apps/intranet` (huérfano) | FASE 14 | 🟢 MEDIUM | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-024.md` |
+| **TASK-025** | Independencia real de páginas de servicio | FASE 15 | 🟡 HIGH | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-025.md` (Req. 1) |
+| **TASK-026** | Auditoría formal Lighthouse (Performance/A11y/SEO) | FASE 15 | 🟡 HIGH | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-026.md` (Req. 2, 3, 5) |
 
 ### Orden de Ejecución Recomendado (FASE 14, correctivas)
 
@@ -78,6 +80,8 @@ TASK-019 (newsletter) ─┬─ decisión compartida: ContentBlockEditor en Desi
 TASK-020 (blog)        ─┘
 TASK-021 (opportunity search real) — requiere decisión de producto sobre LinkedIn antes de estimar
 TASK-022 (cotizaciones/tarifas) — requiere SPEC-001 estable (TASK-005) como base
+TASK-025 (independencia de páginas de servicio) — requiere decisión previa de Product Owner, independiente del resto
+TASK-026 (auditoría Lighthouse) — ejecutar al final, requiere TASK-015 y TASK-023 ya cerradas
 ```
 
 ---

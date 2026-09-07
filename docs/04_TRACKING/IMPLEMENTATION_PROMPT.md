@@ -1,5 +1,7 @@
 # 🤖 PROMPT DE IMPLEMENTACIÓN — Farutech Website Ecosystem (Auditoría 2026-09)
 
+> ⚠️ **SUPERSEDED por [`SDD_MASTER_PROMPT.md`](SDD_MASTER_PROMPT.md) (v2.0, 2026-09-05).** Este documento (v1.0) se conserva como referencia histórica del orden de ejecución original, pero el prompt vigente para iniciar implementación es el SDD Master Prompt, que añade metodología Spec-Driven Development explícita, matriz de trazabilidad completa (incluye TASK-025 y TASK-026, ausentes aquí) y protocolo de verificación de cobertura. Usar `SDD_MASTER_PROMPT.md` para cualquier trabajo nuevo.
+
 **Uso:** Este documento está diseñado para pegarse directamente como instrucción a un agente de codificación (ej. Claude Code) o para entregarse a un desarrollador humano como brief de trabajo. Cubre la ejecución ordenada de las correcciones y features identificadas en la auditoría del 2026-09-05.
 
 ---

@@ -64,6 +64,9 @@ bld/
 !**/[Pp]ackages/build/
 !**/packages/framework-automation/
 !**/packages/framework-automation/**
+## ...pero sin binarios ni artefactos de compilación dentro de los packages referenciados
+**/packages/framework-automation/**/[Bb]in/
+**/packages/framework-automation/**/[Oo]bj/
 *.nuget.props
 *.nuget.targets
 *.nupkg
