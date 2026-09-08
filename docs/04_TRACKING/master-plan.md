@@ -14,13 +14,13 @@
 | Fase | Estado | Tareas principales |
 |---|---|---|
 | FASE 1-2 — Auditoría/Línea base | ✅ COMPLETADO | TASK-000A |
-| FASE 3 — Decisiones arquitectónicas | ✅ COMPLETADO | TASK-000B/C/D, ADR-005/006/007/008 |
-| FASE 4 — Normalización documental | 🔄 RECONCILIACIÓN | TASK-007/008/016 + reconciliación posterior |
+| FASE 3 — Decisiones arquitectónicas | ✅ COMPLETADO | TASK-000B/C/D, ADR-005/006/007/008/009 |
+| FASE 4 — Normalización documental | 🔄 RECONCILIACIÓN | TASK-007/008/016 + reconciliación |
 | FASE 5 — SDD | ✅ COMPLETADO | TASK-003/004, SPEC-001..006 |
-| FASE 7/9 — Foundation Admin | ⚠️ RECONCILIAR | TASK-009/010/011 deben migrarse conceptualmente a `apps/website` |
-| FASE 11 — MiniCRM Admin | 🔄 EN DESARROLLO | TASK-005/006; adaptar ubicación objetivo |
+| FASE 7/9 — Foundation Admin | ⚠️ RECONCILIAR | TASK-009/010/011 → ubicación definitiva en Website |
+| FASE 11 — MiniCRM Admin | 🔄 EN DESARROLLO | TASK-005/006; ubicación objetivo en Website |
 | FASE 13 — Testing | ⬜ BACKLOG | TASK-012 |
-| FASE 14 — Deuda técnica/reconciliación | 🔄 EN PROGRESO | TASK-013/014/016; TASK-015 superseded; TASK-017/023/024; TASK-025 |
+| FASE 14 — Deuda técnica/reconciliación | 🔄 EN PROGRESO | TASK-013/014/016/025/027 + decisiones de release |
 | FASE 15 — Brechas funcionales | ⬜ BACKLOG | TASK-018..022 |
 
 ## 📋 Tablero Maestro
@@ -33,19 +33,19 @@
 | TASK-000D | ⚠️ DECIDIDO / NO EJECUTADO | HIGH | ADR-004; consolidación pendiente |
 | TASK-003 | ✅ DONE | HIGH | SPEC-001 |
 | TASK-004 | 🔄 EXTENDIDA v1.1 | CRÍTICO | SPEC-002 |
-| TASK-005 | 🔄 EN DESARROLLO | CRÍTICO | Leads Admin; debe alinearse con `apps/website` |
-| TASK-006 | 🔄 EN DESARROLLO | CRÍTICO | Opportunities; debe alinearse con `apps/website` |
-| TASK-007 | 🔄 RECONCILIAR | MEDIUM | README debe reflejar ADR-008 |
+| TASK-005 | 🔄 EN DESARROLLO | CRÍTICO | Leads Admin; debe alinearse con Website |
+| TASK-006 | 🔄 EN DESARROLLO | CRÍTICO | Opportunities; debe alinearse con Website |
+| TASK-007 | 🔄 RECONCILIAR | MEDIUM | README/documentación vigente |
 | TASK-008 | 🔄 RECONCILIAR | MEDIUM | Índice/documentación |
-| TASK-009 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | No crear `apps/admin`; integrar en Website |
-| TASK-010 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | Design System dentro del Admin de Website |
-| TASK-011 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | API client dentro del Website |
+| TASK-009 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | No crear apps/admin; integrar en Website |
+| TASK-010 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | Design System en Website/Admin |
+| TASK-011 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | API client en Website |
 | TASK-012 | ⬜ BACKLOG | HIGH | Testing unificado |
 | TASK-013 | ✅ DONE | CRÍTICO | Framework.Automation.sln |
-| TASK-014 | ✅ DONE | CRÍTICO | Backend consolidado en `apps/website/src/backend` |
-| TASK-015 | ⚠️ SUPERSEDED | CRÍTICO | URL `/admin` correcta; topología `apps/admin` obsoleta |
-| TASK-016 | ⚠️ REABRIR/RECONCILIAR | HIGH | Quedó obsoleta tras ADR-008 |
-| TASK-017 | ⬜ BACKLOG | HIGH | Consolidación BD |
+| TASK-014 | ✅ DONE | CRÍTICO | Backend consolidado |
+| TASK-015 | ⚠️ SUPERSEDED | CRÍTICO | `/admin` correcto; topología independiente obsoleta |
+| TASK-016 | ⚠️ REABRIR/RECONCILIAR | HIGH | Reconciliar contra ADR-008 |
+| TASK-017 | ⬜ BACKLOG | HIGH | Infraestructura histórica; reemplazada por TASK-027 donde contradice ADR-008 |
 | TASK-018 | ⬜ BACKLOG | HIGH | Contacto |
 | TASK-019 | ⬜ BACKLOG | HIGH | Newsletter |
 | TASK-020 | ⬜ BACKLOG | HIGH | Blog CMS |
@@ -53,42 +53,52 @@
 | TASK-022 | ⬜ BACKLOG | CRÍTICO | Cotizaciones/Tarifas |
 | TASK-023 | ⬜ BACKLOG | HIGH | JSON-LD/SEO |
 | TASK-024 | ⬜ BACKLOG | MEDIUM | Decisión Intranet |
-| TASK-025 | 🟢 READY | CRÍTICO | Integrar Admin definitivamente en `apps/website` |
+| TASK-025 | 🟢 READY | CRÍTICO | Integrar Admin definitivamente en Website |
+| TASK-026 | 🟡 READY_FOR_LOCAL_EXECUTION | HIGH | Publicar Design System + Framework.Core |
+| TASK-027 | ⬜ TODO | HIGH | Reconciliar infraestructura con arquitectura final |
+
+> **Nota de identidad:** `TASK-017.md` es la tarea histórica de infraestructura. La antigua `TASK-017-PACKAGES-PUBLISHING.md` tenía una colisión de ID y fue normalizada como `TASK-026-PACKAGES-PUBLISHING.md`.
 
 ## 🔗 Orden de ejecución vigente
 
 ```text
 RECONCILIACIÓN DOCUMENTAL
     │
-    ├── ADR-008 (vigente)
-    ├── marcar ADR-006/TASK-015 como superseded
-    ├── reconciliar TASK-007/008/016
-    └── identificar todas las referencias activas a apps/admin
+    ├── ADR-008: Admin dentro de Website
+    ├── ADR-009: distribución de paquetes
+    ├── reconciliar tareas/documentos antiguos
+    └── eliminar contradicciones operativas
              │
              ▼
 TASK-025 — integrar Admin en apps/website
              │
              ├── frontend /admin
-             ├── backend ya consolidado
+             ├── backend consolidado
              ├── tests + Framework.Core
              ├── Docker / gateway / CI
              └── retirar dependencia operativa de apps/admin
              │
-             ▼
-TASK-017 / TASK-023 / TASK-024
-             │
-             ▼
+             ├───────────────┐
+             ▼               ▼
+TASK-027                     TASK-026
+infraestructura              packages
+             │               │
+             └───────┬───────┘
+                     ▼
+TASK-012 / TASK-023 / TASK-024
+                     │
+                     ▼
 TASK-018..022 — brechas funcionales
-             │
-             ▼
-TASK-012 + verificación E2E final
+                     │
+                     ▼
+verificación E2E + security + quality gates
 ```
 
 ## 🧭 Regla para tareas antiguas
 
-Una tarea histórica puede permanecer `DONE` únicamente si su resultado sigue siendo válido. Si su implementación fue reemplazada por una decisión posterior, debe marcarse `SUPERSEDED`, aunque el trabajo histórico realmente se haya ejecutado.
+Una tarea histórica puede permanecer `DONE` únicamente si su resultado sigue siendo válido. Si una implementación fue reemplazada por una decisión posterior, debe marcarse `SUPERSEDED`, aunque el trabajo histórico haya sido ejecutado.
 
-No se deben borrar tareas ni auditorías históricas para ocultar cambios de arquitectura.
+No borrar tareas ni auditorías históricas para ocultar cambios de arquitectura.
 
 ## 🏗️ Arquitectura objetivo resumida
 
@@ -105,15 +115,17 @@ packages/
 Examples/tests/framework-automation/ # referencia, no framework paralelo
 ```
 
-## Definición de Done
+## Definition of Done global
 
-Una tarea solo puede cerrarse cuando existe evidencia de:
+Una tarea solo puede cerrarse cuando exista evidencia de:
 
-- implementación real;
-- build/type-check/lint aplicables;
-- pruebas aplicables;
-- seguridad revisada cuando corresponda;
-- documentación actualizada;
-- changelog actualizado;
 - criterios de aceptación satisfechos;
-- ausencia de contradicción con ADR/SPEC vigentes.
+- build limpio: **0 errores y 0 warnings**;
+- type-check/lint/static analysis aplicables limpios;
+- tests aplicables en verde;
+- seguridad revisada y sin bloqueadores;
+- documentación y changelog reconciliados;
+- ausencia de contradicción con ADR/SPEC vigentes;
+- comandos y resultados registrados.
+
+Si una validación requerida no puede ejecutarse, la tarea no es `DONE`.
