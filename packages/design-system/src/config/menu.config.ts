@@ -1,52 +1,54 @@
 /**
- * Configuración de menús para el sistema de diseño
- * Totalmente configurable y basado en permisos
+ * Tipos de menú públicos del Design System.
+ * Las aplicaciones consumidoras pueden proporcionar su propia configuración.
  */
 
+import type { ReactNode } from 'react'
+
 export interface MenuItemBase {
-  id: string;
-  label: string;
-  icon?: React.ReactNode;
-  badge?: string | number;
-  badgeVariant?: 'primary' | 'success' | 'warning' | 'danger';
+  id: string
+  label: string
+  icon?: ReactNode
+  badge?: string | number
+  badgeVariant?: 'primary' | 'success' | 'warning' | 'danger'
 }
 
 export interface MenuItem extends MenuItemBase {
-  path?: string;
-  onClick?: () => void;
-  children?: MenuItem[];
-  permissions?: string[];
-  disabled?: boolean;
-  external?: boolean;
+  path?: string
+  onClick?: () => void
+  children?: MenuItem[]
+  permissions?: string[]
+  disabled?: boolean
+  external?: boolean
 }
 
 export interface MenuCategory {
-  id: string;
-  label: string;
-  icon?: React.ReactNode;
-  items: MenuItem[];
-  permissions?: string[];
-  collapsed?: boolean;
+  id: string
+  label: string
+  icon?: ReactNode
+  items: MenuItem[]
+  permissions?: string[]
+  collapsed?: boolean
 }
 
-export interface MenuEntry {
-  categories: MenuCategory[];
-  quickActions?: MenuItem[];
+/** Entrada individual renderizable por los componentes de navegación. */
+export type MenuEntry = MenuItem | MenuCategory
+
+/** Configuración completa del menú de una aplicación. */
+export interface MenuConfig {
+  categories: MenuCategory[]
+  quickActions?: MenuItem[]
 }
 
 export interface Module {
-  id: string;
-  name: string;
-  icon: React.ReactNode;
-  color: string;
-  description?: string;
+  id: string
+  name: string
+  icon?: ReactNode
+  color?: string
+  description?: string
 }
 
-/**
- * Configuración por defecto del menú
- * Puede ser sobrescrita por cada aplicación (website, admin, intranet, etc.)
- */
-export const defaultMenuConfig: MenuEntry = {
+export const defaultMenuConfig: MenuConfig = {
   categories: [
     {
       id: 'dashboard',
@@ -67,18 +69,15 @@ export const defaultMenuConfig: MenuEntry = {
     },
   ],
   quickActions: [
-    { id: 'create', label: 'Crear Nuevo', icon: null },
-    { id: 'import', label: 'Importar', icon: null },
-    { id: 'export', label: 'Exportar', icon: null },
+    { id: 'create', label: 'Crear Nuevo' },
+    { id: 'import', label: 'Importar' },
+    { id: 'export', label: 'Exportar' },
   ],
-};
+}
 
-/**
- * Módulos disponibles para el switcher
- */
 export const defaultModules: Module[] = [
-  { id: 'admin', name: 'Admin', icon: null, color: '#10b981' },
-  { id: 'crm', name: 'CRM', icon: null, color: '#3b82f6' },
-  { id: 'pos', name: 'POS', icon: null, color: '#f59e0b' },
-  { id: 'intranet', name: 'Intranet', icon: null, color: '#8b5cf6' },
-];
+  { id: 'admin', name: 'Admin', color: '#10b981' },
+  { id: 'crm', name: 'CRM', color: '#3b82f6' },
+  { id: 'pos', name: 'POS', color: '#f59e0b' },
+  { id: 'intranet', name: 'Intranet', color: '#8b5cf6' },
+]
