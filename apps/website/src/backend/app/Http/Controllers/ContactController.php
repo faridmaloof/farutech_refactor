@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ContactMessage;
 use App\Models\Lead;
 use App\Models\Service;
+use App\Services\ContactMessageService;
+use App\Http\Resources\ContactMessageResource;
 
 class ContactController extends Controller
 {
+    public function __construct(
+        private ContactMessageService $service
+    ) {}
+
     /**
      * @OA\Post(
      *   path="/contact",
@@ -165,5 +171,166 @@ class ContactController extends Controller
                 'message' => 'Ocurrió un error al procesar la solicitud. Por favor, intente nuevamente.'
             ], 500);
         }
+    }
+
+    /**
+     * @OA\Get(
+     *   path="/admin/contacts",
+     *   summary="Listar mensajes de contacto",
+     *   description="Obtiene lista paginada de mensajes de contacto con filtros opcionales",
+     *   tags={"Admin", "Contacts"},
+     *   security={{"sanctum":{}}},
+     *   @OA\Parameter(name="status", in="query", @OA\Schema(type="string", enum={"new", "read", "archived"})),
+     *   @OA\Parameter(name="page", in="query", @OA\Schema(type="integer", default=1)),
+     *   @OA\Parameter(name="per_page", in="query", @OA\Schema(type="integer", default=15)),
+     *   @OA\Response(response=200, description="Lista de mensajes", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="No autorizado")
+     * )
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $status = $request->query('status');
+        $perPage = (int) $request->query('per_page', 15);
+        
+        $messages = $this->service->getPaginatedMessages($perPage, $status);
+        
+        return response()->json([
+            'success' => true,
+            'data' => ContactMessageResource::collection($messages),
+            'meta' => [
+                'current_page' => $messages->currentPage(),
+                'last_page' => $messages->lastPage(),
+                'per_page' => $messages->perPage(),
+                'total' => $messages->total(),
+                'unread_count' => $this->service->getUnreadCount(),
+            ],
+        ]);
+    }
+
+    /**
+     * @OA\Get(
+     *   path="/admin/contacts/{id}",
+     *   summary="Ver detalle de mensaje",
+     *   description="Obtiene detalle completo de un mensaje de contacto",
+     *   tags={"Admin", "Contacts"},
+     *   security={{"sanctum":{}}},
+     *   @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *   @OA\Response(response=200, description="Detalle del mensaje", @OA\JsonContent()),
+     *   @OA\Response(response=404, description="Mensaje no encontrado"),
+     *   @OA\Response(response=401, description="No autorizado")
+     * )
+     */
+    public function show(int $id): JsonResponse
+    {
+        $message = $this->service->getMessageById($id);
+        
+        if (!$message) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mensaje no encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $message->toArray(),
+        ]);
+    }
+
+    /**
+     * @OA\Patch(
+     *   path="/admin/contacts/{id}/read",
+     *   summary="Marcar mensaje como leído",
+     *   description="Cambia el estado del mensaje a 'read'",
+     *   tags={"Admin", "Contacts"},
+     *   security={{"sanctum":{}}},
+     *   @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *   @OA\Response(response=200, description="Estado actualizado"),
+     *   @OA\Response(response=404, description="Mensaje no encontrado"),
+     *   @OA\Response(response=401, description="No autorizado")
+     * )
+     */
+    public function markAsRead(int $id): JsonResponse
+    {
+        $success = $this->service->markAsRead($id);
+        
+        if (!$success) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mensaje no encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Mensaje marcado como leído'
+        ]);
+    }
+
+    /**
+     * @OA\Patch(
+     *   path="/admin/contacts/{id}/archive",
+     *   summary="Archivar mensaje",
+     *   description="Cambia el estado del mensaje a 'archived'",
+     *   tags={"Admin", "Contacts"},
+     *   security={{"sanctum":{}}},
+     *   @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *   @OA\Response(response=200, description="Estado actualizado"),
+     *   @OA\Response(response=404, description="Mensaje no encontrado"),
+     *   @OA\Response(response=401, description="No autorizado")
+     * )
+     */
+    public function markAsArchived(int $id): JsonResponse
+    {
+        $success = $this->service->markAsArchived($id);
+        
+        if (!$success) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mensaje no encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Mensaje archivado correctamente'
+        ]);
+    }
+
+    /**
+     * @OA\Patch(
+     *   path="/admin/contacts/{id}/note",
+     *   summary="Agregar nota interna",
+     *   description="Agrega o actualiza una nota interna al mensaje",
+     *   tags={"Admin", "Contacts"},
+     *   security={{"sanctum":{}}},
+     *   @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *   @OA\RequestBody(required=true, @OA\JsonContent(
+     *     @OA\Property(property="note", type="string", example="Cliente interesado en servicio enterprise")
+     *   )),
+     *   @OA\Response(response=200, description="Nota actualizada"),
+     *   @OA\Response(response=404, description="Mensaje no encontrado"),
+     *   @OA\Response(response=401, description="No autorizado")
+     * )
+     */
+    public function updateNote(Request $request, int $id): JsonResponse
+    {
+        $validated = $request->validate([
+            'note' => ['nullable', 'string', 'max:5000']
+        ]);
+        
+        $success = $this->service->updateAdminNote($id, $validated['note'] ?? null);
+        
+        if (!$success) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mensaje no encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Nota actualizada correctamente'
+        ]);
     }
 }

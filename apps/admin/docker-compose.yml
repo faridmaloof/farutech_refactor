@@ -1,0 +1,48 @@
+# =============================================================================
+# ADMIN APP - FARUTECH WEBSITE ECOSYSTEM
+# TASK-017: Despliegue independiente de Admin
+# =============================================================================
+# Este docker-compose levanta la aplicación Admin con sus componentes:
+# - Frontend: React + Vite (build estático servido por Nginx)
+#   Accesible vía path /admin en el gateway HAProxy
+#
+# CONEXIÓN A INFRAESTRUCTURA:
+# - Opción A (Local): Usar red externa 'farutech-network' creada por infrastructure/docker-compose.yml
+# - Opción B (Externo): Configurar variables API_URL apuntando a backend externo
+#
+# USO (Local con infraestructura):
+#   cd infrastructure && docker-compose up -d    # Primero levantar infra
+#   cd ../apps/admin && docker-compose up -d     # Luego levantar admin
+#
+# USO (Externos/Producción):
+#   cp .env.example .env                         # Configurar hosts externos
+#   docker-compose up -d
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ===========================================================================
+  # FRONTEND - Admin Panel (React + Vite + Nginx)
+  # ===========================================================================
+  admin-frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    container_name: farutech-admin-frontend
+    restart: unless-stopped
+    networks:
+      - app-network
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8000}
+      - VITE_BASE_PATH=/admin
+
+# =============================================================================
+# NETWORKS - Se conecta a la red de infraestructura si existe localmente
+# =============================================================================
+networks:
+  app-network:
+    driver: bridge
+    name: farutech-app-admin-network
+    external:
+      required: false

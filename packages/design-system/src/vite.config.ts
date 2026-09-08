@@ -27,6 +27,7 @@ export default defineConfig({
         'components/crud': path.resolve(__dirname, 'components/crud/index.ts'),
         'components/layout': path.resolve(__dirname, 'components/layout/index.ts'),
         'components/basic': path.resolve(__dirname, 'components/basic/index.ts'),
+        'components/navigation': path.resolve(__dirname, 'components/navigation/index.ts'),
         'auth-screens': path.resolve(__dirname, 'auth-screens/index.ts'),
         tokens: path.resolve(__dirname, 'tokens/index.ts'),
       },

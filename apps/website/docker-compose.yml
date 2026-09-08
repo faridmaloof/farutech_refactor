@@ -1,0 +1,142 @@
+# =============================================================================
+# WEBSITE APP - FARUTECH WEBSITE ECOSYSTEM
+# TASK-017: Despliegue independiente de Website
+# =============================================================================
+# Este docker-compose levanta la aplicación Website con sus componentes:
+# - Frontend: React + Vite (build estático servido por Nginx)
+# - Backend: Laravel 11 API (PHP 8.3)
+# - Workers: Procesamiento en segundo plano (colas Redis)
+#
+# CONEXIÓN A INFRAESTRUCTURA:
+# - Opción A (Local): Usar red externa 'farutech-network' creada por infrastructure/docker-compose.yml
+# - Opción B (Externo): Configurar variables DB_HOST, MONGO_HOST, REDIS_HOST apuntando a servicios externos
+#
+# USO (Local con infraestructura):
+#   cd infrastructure && docker-compose up -d    # Primero levantar infra
+#   cd ../apps/website && docker-compose up -d   # Luego levantar website
+#
+# USO (Externos/Producción):
+#   cp .env.example .env                         # Configurar hosts externos
+#   docker-compose up -d
+#
+# VARIABLES DE ENTORNO CLAVE:
+#   DB_HOST=mysql (local) o hostinger-mysql-host (externo)
+#   MONGO_HOST=mongodb (local) o atlas-uri (externo)
+#   REDIS_HOST=redis (local) o redis-cloud-uri (externo)
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ===========================================================================
+  # FRONTEND - Website público (React + Vite + Nginx)
+  # ===========================================================================
+  website-frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    container_name: farutech-website-frontend
+    restart: unless-stopped
+    networks:
+      - app-network
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8000}
+    depends_on:
+      - website-backend
+
+  # ===========================================================================
+  # BACKEND - Laravel 11 API
+  # ===========================================================================
+  website-backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    container_name: farutech-website-backend
+    restart: unless-stopped
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_URL=${APP_URL:-http://localhost}
+      
+      # MySQL (Hostinger compatible)
+      - DB_CONNECTION=mysql
+      - DB_HOST=${DB_HOST:-mysql}
+      - DB_PORT=3306
+      - DB_DATABASE=${MYSQL_DATABASE:-farutech_website}
+      - DB_USERNAME=${MYSQL_USER:-farutech}
+      - DB_PASSWORD=${MYSQL_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+      
+      # MongoDB (para oportunidades)
+      - MONGODB_HOST=${MONGODB_HOST:-mongodb}
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=${MONGODB_DATABASE:-farutech_opportunities}
+      - MONGODB_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-farutech}
+      - MONGODB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+      
+      # Redis (colas y caché)
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+      
+      # Mail
+      - MAIL_MAILER=${MAIL_MAILER:-smtp}
+      - MAIL_HOST=${MAIL_HOST:-mailhog}
+      - MAIL_PORT=${MAIL_PORT:-1025}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-noreply@farutech.com}
+    networks:
+      - app-network
+    volumes:
+      - backend-storage:/var/www/html/storage
+    depends_on:
+      - website-frontend
+
+  # ===========================================================================
+  # WORKERS - Procesamiento de colas (Redis Queue Workers)
+  # ===========================================================================
+  website-workers:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    container_name: farutech-website-workers
+    restart: unless-stopped
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - DB_CONNECTION=mysql
+      - DB_HOST=${DB_HOST:-mysql}
+      - DB_PORT=3306
+      - DB_DATABASE=${MYSQL_DATABASE:-farutech_website}
+      - DB_USERNAME=${MYSQL_USER:-farutech}
+      - DB_PASSWORD=${MYSQL_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+      - MONGODB_HOST=${MONGODB_HOST:-mongodb}
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=${MONGODB_DATABASE:-farutech_opportunities}
+      - MONGODB_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-farutech}
+      - MONGODB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
+    networks:
+      - app-network
+    volumes:
+      - backend-storage:/var/www/html/storage
+    depends_on:
+      - website-backend
+
+# =============================================================================
+# NETWORKS - Se conecta a la red de infraestructura si existe localmente
+# =============================================================================
+networks:
+  app-network:
+    driver: bridge
+    name: farutech-app-website-network
+    external:
+      required: false
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  backend-storage:
+    driver: local
+    name: farutech-website-backend-storage

@@ -2,10 +2,12 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { LoginScreen } from "@farutech/design-system/auth-screens";
 import { MainLayout } from "@farutech/design-system/components/layout";
 
-// Páginas Admin (pendientes de migrar al Design System)
+// Páginas Admin
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminLeadsPage from "./pages/AdminLeadsPage";
 import AdminSettingsPage from "./pages/AdminSettingsPage";
+import NewslettersPage from "./pages/NewslettersPage";
+import { ContactMessagesPage } from "./pages/ContactMessagesPage";
 
 function RequireAuth() {
   const token = localStorage.getItem("admin_token");
@@ -26,6 +28,16 @@ export default function App() {
         <Route path="/leads" element={
           <MainLayout>
             <AdminLeadsPage />
+          </MainLayout>
+        } />
+        <Route path="/messages" element={
+          <MainLayout>
+            <ContactMessagesPage />
+          </MainLayout>
+        } />
+        <Route path="/newsletters" element={
+          <MainLayout>
+            <NewslettersPage />
           </MainLayout>
         } />
         <Route path="/settings" element={
