@@ -1,15 +1,15 @@
 # =============================================================================
 # INFRAESTRUCTURA BASE - FARUTECH ECOSYSTEM
-# TASK-000A: Consolidación completada - 3 motores BD + Redis
+# TASK-017: Infraestructura simplificada - Solo PostgreSQL + Redis (ADR-004)
 # =============================================================================
 # Este docker-compose levanta TODA la infraestructura base necesaria:
 # - Gateway (HAProxy) para routing por dominios y puertos
-# - MySQL 8.4: Website público (lectura principalmente)
-# - PostgreSQL 17: Aplicaciones transaccionales (Admin, Intranet, API)
-# - MongoDB 8: Logs de auditoría y actividad de Admin
+# - PostgreSQL 17: Única base de datos para todas las aplicaciones
 # - Redis 7: Colas, caché y workers
 # - Mailhog: Email testing (desarrollo)
-# - phpMyAdmin, pgAdmin, Mongo Express: Gestión de BDs
+# - pgAdmin: Gestión de PostgreSQL
+#
+# NOTA: MySQL y MongoDB fueron eliminados según ADR-004 (re-alcance)
 #
 # USO:
 #   cp .env.example .env              # Configurar variables
@@ -18,7 +18,6 @@
 #   docker-compose ps                 # Ver estado
 #
 # DOMINIOS LOCALES (agregar al /etc/hosts):
-#   127.0.0.1 api.farutech.local
 #   127.0.0.1 admin.farutech.local
 #   127.0.0.1 www.farutech.local
 #   127.0.0.1 farutech.local
@@ -35,9 +34,7 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-      - "3306:3306"
       - "5432:5432"
-      - "27017:27017"
       - "6379:6379"
     volumes:
       - ./gateway/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
@@ -49,39 +46,13 @@ services:
         aliases:
           - db.farutech.local
     depends_on:
-      mysql:
-        condition: service_healthy
       postgres:
-        condition: service_healthy
-      mongodb:
         condition: service_healthy
       redis:
         condition: service_healthy
 
   # ===========================================================================
-  # MYSQL - Website público
-  # ===========================================================================
-  mysql:
-    image: mysql:8.4
-    container_name: farutech-mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-CHANGE_ME_OR_SET_SECRET}
-      MYSQL_USER: ${MYSQL_USER:-CHANGE_ME_OR_SET_SECRET}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
-    volumes:
-      - ./mysql/data:/var/lib/mysql
-    networks:
-      - farutech-data-network
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-
-  # ===========================================================================
-  # POSTGRESQL - Aplicaciones transaccionales
+  # POSTGRESQL - Única base de datos para todas las aplicaciones
   # ===========================================================================
   postgres:
     image: postgres:17-alpine
@@ -100,27 +71,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-
-  # ===========================================================================
-  # MONGODB - Logs de auditoría
-  # ===========================================================================
-  mongodb:
-    image: mongo:8
-    container_name: farutech-mongodb
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-CHANGE_ME_OR_SET_SECRET}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-CHANGE_ME_OR_SET_SECRET}
-    volumes:
-      - ./mongodb/data:/data/db
-    networks:
-      - farutech-data-network
-    healthcheck:
-      test: ["CMD-SHELL", "mongosh --quiet --eval \"db.adminCommand('ping').ok\" | grep -q 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 12
-      start_period: 30s
 
   # ===========================================================================
   # REDIS - Colas, caché y workers
@@ -196,34 +146,17 @@ services:
     restart: unless-stopped
     environment:
       - APP_ENV=production
-      - DB_CONNECTION=mysql
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=${MYSQL_DATABASE}
-      - DB_USERNAME=${MYSQL_USER}
-      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=${POSTGRES_DB}
+      - DB_USERNAME=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
     networks:
       - farutech-data-network
       - farutech-proxy-network
     depends_on:
-      mysql:
-        condition: service_healthy
-
-  # ===========================================================================
-  # PHPMYADMIN - MySQL Management
-  # ===========================================================================
-  phpmyadmin:
-    image: phpmyadmin:5-apache
-    container_name: farutech-phpmyadmin
-    restart: unless-stopped
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    networks:
-      - farutech-data-network
-      - farutech-proxy-network
-    depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
 
   # ===========================================================================
