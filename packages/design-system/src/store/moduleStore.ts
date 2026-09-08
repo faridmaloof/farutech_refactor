@@ -1,23 +1,25 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
+import type { ReactNode } from 'react'
 
-interface Module {
-  id: string;
-  name: string;
-  icon: string;
-  path: string;
-  active?: boolean;
+export interface Module {
+  id: string
+  name: string
+  icon?: ReactNode
+  path?: string
+  active?: boolean
+  description?: string
 }
 
 interface ModuleState {
-  modules: Module[];
-  currentModule: Module | null;
-  setModules: (modules: Module[]) => void;
-  setCurrentModule: (module: Module | null) => void;
+  modules: Module[]
+  currentModule: string | null
+  setModules: (modules: Module[]) => void
+  setCurrentModule: (moduleId: string | null) => void
 }
 
 export const useModuleStore = create<ModuleState>((set) => ({
   modules: [],
   currentModule: null,
   setModules: (modules) => set({ modules }),
-  setCurrentModule: (module) => set({ currentModule: module }),
-}));
+  setCurrentModule: (moduleId) => set({ currentModule: moduleId }),
+}))
