@@ -1,0 +1,157 @@
+name: Version changed packages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: version-packages-main
+  cancel-in-progress: false
+
+env:
+  DESIGN_SYSTEM_PATH: packages/design-system/src
+  FRAMEWORK_CORE_PATH: packages/framework-automation/src/Framework.Core
+
+jobs:
+  detect-and-version:
+    name: Validate and version changed packages
+    runs-on: ubuntu-latest
+    outputs:
+      design_system_changed: ${{ steps.detect.outputs.design_system_changed }}
+      framework_core_changed: ${{ steps.detect.outputs.framework_core_changed }}
+      design_system_version: ${{ steps.version.outputs.design_system_version }}
+      framework_core_version: ${{ steps.version.outputs.framework_core_version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Detect changed package files
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Compare against the first parent so this works for squash and merge commits.
+          changed_files="$(git diff-tree --no-commit-id --name-only -r HEAD^1 HEAD)"
+
+          design_system_changed=false
+          framework_core_changed=false
+
+          while IFS= read -r file; do
+            [[ -z "$file" ]] && continue
+            case "$file" in
+              "$DESIGN_SYSTEM_PATH"/*) design_system_changed=true ;;
+              "$FRAMEWORK_CORE_PATH"/*) framework_core_changed=true ;;
+            esac
+          done <<< "$changed_files"
+
+          echo "design_system_changed=$design_system_changed" >> "$GITHUB_OUTPUT"
+          echo "framework_core_changed=$framework_core_changed" >> "$GITHUB_OUTPUT"
+
+          echo "Design System changed: $design_system_changed"
+          echo "Framework.Core changed: $framework_core_changed"
+          printf 'Changed files:\n%s\n' "$changed_files"
+
+      - name: Configure Git
+        if: steps.detect.outputs.design_system_changed == 'true' || steps.detect.outputs.framework_core_changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Version changed packages
+        id: version
+        if: steps.detect.outputs.design_system_changed == 'true' || steps.detect.outputs.framework_core_changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          design_system_version=""
+          framework_core_version=""
+
+          if [[ "${{ steps.detect.outputs.design_system_changed }}" == "true" ]]; then
+            cd "$GITHUB_WORKSPACE/$DESIGN_SYSTEM_PATH"
+            npm install --package-lock-only --ignore-scripts
+            design_system_version="$(npm version patch --no-git-tag-version | tr -d 'v')"
+            cd "$GITHUB_WORKSPACE"
+          fi
+
+          if [[ "${{ steps.detect.outputs.framework_core_changed }}" == "true" ]]; then
+            csproj="$GITHUB_WORKSPACE/$FRAMEWORK_CORE_PATH/Framework.Core.csproj"
+            current_version="$(dotnet msbuild "$csproj" -getProperty:Version | tail -n 1 | tr -d '\r')"
+
+            if [[ ! "$current_version" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+              echo "Framework.Core version is not a stable SemVer triplet: $current_version"
+              exit 1
+            fi
+
+            major="${BASH_REMATCH[1]}"
+            minor="${BASH_REMATCH[2]}"
+            patch="${BASH_REMATCH[3]}"
+            framework_core_version="$major.$minor.$((patch + 1))"
+            sed -i -E "s#<Version>[0-9]+\.[0-9]+\.[0-9]+</Version>#<Version>${framework_core_version}</Version>#" "$csproj"
+          fi
+
+          echo "design_system_version=$design_system_version" >> "$GITHUB_OUTPUT"
+          echo "framework_core_version=$framework_core_version" >> "$GITHUB_OUTPUT"
+          echo "Design System version: ${design_system_version:-unchanged}"
+          echo "Framework.Core version: ${framework_core_version:-unchanged}"
+
+      - name: Validate Design System
+        if: steps.detect.outputs.design_system_changed == 'true'
+        working-directory: packages/design-system/src
+        run: |
+          npm ci
+          npm run build
+          npm run lint
+          npm test -- --run
+          npm pack --dry-run
+
+      - name: Validate Framework.Core
+        if: steps.detect.outputs.framework_core_changed == 'true'
+        working-directory: packages/framework-automation/src/Framework.Core
+        run: |
+          dotnet restore
+          dotnet build --configuration Release --no-restore
+          dotnet pack --configuration Release --no-build --output ./nupkg
+          test -n "$(find ./nupkg -maxdepth 1 -name '*.nupkg' -print -quit)"
+
+      - name: Commit package versions
+        if: steps.detect.outputs.design_system_changed == 'true' || steps.detect.outputs.framework_core_changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git add "$DESIGN_SYSTEM_PATH/package.json" "$DESIGN_SYSTEM_PATH/package-lock.json" "$FRAMEWORK_CORE_PATH/Framework.Core.csproj"
+
+          if git diff --cached --quiet; then
+            echo "No version changes were produced."
+            exit 1
+          fi
+
+          git commit -m "chore(release): version changed packages [skip ci]"
+          git push origin HEAD:main
+
+      - name: Create release tags
+        if: steps.detect.outputs.design_system_changed == 'true' || steps.detect.outputs.framework_core_changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -n "${{ steps.version.outputs.design_system_version }}" ]]; then
+            git tag "design-system-v${{ steps.version.outputs.design_system_version }}"
+            git push origin "design-system-v${{ steps.version.outputs.design_system_version }}"
+          fi
+
+          if [[ -n "${{ steps.version.outputs.framework_core_version }}" ]]; then
+            git tag "framework-core-v${{ steps.version.outputs.framework_core_version }}"
+            git push origin "framework-core-v${{ steps.version.outputs.framework_core_version }}"
+          fi
