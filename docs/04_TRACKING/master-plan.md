@@ -1,7 +1,7 @@
 # 📊 Master Tracking Plan — Farutech Website Ecosystem
 
-**Última actualización:** 2026-09-05
-**Estado General:** 🟡 En Desarrollo (Progreso real inferior al reportado previamente — ver nota de auditoría)
+**Última actualización:** 2026-09-07
+**Estado General:** 🟢 En Desarrollo (TASK-015 completada, cimientos técnicos consolidados)
 
 > ⚠️ **Nota de auditoría (2026-09-05):** el "45% implementado" reportado en la versión anterior de este documento no reflejaba piezas críticas del alcance funcional completo (módulos de Newsletter/Blog en admin, cotizaciones/tarifas, señales reales de Opportunity Search). Este documento se actualiza para incluir las tareas correctivas y las tareas que cierran brechas funcionales identificadas frente a la definición de producto completa. Ver también: [ADR-005](../01_ARCHITECTURE/adr/ADR-005_website_backend_consolidation.md), [ADR-006](../01_ARCHITECTURE/adr/ADR-006_admin_routing_strategy_v2.md), [ADR-007](../01_ARCHITECTURE/adr/ADR-007_platform_scope_separation.md).
 >
@@ -14,13 +14,13 @@
 | Fase | Nombre | Estado | Progreso | Tareas Asociadas |
 |------|--------|--------|----------|-------------------|
 | **FASE 1-2** | Auditoría y Línea Base | ✅ COMPLETADO | 100% | TASK-000A |
-| **FASE 3** | Decisiones Arquitectónicas (ADRs) | 🔄 EN PROGRESO | 80% | TASK-000B, TASK-000C, TASK-000D, y nuevas ADR-005/006/007 |
+| **FASE 3** | Decisiones Arquitectónicas (ADRs) | ✅ COMPLETADO | 100% | TASK-000B, TASK-000C, TASK-000D, ADR-005/006/007 |
 | **FASE 4** | Normalización de Documentación | 🔄 EN PROGRESO | 70% | TASK-007, TASK-008, TASK-016 |
 | **FASE 5** | Especificaciones SDD | ✅ COMPLETADO | 100% | TASK-003 (SPEC-001), TASK-004 (SPEC-002 v1.1), SPEC-003/004/005/006 |
 | **FASE 7** | Foundation Admin & API Client | 🔄 EN PROGRESO | 60% | TASK-009, TASK-010, TASK-011 |
 | **FASE 11** | Implementación MiniCRM (Admin) | 🔄 EN PROGRESO | 30% | TASK-005 (Leads), TASK-006 (Opportunities) |
 | **FASE 13** | Testing & Calidad E2E | ⬜ BACKLOG | 15% | TASK-012 |
-| **FASE 14** | Corrección de Deuda Técnica (Auditoría 2026-09) | ⬜ BACKLOG | 0% | TASK-013 a TASK-017, TASK-023, TASK-024 |
+| **FASE 14** | Corrección de Deuda Técnica (Auditoría 2026-09) | 🔄 EN PROGRESO | 60% | TASK-013✅, TASK-014✅, TASK-015✅, TASK-016🔄, TASK-017⬜, TASK-023⬜, TASK-024⬜ |
 | **FASE 15** | Cierre de Brechas Funcionales (Requisito 6 completo) | ⬜ BACKLOG | 0% | TASK-018 a TASK-022 |
 
 ---
