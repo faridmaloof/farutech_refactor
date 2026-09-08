@@ -1,0 +1,50 @@
+name: Publish Framework.Core
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'framework-core-v*'
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-framework-core
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build, validate and publish EnterpriseAutomation.Framework
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/framework-automation/src/Framework.Core
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack
+        run: dotnet pack --configuration Release --no-build --output ./nupkg
+
+      - name: Validate package
+        shell: bash
+        run: |
+          test -n "$(find ./nupkg -maxdepth 1 -name '*.nupkg' -print -quit)"
+          echo "NuGet package generated successfully."
+
+      - name: Publish to GitHub Packages
+        run: dotnet nuget push "./nupkg/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
