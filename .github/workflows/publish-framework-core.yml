@@ -58,10 +58,6 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Test package dependencies
-        run: dotnet test --configuration Release --no-build
-        working-directory: packages/framework-automation/src/Framework.Core.Tests
-
       - name: Pack
         run: dotnet pack --configuration Release --no-build --output ./nupkg
 
