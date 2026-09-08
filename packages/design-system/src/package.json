@@ -55,13 +55,15 @@
     "**/*.css"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@farutech",
+    "registry": "https://npm.pkg.github.com",
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Farutech/design-system.git"
+    "url": "https://github.com/faridmaloof/farutech_refactor.git",
+    "directory": "packages/design-system/src"
   },
+  "homepage": "https://github.com/faridmaloof/farutech_refactor/tree/main/packages/design-system/src",
   "keywords": [
     "react",
     "design-system",
@@ -70,6 +72,9 @@
     "tailwindcss",
     "typescript"
   ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite build --watch",
     "build": "tsc && vite build",
@@ -80,7 +85,8 @@
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "pack:check": "npm pack --dry-run"
   },
   "peerDependencies": {
     "react": ">=18.0.0 <20.0.0",
@@ -132,6 +138,3 @@
     "esbuild@0.28.2": true
   }
 }
-
-
-

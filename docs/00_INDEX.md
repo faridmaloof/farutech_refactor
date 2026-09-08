@@ -2,75 +2,86 @@
 
 Bienvenido a la documentación técnica del **Website Ecosystem** de Farutech.
 
-> ⚠️ Esta documentación cubre el sitio web público + su panel de administración (`/admin`). La futura plataforma multi-tenant (`platform`) tiene su propio documento de visión ([SPEC-003](02_SPECIFICATIONS/SPEC-003_Platform_Vision.md)) y su propio ADR de separación de alcance ([ADR-007](01_ARCHITECTURE/adr/ADR-007_platform_scope_separation.md)) — no confundir ambos alcances.
+> **Arquitectura vigente:** Website público + Admin integrado dentro de `apps/website`, accesible exclusivamente mediante `<dominio>/admin`. El backend Website/Admin vive en `apps/website/src/backend`. `apps/admin` no es arquitectura objetivo. Ver [ADR-008](01_ARCHITECTURE/adr/ADR-008_admin_hosting_and_ownership.md).
+>
+> La futura plataforma multi-tenant (`platform`) mantiene un alcance separado mediante [SPEC-003](02_SPECIFICATIONS/SPEC-003_Platform_Vision.md) y [ADR-007](01_ARCHITECTURE/adr/ADR-007_platform_scope_separation.md).
 
 ---
 
 ## 🧭 Mapa General
 
-```
+```text
 docs/
-├── 00_INDEX.md                      # [Este documento] Índice maestro
-├── README.md                        # Resumen ejecutivo y dashboard
-│
-├── 01_ARCHITECTURE/                 # Arquitectura de Alto Nivel y Decisiones
-│   ├── overview.md                  # Visión general técnica del sistema (Website Ecosystem)
-│   └── adr/                         # Architecture Decision Records (ADRs)
-│       ├── ADR-001_admin_routing_strategy.md         # ⚠️ SUPERSEDED por ADR-006
+├── 00_INDEX.md
+├── README.md
+├── 01_ARCHITECTURE/
+│   ├── overview.md
+│   └── adr/
+│       ├── ADR-001_admin_routing_strategy.md          # SUPERSEDED
 │       ├── ADR-002_design_system_structure.md
 │       ├── ADR-003_intranet_strategy.md
-│       ├── ADR-004_multi_database_strategy.md        # ⚠️ Decidido, no ejecutado (TASK-017)
-│       ├── ADR-005_website_backend_consolidation.md  # 🆕 apps/api → apps/website/src/backend
-│       ├── ADR-006_admin_routing_strategy_v2.md      # 🆕 Admin bajo path /admin (vigente)
-│       └── ADR-007_platform_scope_separation.md      # 🆕 Website vs. futura Platform
-│
-├── 02_SPECIFICATIONS/               # Especificaciones Funcionales y de Dominio (SDD)
-│   ├── SPEC-001_Lead_Management.md          # Mini CRM de Leads
-│   ├── SPEC-002_Opportunity_Search.md       # Búsqueda de oportunidades (v1.1 con señales reales de negocio)
-│   ├── SPEC-003_Platform_Vision.md          # 🆕 Visión futura de Platform (no ejecutable aún)
-│   ├── SPEC-004_Newsletter_Management.md    # 🆕 Newsletter con editor Visual/HTML
-│   ├── SPEC-005_Blog_CMS.md                 # 🆕 Blog CMS con SEO completo
-│   └── SPEC-006_Quotes_And_Tariff_Management.md  # 🆕 Cotizaciones + control tarifario ("minipos")
-│
-├── 03_IMPLEMENTATION/               # Guías para Desarrolladores
-│   ├── getting-started.md           # Setup local y primeros pasos (rutas corregidas)
-│   ├── coding-standards.md          # Estándares de TypeScript, React y PHP
-│   └── testing-strategy.md          # Estrategia de testing (Unit, Integration, E2E)
-│
-├── 04_TRACKING/                     # Sistema de Gestión y Tareas
-│   ├── master-plan.md               # Dashboard consolidado de avance (actualizado con FASE 14-15)
-│   ├── guia-de-uso.md               # Ciclo de vida y reglas de tasks
-│   ├── change-log/
-│   │   └── CHANGELOG.md             # Registro cronológico de cambios
-│   └── tasks/                       # Tareas individuales (TASK-000A a TASK-024)
-│
-└── 99_ARCHIVE/                      # Auditorías y documentos históricos
+│       ├── ADR-004_multi_database_strategy.md
+│       ├── ADR-005_website_backend_consolidation.md
+│       ├── ADR-006_admin_routing_strategy_v2.md       # SUPERSEDED por ADR-008
+│       ├── ADR-007_platform_scope_separation.md       # VIGENTE
+│       ├── ADR-008_admin_hosting_and_ownership.md     # VIGENTE
+│       └── ADR-009_package_distribution_strategy.md   # VIGENTE
+├── 02_SPECIFICATIONS/
+├── 03_IMPLEMENTATION/
+├── 04_TRACKING/
+│   ├── master-plan.md
+│   ├── TASK_WORKFLOW_AND_HANDOFF.md
+│   ├── RECONCILIATION_MATRIX.md
+│   ├── guia-de-uso.md
+│   ├── IMPLEMENTATION_PROMPT.md
+│   ├── change-log/CHANGELOG.md
+│   └── tasks/
+└── 99_ARCHIVE/                                        # evidencia histórica
 ```
 
----
+## 🔗 Enlaces rápidos
 
-## 🔗 Enlaces Rápidos
+- [Master Plan](04_TRACKING/master-plan.md)
+- [Workflow, ownership y quality gates](04_TRACKING/TASK_WORKFLOW_AND_HANDOFF.md)
+- [Matriz de reconciliación](04_TRACKING/RECONCILIATION_MATRIX.md)
+- [Guía de Tracking](04_TRACKING/guia-de-uso.md)
+- [ADRs](01_ARCHITECTURE/adr/)
+- [Especificaciones](02_SPECIFICATIONS/)
+- [CHANGELOG](04_TRACKING/change-log/CHANGELOG.md)
+- [TASK-025 — Integración definitiva del Admin](04_TRACKING/tasks/TASK-025.md)
+- [TASK-026 — Publicación de paquetes](04_TRACKING/tasks/TASK-026-PACKAGES-PUBLISHING.md)
+- [TASK-027 — Infraestructura y topología](04_TRACKING/tasks/TASK-027-INFRASTRUCTURE-TOPOLOGY.md)
 
-- **Dashboard Principal de Tareas:** [Master Plan](04_TRACKING/master-plan.md)
-- **Especificación de Leads:** [SPEC-001](02_SPECIFICATIONS/SPEC-001_Lead_Management.md)
-- **Especificación de Oportunidades:** [SPEC-002 v1.1](02_SPECIFICATIONS/SPEC-002_Opportunity_Search.md)
-- **Visión de Platform (futuro):** [SPEC-003](02_SPECIFICATIONS/SPEC-003_Platform_Vision.md)
-- **Newsletter:** [SPEC-004](02_SPECIFICATIONS/SPEC-004_Newsletter_Management.md)
-- **Blog CMS:** [SPEC-005](02_SPECIFICATIONS/SPEC-005_Blog_CMS.md)
-- **Cotizaciones y Tarifas:** [SPEC-006](02_SPECIFICATIONS/SPEC-006_Quotes_And_Tariff_Management.md)
-- **Registro de Decisiones (ADRs):** [Directorio ADR](01_ARCHITECTURE/adr/)
-- **Historial de Cambios:** [CHANGELOG](04_TRACKING/change-log/CHANGELOG.md)
+## 🏗️ Reglas arquitectónicas clave
 
----
+1. **Admin:** `<dominio>/admin`.
+2. **No:** `admin.<dominio>`.
+3. **Ownership:** Admin dentro de `apps/website`.
+4. **Backend:** `apps/website/src/backend`.
+5. **No:** `apps/admin` como aplicación objetivo.
+6. **Design System:** `packages/design-system`.
+7. **Automation Core:** `packages/framework-automation/src/Framework.Core`.
+8. **Ejemplo:** `Examples/tests/framework-automation` no es un segundo framework.
+9. **Histórico:** documentación obsoleta se conserva y se marca `SUPERSEDED`/`ARCHIVED`.
+10. **Platform:** alcance futuro separado; no mezclarlo con Website Ecosystem.
+11. **Packages:** Design System y Framework.Core tienen versionado y distribución independientes.
+12. **Orquestación:** `/TL` y `/lider-Tecnico` son la entrada recomendada para implementación multiagente.
 
-## 🆕 Novedades de esta Actualización (2026-09-05)
+## 📌 Estados documentales
 
-Se incorporó una auditoría técnica completa que identificó brechas entre la documentación/decisiones previas y el código real, y brechas entre el código real y la definición completa de producto. Resultado:
+- `TODO` — identificado, aún no preparado.
+- `READY` — puede ejecutarse si sus dependencias están satisfechas.
+- `IN PROGRESS` — ejecución activa.
+- `BLOCKED` — requiere resolver una dependencia/decisión.
+- `VALIDATION` — implementación terminada, pendiente de evidencia final.
+- `DONE` — criterios satisfechos con evidencia.
+- `SUPERSEDED` — reemplazado por una decisión/implementación posterior.
+- `ARCHIVED` — conservado como historia y no aplicable al estado actual.
 
-- **3 ADRs nuevos** (ADR-005, ADR-006, ADR-007) que resuelven contradicciones detectadas (admin por subdominio vs. path; backend separado vs. consolidado; ausencia total de visión de plataforma futura)
-- **1 ADR marcado como superseded** (ADR-001) y **1 ADR marcado como no ejecutado** (ADR-004)
-- **4 especificaciones nuevas** (SPEC-003 a SPEC-006) que cubren brechas funcionales del requisito 6 (Newsletter, Blog, Cotizaciones/Tarifas, Visión de Platform)
-- **1 adendo** a SPEC-002 (v1.1) corrigiendo el modelo de datos faltante y agregando señales reales de detección de negocio
-- **12 tareas nuevas** (TASK-013 a TASK-024) organizadas en dos fases nuevas: FASE 14 (deuda técnica) y FASE 15 (cierre de brechas funcionales)
+## 🧾 Reconciliación 2026-09-07
 
-Ver el prompt de implementación consolidado en `docs/04_TRACKING/IMPLEMENTATION_PROMPT.md` para retomar este trabajo con un equipo de desarrollo o un agente de codificación.
+ADR-007 queda reservado para Platform. La estrategia de distribución de paquetes se normaliza como ADR-009. La tarea de publicación de paquetes se normaliza como TASK-026 porque TASK-017 corresponde a infraestructura histórica.
+
+ADR-006/TASK-015 describieron una etapa intermedia en la que el Admin era una aplicación independiente. Esa etapa queda superseded por ADR-008/TASK-025.
+
+Las referencias históricas a `apps/admin`, subdominios o repositorios separados pueden permanecer cuando documenten decisiones anteriores, pero no son instrucciones actuales.

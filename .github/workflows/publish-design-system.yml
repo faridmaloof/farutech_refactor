@@ -1,0 +1,49 @@
+name: Publish Design System
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'design-system-v*'
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-design-system
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build, validate and publish @farutech/design-system
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/design-system/src
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
+          cache: npm
+          cache-dependency-path: packages/design-system/src/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Package validation
+        run: npm pack --dry-run
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
