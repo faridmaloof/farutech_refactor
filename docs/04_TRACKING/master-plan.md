@@ -7,20 +7,18 @@
 >
 > Este documento cubre únicamente el **Website Ecosystem**. La futura `platform` tiene alcance separado según ADR-007/SPEC-003.
 
----
-
 ## 🎯 Fases
 
 | Fase | Estado | Tareas principales |
 |---|---|---|
 | FASE 1-2 — Auditoría/Línea base | ✅ COMPLETADO | TASK-000A |
 | FASE 3 — Decisiones arquitectónicas | ✅ COMPLETADO | TASK-000B/C/D, ADR-005/006/007/008/009 |
-| FASE 4 — Normalización documental | 🔄 RECONCILIACIÓN | TASK-007/008/016 + reconciliación |
+| FASE 4 — Normalización documental | 🔄 RECONCILIACIÓN | TASK-007/008/016/028 |
 | FASE 5 — SDD | ✅ COMPLETADO | TASK-003/004, SPEC-001..006 |
-| FASE 7/9 — Foundation Admin | ⚠️ RECONCILIAR | TASK-009/010/011 → ubicación definitiva en Website |
-| FASE 11 — MiniCRM Admin | 🔄 EN DESARROLLO | TASK-005/006; ubicación objetivo en Website |
+| FASE 7/9 — Foundation Admin | ⚠️ RECONCILIAR | TASK-009/010/011 → Website |
+| FASE 11 — MiniCRM Admin | 🔄 EN DESARROLLO | TASK-005/006 |
 | FASE 13 — Testing | ⬜ BACKLOG | TASK-012 |
-| FASE 14 — Deuda técnica/reconciliación | 🔄 EN PROGRESO | TASK-013/014/016/025/027 + decisiones de release |
+| FASE 14 — Deuda técnica/reconciliación | 🔄 EN PROGRESO | TASK-013/014/016/025/027 + release |
 | FASE 15 — Brechas funcionales | ⬜ BACKLOG | TASK-018..022 |
 
 ## 📋 Tablero Maestro
@@ -33,65 +31,50 @@
 | TASK-000D | ⚠️ DECIDIDO / NO EJECUTADO | HIGH | ADR-004; consolidación pendiente |
 | TASK-003 | ✅ DONE | HIGH | SPEC-001 |
 | TASK-004 | 🔄 EXTENDIDA v1.1 | CRÍTICO | SPEC-002 |
-| TASK-005 | 🔄 EN DESARROLLO | CRÍTICO | Leads Admin; debe alinearse con Website |
-| TASK-006 | 🔄 EN DESARROLLO | CRÍTICO | Opportunities; debe alinearse con Website |
-| TASK-007 | 🔄 RECONCILIAR | MEDIUM | README/documentación vigente |
-| TASK-008 | 🔄 RECONCILIAR | MEDIUM | Índice/documentación |
-| TASK-009 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | No crear apps/admin; integrar en Website |
+| TASK-005 | 🔄 EN DESARROLLO | CRÍTICO | Leads Admin |
+| TASK-006 | 🔄 EN DESARROLLO | CRÍTICO | Opportunities |
+| TASK-007 | 🔄 RECONCILIAR | MEDIUM | README |
+| TASK-008 | 🔄 RECONCILIAR | MEDIUM | Índice/docs |
+| TASK-009 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | No apps/admin |
 | TASK-010 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | Design System en Website/Admin |
 | TASK-011 | ⚠️ SUPERSEDED/REUBICAR | CRÍTICO | API client en Website |
 | TASK-012 | ⬜ BACKLOG | HIGH | Testing unificado |
 | TASK-013 | ✅ DONE | CRÍTICO | Framework.Automation.sln |
 | TASK-014 | ✅ DONE | CRÍTICO | Backend consolidado |
-| TASK-015 | ⚠️ SUPERSEDED | CRÍTICO | `/admin` correcto; topología independiente obsoleta |
+| TASK-015 | ⚠️ SUPERSEDED | CRÍTICO | Topología independiente obsoleta |
 | TASK-016 | ⚠️ REABRIR/RECONCILIAR | HIGH | Reconciliar contra ADR-008 |
-| TASK-017 | ⬜ BACKLOG | HIGH | Infraestructura histórica; reemplazada por TASK-027 donde contradice ADR-008 |
+| TASK-017 | ⚠️ SUPERSEDED | HIGH | Topología de infraestructura anterior; ver TASK-027 |
 | TASK-018 | ⬜ BACKLOG | HIGH | Contacto |
 | TASK-019 | ⬜ BACKLOG | HIGH | Newsletter |
 | TASK-020 | ⬜ BACKLOG | HIGH | Blog CMS |
-| TASK-021 | ⬜ BACKLOG | CRÍTICO | Opportunity Search real |
+| TASK-021 | ⬜ BACKLOG | CRÍTICO | Opportunity Search |
 | TASK-022 | ⬜ BACKLOG | CRÍTICO | Cotizaciones/Tarifas |
 | TASK-023 | ⬜ BACKLOG | HIGH | JSON-LD/SEO |
-| TASK-024 | ⬜ BACKLOG | MEDIUM | Decisión Intranet |
-| TASK-025 | 🟢 READY | CRÍTICO | Integrar Admin definitivamente en Website |
-| TASK-026 | 🟡 READY_FOR_LOCAL_EXECUTION | HIGH | Publicar Design System + Framework.Core |
-| TASK-027 | ⬜ TODO | HIGH | Reconciliar infraestructura con arquitectura final |
-
-> **Nota de identidad:** `TASK-017.md` es la tarea histórica de infraestructura. La antigua `TASK-017-PACKAGES-PUBLISHING.md` tenía una colisión de ID y fue normalizada como `TASK-026-PACKAGES-PUBLISHING.md`.
+| TASK-024 | ⬜ BACKLOG | MEDIUM | Intranet |
+| TASK-025 | 🟢 READY | CRÍTICO | Integrar Admin definitivamente |
+| TASK-026 | 🟡 READY_FOR_LOCAL_EXECUTION | HIGH | Publicar paquetes |
+| TASK-027 | ⬜ TODO | HIGH | Infraestructura/topología |
+| TASK-028 | 🔄 IN PROGRESS | CRÍTICO | Auditoría documental continua |
 
 ## 🔗 Orden de ejecución vigente
 
 ```text
-RECONCILIACIÓN DOCUMENTAL
-    │
-    ├── ADR-008: Admin dentro de Website
-    ├── ADR-009: distribución de paquetes
-    ├── reconciliar tareas/documentos antiguos
-    └── eliminar contradicciones operativas
-             │
-             ▼
+TASK-028 — reconciliación documental
+        │
+        ▼
 TASK-025 — integrar Admin en apps/website
-             │
-             ├── frontend /admin
-             ├── backend consolidado
-             ├── tests + Framework.Core
-             ├── Docker / gateway / CI
-             └── retirar dependencia operativa de apps/admin
-             │
-             ├───────────────┐
-             ▼               ▼
-TASK-027                     TASK-026
-infraestructura              packages
-             │               │
-             └───────┬───────┘
-                     ▼
+        │
+        ├── TASK-027 — infraestructura
+        └── TASK-026 — packages
+        │
+        ▼
 TASK-012 / TASK-023 / TASK-024
-                     │
-                     ▼
-TASK-018..022 — brechas funcionales
-                     │
-                     ▼
-verificación E2E + security + quality gates
+        │
+        ▼
+TASK-018..022
+        │
+        ▼
+E2E + security + quality gates globales
 ```
 
 ## 🧭 Regla para tareas antiguas
@@ -108,9 +91,9 @@ apps/website/
 └── src/backend/        # API Website + API Admin
 
 packages/
-├── design-system/      # paquete reutilizable
+├── design-system/
 └── framework-automation/
-    └── src/Framework.Core/  # framework de automatización
+    └── src/Framework.Core/
 
 Examples/tests/framework-automation/ # referencia, no framework paralelo
 ```
