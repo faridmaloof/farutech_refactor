@@ -1,171 +1,209 @@
 # ==============================================================================
-# ARCHIVOS DE SISTEMA (OS)
-# Ignora archivos temporales generados por los sistemas operativos.
+# FaruTech monorepo - root .gitignore
 # ==============================================================================
+# Keep source, templates and documentation versioned. Ignore generated, local,
+# IDE, build, test, cache and secret material.
+
+# Operating systems
 .DS_Store
 .AppleDouble
+.LSOverride
 ._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
+.Spotlight-V100/
+.Trashes/
 Thumbs.db
+ehthumbs.db
 desktop.ini
 $RECYCLE.BIN/
 
-# ==============================================================================
-# VISUAL STUDIO CODE (VS Code)
-# Ignora la configuración local del editor, pero permite compartir configuraciones
-# de depuración y extensiones recomendadas para el equipo.
-# ==============================================================================
+# Editors / IDEs
 .vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
-!.vscode/tasks.json
 !.vscode/settings.json
-
-# ==============================================================================
-# .NET / C#
-# Ignora binarios compilados, caché de Visual Studio y paquetes NuGet.
-# ==============================================================================
-## Archivos específicos de usuario y opciones de VS
-*.rsuser
+!.vscode/tasks.json
+.idea/
+*.iml
+*.ipr
+*.iws
 *.suo
 *.user
 *.userosscache
+*.rsuser
 *.sln.docstates
-
-## Resultados de compilación (Debug/Release)
-[Dd]ebug/
-[Rr]elease/
-**/[Dd]ebug/
-**/[Rr]elease/
-x64/
-x86/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
-[Bb]in/
-**/[Bb]in/
-[Oo]bj/
-**/[Oo]bj/
-[Ll]og/
-[Ll]ogs/
-**/[Ll]og/
-**/[Ll]ogs/
-
-## Playwright (descargas de browsers y paquetes en tiempo de ejecución)
-/.playwright/
-/.cache/
-**/node_modules/.cache/
-**/.playwright/
-
-## Paquetes NuGet (si usas el modelo antiguo de packages.config)
-**/[Pp]ackages/*
-!**/[Pp]ackages/build/
-!**/packages/framework-automation/
-!**/packages/framework-automation/**
-## ...pero sin binarios ni artefactos de compilación dentro de los packages referenciados
-**/packages/framework-automation/**/[Bb]in/
-**/packages/framework-automation/**/[Oo]bj/
-*.nuget.props
-*.nuget.targets
-*.nupkg
-*.snupkg
-
-## Perfiles de publicación de .NET
-**/[Pp]ublish[Pp]rofiles/
-
-# ==============================================================================
-# NODE.JS / REACT / VITE / TYPESCRIPT
-# Ignora dependencias, caché de Vite, compilaciones y logs de npm/yarn/pnpm.
-# ==============================================================================
-## Dependencias de Node
-node_modules/
-jspm_packages/
-
-## Carpeta de compilación de Vite / React
-dist/
-build/
-.vite/
-
-## Caché de TypeScript
-*.tsbuildinfo
-
-## Logs de ejecutores de paquetes
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-## Archivos de coverage (Cobertura de pruebas de JS/TS)
-coverage/
-*.lcov
-
-# ==============================================================================
-# LARAVEL / PHP
-# Ignora dependencias de Composer, caché, logs y archivos de almacenamiento.
-# ==============================================================================
-## Dependencias de Composer
-/vendor/
-composer.phar
-
-## Archivos de Homestead / Vagrant (si los usas)
-Homestead.json
-Homestead.yaml
-
-## Storage y Cache de Laravel (¡Muy importante!)
-/storage/*.key
-/public/storage
-/storage/framework/cache/data/*
-/storage/framework/sessions/*
-/storage/framework/views/*
-/storage/logs/*
-
-## Bootstrap cache de Laravel
-/bootstrap/cache/*
-
-# ==============================================================================
-# PLAYWRIGHT
-# Ignora reportes de pruebas, capturas de pantalla y archivos de trazas.
-# ==============================================================================
-## Resultados y reportes de ejecución
-/test-results/
-/playwright-report/
-/blob-report/
-
-## Caché interna de Playwright
-/playwright/.cache/
-
-## Archivos de trazas (traces) y videos generados en fallos
-*.trace.zip
-*.webm
-
-# ==============================================================================
-# VARIABLES DE ENTORNO Y SECRETOS (GLOBAL)
-# ¡CRÍTICO! Nunca subas contraseñas, API Keys o tokens al repositorio.
-# ==============================================================================
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.backup
-*.pem
-*.key
-*.p12
-*.cer
-
-# ==============================================================================
-# OTROS / VARIOS
-# Archivos temporales de editores y herramientas de terceros.
-# ==============================================================================
-.idea/
+*.sln.ide
+*.sln.iml
 *.swp
 *.swo
+*.sw?
 *~
 .project
 .classpath
 .c9/
 *.launch
 .settings/
+
+# .NET / Visual Studio / MSBuild
+**/[Bb]in/
+**/[Oo]bj/
+**/[Dd]ebug/
+**/[Rr]elease/
+**/[Ll]og/
+**/[Ll]ogs/
+**/TestResults/
+**/[Pp]ublish[Pp]rofiles/
+**/.vs/
+**/artifacts/
+x64/
+x86/
+arm/
+arm64/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+
+# NuGet generated / package artifacts
+**/packages/*
+!packages/
+!packages/**/
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+.nuget/
+
+# Package source trees must remain trackable
+!packages/design-system/
+!packages/design-system/**
+!packages/framework-automation/
+!packages/framework-automation/**
+
+# Node.js / React / Vite / TypeScript
+**/node_modules/
+**/.npm/
+**/.pnpm-store/
+**/.yarn/
+**/.yarn/cache/
+**/.yarn/install-state.gz
+**/.yarn/unplugged/
+**/.yarn/build-state.yml
+**/.yarn/patches/
+**/jspm_packages/
+**/.vite/
+**/.cache/
+**/.parcel-cache/
+**/.turbo/
+**/.eslintcache
+**/*.tsbuildinfo
+**/dist/
+**/build/
+**/coverage/
+**/*.lcov
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+corepack-debug.log*
+
+# Playwright / browser-test artifacts
+**/.playwright/
+**/playwright/.cache/
+**/test-results/
+**/playwright-report/
+**/blob-report/
+**/*.trace.zip
+**/*.webm
+**/*.har
+
+# Test / quality / reporting artifacts
+**/allure-results/
+**/allure-report/
+**/AllureResults/
+**/*.trx
+**/*.coverage
+**/*.coveragexml
+**/*.coverlet.json
+**/evidence/
+**/screenshots/
+**/videos/
+**/traces/
+**/*.sarif
+**/*.codeanalysis
+
+# Laravel / PHP
+**/vendor/
+composer.phar
+**/Homestead.json
+**/Homestead.yaml
+**/storage/*.key
+**/public/storage
+**/storage/framework/cache/data/*
+**/storage/framework/sessions/*
+**/storage/framework/views/*
+**/storage/logs/*
+**/bootstrap/cache/*
+
+# Environment files and local secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+**/.env.backup
+*.local.json
+*.local.yaml
+*.local.yml
+secrets.json
+**/secrets.json
+
+# Certificates / private keys / credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.cer
+*.crt
+**/keystore/
+.mysql-credentials.generated
+*.credentials.generated
+
+# Docker / Kubernetes local overrides
+**/docker-compose.override.yml
+
+# Documentation / generated site output
+docfx/_site/
+
+# Profiling / crash dumps / local performance output
+*.prof
+*.profraw
+*.dmp
+*.perf
+
+# Legacy tooling / build systems
+[Ss]vn/
+$tf/
+*.ncrunch*
+*CrunchSolution.*
+*.CodeRush*
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+StyleCopReport.xml
+BenchmarkDotNet.Artifacts/
+*.publish
+SetupLog.txt
+
+# Temporary / backup files
+*.tmp
+*.temp
+*.old
+*.bak
