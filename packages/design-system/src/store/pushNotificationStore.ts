@@ -5,7 +5,7 @@ export interface PushNotificationItem {
   title: string;
   message: string;
   icon?: string;
-  badge?: string;
+  badge?: number;
   timestamp: Date;
   read: boolean;
   onClick?: () => void;
@@ -54,7 +54,7 @@ export const usePushNotificationStore = create<PushNotificationState>((set, get)
       new Notification(notification.title, {
         body: notification.message,
         icon: notification.icon,
-        badge: notification.badge,
+        badge: notification.badge ? String(notification.badge) : undefined,
       });
     } else if ('Notification' in window && Notification.permission !== 'denied') {
       Notification.requestPermission().then((permission) => {
@@ -62,7 +62,7 @@ export const usePushNotificationStore = create<PushNotificationState>((set, get)
           new Notification(notification.title, {
             body: notification.message,
             icon: notification.icon,
-            badge: notification.badge,
+            badge: notification.badge ? String(notification.badge) : undefined,
           });
         }
       });

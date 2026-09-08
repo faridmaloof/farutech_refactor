@@ -17,7 +17,8 @@ export { useAuth } from './useAuth';
 export type { UseAuthReturn } from './useAuth';
 
 export { useMenu } from './useMenu';
-export type { UseMenuOptions, UseMenuReturn, MenuItem } from './useMenu';
+export type { UseMenuOptions, UseMenuReturn } from './useMenu';
+export type { MenuItem, MenuCategory } from '@/config/menu.config';
 
 export { useNotification } from './useNotification';
 export type { UseNotificationReturn, Notification } from './useNotification';
