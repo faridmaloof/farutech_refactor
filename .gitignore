@@ -1,67 +1,171 @@
-```
-# Logs and temp files
-*.log
-*.tmp
-*.swp
+# ==============================================================================
+# ARCHIVOS DE SISTEMA (OS)
+# Ignora archivos temporales generados por los sistemas operativos.
+# ==============================================================================
+.DS_Store
+.AppleDouble
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
 
-# Environment
-.env
-.env.local
-*.env.*
+# ==============================================================================
+# VISUAL STUDIO CODE (VS Code)
+# Ignora la configuración local del editor, pero permite compartir configuraciones
+# de depuración y extensiones recomendadas para el equipo.
+# ==============================================================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
 
-# Editors
-.vscode/
-.idea/
+# ==============================================================================
+# .NET / C#
+# Ignora binarios compilados, caché de Visual Studio y paquetes NuGet.
+# ==============================================================================
+## Archivos específicos de usuario y opciones de VS
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-# Dependencies
+## Resultados de compilación (Debug/Release)
+[Dd]ebug/
+[Rr]elease/
+**/[Dd]ebug/
+**/[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+**/[Bb]in/
+[Oo]bj/
+**/[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+**/[Ll]og/
+**/[Ll]ogs/
+
+## Playwright (descargas de browsers y paquetes en tiempo de ejecución)
+/.playwright/
+/.cache/
+**/node_modules/.cache/
+**/.playwright/
+
+## Paquetes NuGet (si usas el modelo antiguo de packages.config)
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+!**/packages/framework-automation/
+!**/packages/framework-automation/**
+## ...pero sin binarios ni artefactos de compilación dentro de los packages referenciados
+**/packages/framework-automation/**/[Bb]in/
+**/packages/framework-automation/**/[Oo]bj/
+*.nuget.props
+*.nuget.targets
+*.nupkg
+*.snupkg
+
+## Perfiles de publicación de .NET
+**/[Pp]ublish[Pp]rofiles/
+
+# ==============================================================================
+# NODE.JS / REACT / VITE / TYPESCRIPT
+# Ignora dependencias, caché de Vite, compilaciones y logs de npm/yarn/pnpm.
+# ==============================================================================
+## Dependencias de Node
 node_modules/
-venv/
-.venv/
-__pycache__/
-.mypy_cache/
-.pytest_cache/
+jspm_packages/
+
+## Carpeta de compilación de Vite / React
 dist/
 build/
-target/
-.gradle/
+.vite/
 
-# System files
-.DS_Store
-Thumbs.db
+## Caché de TypeScript
+*.tsbuildinfo
 
-# Compiled files
-*.pyc
-*.class
-*.o
-*.exe
-*.dll
-*.so
-*.a
-*.obj
-*.out
+## Logs de ejecutores de paquetes
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Coverage
+## Archivos de coverage (Cobertura de pruebas de JS/TS)
 coverage/
-htmlcov/
-.coverage
+*.lcov
 
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
-```
+# ==============================================================================
+# LARAVEL / PHP
+# Ignora dependencias de Composer, caché, logs y archivos de almacenamiento.
+# ==============================================================================
+## Dependencias de Composer
+/vendor/
+composer.phar
+
+## Archivos de Homestead / Vagrant (si los usas)
+Homestead.json
+Homestead.yaml
+
+## Storage y Cache de Laravel (¡Muy importante!)
+/storage/*.key
+/public/storage
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+
+## Bootstrap cache de Laravel
+/bootstrap/cache/*
+
+# ==============================================================================
+# PLAYWRIGHT
+# Ignora reportes de pruebas, capturas de pantalla y archivos de trazas.
+# ==============================================================================
+## Resultados y reportes de ejecución
+/test-results/
+/playwright-report/
+/blob-report/
+
+## Caché interna de Playwright
+/playwright/.cache/
+
+## Archivos de trazas (traces) y videos generados en fallos
+*.trace.zip
+*.webm
+
+# ==============================================================================
+# VARIABLES DE ENTORNO Y SECRETOS (GLOBAL)
+# ¡CRÍTICO! Nunca subas contraseñas, API Keys o tokens al repositorio.
+# ==============================================================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+*.pem
+*.key
+*.p12
+*.cer
+
+# ==============================================================================
+# OTROS / VARIOS
+# Archivos temporales de editores y herramientas de terceros.
+# ==============================================================================
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
