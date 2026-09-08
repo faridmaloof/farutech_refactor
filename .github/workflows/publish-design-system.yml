@@ -44,8 +44,7 @@ jobs:
           PACKAGE_NAME=$(node -p "require('./package.json').name")
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
           EXPECTED_SCOPE="@$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
-          ACTUAL_SCOPE="${PACKAGE_NAME%@*}"
-          ACTUAL_SCOPE="@${PACKAGE_NAME#*@}"
+          ACTUAL_SCOPE="${PACKAGE_NAME%%/*}"
 
           if [[ "$ACTUAL_SCOPE" != "$EXPECTED_SCOPE" ]]; then
             echo "Package scope mismatch: $ACTUAL_SCOPE != $EXPECTED_SCOPE"
