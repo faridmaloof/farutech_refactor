@@ -70,6 +70,24 @@ Route::post('contact', 'App\Http\Controllers\ContactController@store');
 Route::post('newsletter', 'App\Http\Controllers\NewsletterController@store');
 
 // ============================================================
+// API ADMIN — Newsletter (CRUD de campañas y gestión de suscriptores)
+// ============================================================
+Route::prefix('admin/newsletter')->middleware('auth:sanctum')->group(function () {
+    // Campañas CRUD
+    Route::get('campaigns', 'App\\Http\\Controllers\\NewsletterController@index');
+    Route::post('campaigns', 'App\\Http\\Controllers\\NewsletterController@create');
+    Route::get('campaigns/{id}', 'App\\Http\\Controllers\\NewsletterController@show');
+    Route::put('campaigns/{id}', 'App\\Http\\Controllers\\NewsletterController@update');
+    Route::delete('campaigns/{id}', 'App\\Http\\Controllers\\NewsletterController@destroy');
+    Route::post('campaigns/{id}/send', 'App\\Http\\Controllers\\NewsletterController@send');
+
+    // Suscriptores
+    Route::get('subscribers', 'App\\Http\\Controllers\\NewsletterController@subscribers');
+    Route::post('subscribers/{id}/unsubscribe', 'App\\Http\\Controllers\\NewsletterController@unsubscribeSubscriber');
+    Route::post('subscribers/{id}/reactivate', 'App\\Http\\Controllers\\NewsletterController@reactivateSubscriber');
+});
+
+// ============================================================
 // Búsqueda jerárquica de ubicaciones (búsqueda de leads)
 // ============================================================
 Route::prefix('locations')->group(function () {
