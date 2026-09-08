@@ -39,13 +39,12 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
         },
-        preserveModules: true,
-        preserveModulesRoot: 'src',
+        preserveModules: false,
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
             return 'styles.css'
           }
-          return 'assets/[name]-[hash].[ext]'
+          return '[name].js'
         },
       },
     },

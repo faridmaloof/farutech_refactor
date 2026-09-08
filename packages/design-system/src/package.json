@@ -17,23 +17,23 @@
       "types": "./dist/index.d.ts"
     },
     "./components/ui": {
-      "import": "./dist/components/ui/index.js",
+      "import": "./dist/components/ui.js",
       "types": "./dist/components/ui/index.d.ts"
     },
     "./components/crud": {
-      "import": "./dist/components/crud/index.js",
+      "import": "./dist/components/crud.js",
       "types": "./dist/components/crud/index.d.ts"
     },
     "./components/layout": {
-      "import": "./dist/components/layout/index.js",
+      "import": "./dist/components/layout.js",
       "types": "./dist/components/layout/index.d.ts"
     },
     "./auth-screens": {
-      "import": "./dist/auth-screens/index.js",
+      "import": "./dist/auth-screens.js",
       "types": "./dist/auth-screens/index.d.ts"
     },
     "./tokens": {
-      "import": "./dist/tokens/index.js",
+      "import": "./dist/tokens.js",
       "types": "./dist/tokens/index.d.ts"
     },
     "./styles.css": "./dist/styles.css"
