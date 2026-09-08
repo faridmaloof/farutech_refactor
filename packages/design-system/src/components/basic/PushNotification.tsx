@@ -1,10 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+export interface PushNotificationItem {
+  id: string;
+  title: string;
+  message: string;
+  icon?: string;
+  badge?: number;
+  timestamp: Date;
+  read: boolean;
+  onClick?: () => void;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+}
+
 export interface PushNotificationProps {
   title: string;
   message: string;
   icon?: string;
-  badge?: string;
+  badge?: string | number;
   timestamp?: Date;
   onClick?: () => void;
   onClose?: () => void;
@@ -28,16 +43,13 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    // Trigger entrance animation
     const enterTimer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(enterTimer);
   }, []);
 
   const handleClose = useCallback(() => {
     setIsExiting(true);
-    setTimeout(() => {
-      if (onClose) onClose();
-    }, 300);
+    setTimeout(() => onClose?.(), 300);
   }, [onClose]);
 
   const formatTime = (date: Date) => {
@@ -54,6 +66,8 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
     return date.toLocaleDateString();
   };
 
+  const numericBadge = typeof badge === 'number' ? badge : Number(badge);
+
   return (
     <div
       role="alert"
@@ -62,21 +76,20 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
       } ${isExiting ? 'opacity-0 translate-x-full' : ''}`}
       onClick={onClick}
     >
-      {icon && (
+      {icon ? (
         <img src={icon} alt="" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
-      )}
-      {!icon && (
+      ) : (
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
           <span className="text-white font-bold text-lg">{title.charAt(0).toUpperCase()}</span>
         </div>
       )}
-      
+
       <div className="ml-3 flex-1 min-w-0">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-900 truncate">{title}</h3>
-          {badge !== undefined && badge > '0' && (
+          {badge !== undefined && Number.isFinite(numericBadge) && numericBadge > 0 && (
             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-              {parseInt(badge) > 99 ? '99+' : badge}
+              {numericBadge > 99 ? '99+' : numericBadge}
             </span>
           )}
         </div>
@@ -85,6 +98,7 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
           <span className="text-xs text-gray-400">{formatTime(timestamp)}</span>
           {action && (
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation();
                 action.onClick();
@@ -96,8 +110,9 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
           )}
         </div>
       </div>
-      
+
       <button
+        type="button"
         onClick={(e) => {
           e.stopPropagation();
           handleClose();
