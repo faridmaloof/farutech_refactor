@@ -31,6 +31,7 @@ docs/
 ├── 04_TRACKING/
 │   ├── master-plan.md
 │   ├── TASK_WORKFLOW_AND_HANDOFF.md
+│   ├── RECONCILIATION_MATRIX.md
 │   ├── guia-de-uso.md
 │   ├── IMPLEMENTATION_PROMPT.md
 │   ├── change-log/CHANGELOG.md
@@ -42,6 +43,7 @@ docs/
 
 - [Master Plan](04_TRACKING/master-plan.md)
 - [Workflow, ownership y quality gates](04_TRACKING/TASK_WORKFLOW_AND_HANDOFF.md)
+- [Matriz de reconciliación](04_TRACKING/RECONCILIATION_MATRIX.md)
 - [Guía de Tracking](04_TRACKING/guia-de-uso.md)
 - [ADRs](01_ARCHITECTURE/adr/)
 - [Especificaciones](02_SPECIFICATIONS/)
@@ -63,6 +65,7 @@ docs/
 9. **Histórico:** documentación obsoleta se conserva y se marca `SUPERSEDED`/`ARCHIVED`.
 10. **Platform:** alcance futuro separado; no mezclarlo con Website Ecosystem.
 11. **Packages:** Design System y Framework.Core tienen versionado y distribución independientes.
+12. **Orquestación:** `/TL` y `/lider-Tecnico` son la entrada recomendada para implementación multiagente.
 
 ## 📌 Estados documentales
 
