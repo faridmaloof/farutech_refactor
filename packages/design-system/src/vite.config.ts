@@ -16,20 +16,20 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '.'),
+      '@': path.resolve(import.meta.dirname, '.'),
     },
   },
   build: {
     lib: {
       entry: {
-        index: path.resolve(__dirname, 'index.ts'),
-        'components/ui': path.resolve(__dirname, 'components/ui/index.ts'),
-        'components/crud': path.resolve(__dirname, 'components/crud/index.ts'),
-        'components/layout': path.resolve(__dirname, 'components/layout/index.ts'),
-        'components/basic': path.resolve(__dirname, 'components/basic/index.ts'),
-        'components/navigation': path.resolve(__dirname, 'components/navigation/index.ts'),
-        'auth-screens': path.resolve(__dirname, 'auth-screens/index.ts'),
-        tokens: path.resolve(__dirname, 'tokens/index.ts'),
+        index: path.resolve(import.meta.dirname, 'index.ts'),
+        'components/ui': path.resolve(import.meta.dirname, 'components/ui/index.ts'),
+        'components/crud': path.resolve(import.meta.dirname, 'components/crud/index.ts'),
+        'components/layout': path.resolve(import.meta.dirname, 'components/layout/index.ts'),
+        'components/basic': path.resolve(import.meta.dirname, 'components/basic/index.ts'),
+        'components/navigation': path.resolve(import.meta.dirname, 'components/navigation/index.ts'),
+        'auth-screens': path.resolve(import.meta.dirname, 'auth-screens/index.ts'),
+        tokens: path.resolve(import.meta.dirname, 'tokens/index.ts'),
       },
       formats: ['es'],
     },

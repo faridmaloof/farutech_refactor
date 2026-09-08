@@ -1,5 +1,5 @@
 {
-  "name": "@farutech/design-system",
+  "name": "@faridmaloof/design-system",
   "version": "1.0.0",
   "description": "Sistema de diseño de Farutech - Componentes UI reutilizables para website, admin, intranet y futuras aplicaciones",
   "author": {
@@ -60,7 +60,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/faridmaloof/farutech_refactor.git",
+    "url": "git+https://github.com/faridmaloof/farutech_refactor.git",
     "directory": "packages/design-system/src"
   },
   "homepage": "https://github.com/faridmaloof/farutech_refactor/tree/main/packages/design-system/src",

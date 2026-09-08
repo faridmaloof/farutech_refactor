@@ -14,6 +14,11 @@ concurrency:
   group: publish-framework-core
   cancel-in-progress: false
 
+env:
+  DOTNET_VERSION: 10.x
+  PACKAGE_ID: EnterpriseAutomation.Framework
+  REGISTRY: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+
 jobs:
   publish:
     name: Build, validate and publish EnterpriseAutomation.Framework
@@ -24,12 +29,28 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '10.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Validate package version
+        shell: bash
+        run: |
+          PACKAGE_VERSION=$(dotnet msbuild Framework.Core.csproj -getProperty:Version | tail -n 1 | tr -d '\r')
+
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            EXPECTED_VERSION="${GITHUB_REF_NAME#framework-core-v}"
+            if [[ "$PACKAGE_VERSION" != "$EXPECTED_VERSION" ]]; then
+              echo "Package version $PACKAGE_VERSION does not match tag version $EXPECTED_VERSION"
+              exit 1
+            fi
+          fi
+
+          echo "Package: $PACKAGE_ID"
+          echo "Version: $PACKAGE_VERSION"
 
       - name: Restore
         run: dotnet restore
@@ -43,8 +64,9 @@ jobs:
       - name: Validate package
         shell: bash
         run: |
-          test -n "$(find ./nupkg -maxdepth 1 -name '*.nupkg' -print -quit)"
-          echo "NuGet package generated successfully."
+          PACKAGE_FILE=$(find ./nupkg -maxdepth 1 -name '*.nupkg' -print -quit)
+          test -n "$PACKAGE_FILE"
+          echo "NuGet package generated successfully: $PACKAGE_FILE"
 
       - name: Publish to GitHub Packages
-        run: dotnet nuget push "./nupkg/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
+        run: dotnet nuget push "./nupkg/*.nupkg" --source "$REGISTRY" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
