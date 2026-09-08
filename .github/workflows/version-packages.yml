@@ -19,7 +19,7 @@ env:
 
 jobs:
   detect-and-version:
-    name: Version packages with source changes
+    name: Validate and version changed packages
     runs-on: ubuntu-latest
     outputs:
       design_system_changed: ${{ steps.detect.outputs.design_system_changed }}
@@ -40,7 +40,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Compare against the first parent so this works for both squash and merge commits.
+          # Compare against the first parent so this works for squash and merge commits.
           changed_files="$(git diff-tree --no-commit-id --name-only -r HEAD^1 HEAD)"
 
           design_system_changed=false
@@ -49,12 +49,8 @@ jobs:
           while IFS= read -r file; do
             [[ -z "$file" ]] && continue
             case "$file" in
-              "$DESIGN_SYSTEM_PATH"/*)
-                design_system_changed=true
-                ;;
-              "$FRAMEWORK_CORE_PATH"/*)
-                framework_core_changed=true
-                ;;
+              "$DESIGN_SYSTEM_PATH"/*) design_system_changed=true ;;
+              "$FRAMEWORK_CORE_PATH"/*) framework_core_changed=true ;;
             esac
           done <<< "$changed_files"
 
@@ -63,8 +59,7 @@ jobs:
 
           echo "Design System changed: $design_system_changed"
           echo "Framework.Core changed: $framework_core_changed"
-          echo "Changed files:"
-          printf '%s\n' "$changed_files"
+          printf 'Changed files:\n%s\n' "$changed_files"
 
       - name: Configure Git
         if: steps.detect.outputs.design_system_changed == 'true' || steps.detect.outputs.framework_core_changed == 'true'
@@ -102,15 +97,32 @@ jobs:
             minor="${BASH_REMATCH[2]}"
             patch="${BASH_REMATCH[3]}"
             framework_core_version="$major.$minor.$((patch + 1))"
-
             sed -i -E "s#<Version>[0-9]+\.[0-9]+\.[0-9]+</Version>#<Version>${framework_core_version}</Version>#" "$csproj"
           fi
 
           echo "design_system_version=$design_system_version" >> "$GITHUB_OUTPUT"
           echo "framework_core_version=$framework_core_version" >> "$GITHUB_OUTPUT"
-
           echo "Design System version: ${design_system_version:-unchanged}"
           echo "Framework.Core version: ${framework_core_version:-unchanged}"
+
+      - name: Validate Design System
+        if: steps.detect.outputs.design_system_changed == 'true'
+        working-directory: packages/design-system/src
+        run: |
+          npm ci
+          npm run build
+          npm run lint
+          npm test -- --run
+          npm pack --dry-run
+
+      - name: Validate Framework.Core
+        if: steps.detect.outputs.framework_core_changed == 'true'
+        working-directory: packages/framework-automation/src/Framework.Core
+        run: |
+          dotnet restore
+          dotnet build --configuration Release --no-restore
+          dotnet pack --configuration Release --no-build --output ./nupkg
+          test -n "$(find ./nupkg -maxdepth 1 -name '*.nupkg' -print -quit)"
 
       - name: Commit package versions
         if: steps.detect.outputs.design_system_changed == 'true' || steps.detect.outputs.framework_core_changed == 'true'
