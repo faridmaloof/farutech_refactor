@@ -4,6 +4,23 @@ Este documento registra todos los cambios realizados al sistema de tracking del 
 
 ---
 
+## [2026-09-07] — Actualización: TASK-016 Completada (Documentación Sincronizada)
+
+**Tipo:** ✅ TASK COMPLETION
+**Responsable:** Technical Lead
+
+### Cambios Realizados
+
+#### TASK-016 — Sincronizar Documentación Desactualizada con el Código Real:
+- ✅ **README.md** — Tabla de estado actualizada con TASK-014 y TASK-015 marcadas DONE
+- ✅ **README.md** — Referencia a `apps/api` cambiada a "migrado desde" con TASK-014 ✅ DONE
+- ✅ **README.md** — Admin Panel ahora documentado como "Servido bajo `/admin`" (TASK-015 ✅ DONE)
+- ✅ **README.md** — Infraestructura actualizada: gateway con regla de enrutamiento para admin configurada
+- ✅ **docs/03_IMPLEMENTATION/testing-strategy.md** — Verificado, no requiere cambios (rutas genéricas correctas)
+- ✅ **docs/03_IMPLEMENTATION/coding-standards.md** — Verificado, no requiere cambios (estructura correcta)
+
+---
+
 ## [2026-09-07] — Actualización: TASK-015 Completada (Admin Routing por Path)
 
 **Tipo:** ✅ TASK COMPLETION

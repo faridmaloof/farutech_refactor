@@ -1,10 +1,60 @@
-# Documentation
-docs/
+```markdown
+# Logs and temp files
+*.log
+*.tmp
+*.swp
 
-Wait, that would ignore the entire docs directory, but the user specifically mentioned that 'docs/04_TRACKING/master-plan.md' was modified. I need to be more specific.
+# Environment
+.env
+.env.local
+*.env.*
 
-Actually, looking at the requirements again, I should only add things to .gitignore if they match common ignore patterns or are build artifacts, dependencies, temp files, etc. A markdown file in docs doesn't fit any of those categories, so it shouldn't be ignored.
+# Editors
+.vscode/
+.idea/
 
-Since the only change is to a documentation file (.md) which is not a build artifact, dependency, or temp file, there's nothing to add to .gitignore.
+# Dependencies
+node_modules/
+venv/
+.venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+dist/
+build/
+target/
+.gradle/
 
-(empty — output nothing)
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+```

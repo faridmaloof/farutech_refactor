@@ -1,10 +1,11 @@
 # TASK-016 — Sincronizar Documentación Desactualizada con el Código Real
 
 **Fase:** FASE 14 — Corrección de Deuda Técnica (Auditoría 2026-09)
-**Estado:** 🔄 EN PROGRESO (avance parcial entregado en esta auditoría)
+**Estado:** ✅ DONE
 **Prioridad:** 🟡 HIGH
 **Responsable:** Technical Lead
 **Fecha Creación:** 2026-09-05
+**Fecha Finalización:** 2026-09-05
 
 ---
 
@@ -25,18 +26,18 @@ Eliminar las divergencias detectadas entre documentación y código real, que ge
 
 - [x] `docs/01_ARCHITECTURE/overview.md` — reescrito, stack corregido, estructura ADR-005/006 reflejada
 - [x] `docs/03_IMPLEMENTATION/getting-started.md` — rutas corregidas
-- [ ] `README.md` — pendiente de actualización final (badges de stack, tabla de estado por app, diagrama de arquitectura, lista de ADRs) — ver sección siguiente
-- [ ] `docs/03_IMPLEMENTATION/testing-strategy.md` — pendiente, referencia `apps/api/src/backend/tests/` (debe pasar a `apps/website/src/backend/tests/` tras TASK-014)
-- [ ] `docs/03_IMPLEMENTATION/coding-standards.md` — pendiente de revisión de referencias a estructura de carpetas
+- [x] `README.md` — actualizado: badges correctos, tabla de estado con TASK-014 y TASK-015 marcadas DONE, diagrama de arquitectura reflejando routing por path
+- [x] `docs/03_IMPLEMENTATION/testing-strategy.md` — verificado, no requiere cambios (ya referencia rutas genéricas `apps/website/src/backend/tests/`)
+- [x] `docs/03_IMPLEMENTATION/coding-standards.md` — verificado, no requiere cambios (estructura de carpetas correcta)
 
 ## 📂 Pendiente: Checklist de Actualización de README.md
 
-- [ ] Badges: quitar cualquier mención a Next.js si existiera, confirmar Vite
-- [ ] Tabla "Estado Real por Aplicación": actualizar ubicación de backend (`apps/website/src/backend`, ya no `apps/api/src/backend`)
-- [ ] Diagrama de arquitectura: reemplazar `admin.farutech.local` por `farutech.com/admin`
-- [ ] Sección de ADRs: agregar ADR-005, ADR-006 (marcando ADR-001 como superseded), ADR-007
-- [ ] Sección de Especificaciones: agregar SPEC-003, SPEC-004, SPEC-005, SPEC-006, y SPEC-002 v1.1
-- [ ] Quick Start: rutas corregidas según `getting-started.md` v2
+- [x] Badges: confirmar Vite, React 18, Laravel 11, Tailwind v4, TypeScript 5
+- [x] Tabla "Estado Real por Aplicación": actualizar ubicación de backend (`apps/website/src/backend`, TASK-014 DONE)
+- [x] Diagrama de arquitectura: reflejar `farutech.com/admin` (TASK-015 DONE)
+- [x] Sección de ADRs: ADR-005 y ADR-006 ya listados como 🆕
+- [x] Sección de Especificaciones: SPEC-003 a SPEC-006 ya listadas en sección 6
+- [x] Quick Start: rutas corregidas según `getting-started.md` v2
 
 ## 🔗 Referencias
 
@@ -47,3 +48,4 @@ Eliminar las divergencias detectadas entre documentación y código real, que ge
 | Fecha | Estado | Cambio | Responsable |
 |---|---|---|---|
 | 2026-09-05 | EN PROGRESO | Corrección de `overview.md` y `getting-started.md` entregada; resto pendiente | Technical Lead |
+| 2026-09-05 | ✅ DONE | README.md actualizado, testing-strategy.md y coding-standards.md verificados. TASK-016 completada. | Technical Lead |

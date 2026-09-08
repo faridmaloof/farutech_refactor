@@ -1,7 +1,7 @@
 # 📊 Master Tracking Plan — Farutech Website Ecosystem
 
 **Última actualización:** 2026-09-07
-**Estado General:** 🟢 En Desarrollo (TASK-015 completada, cimientos técnicos consolidados)
+**Estado General:** 🟢 En Desarrollo (TASK-016 completada, cimientos técnicos consolidados)
 
 > ⚠️ **Nota de auditoría (2026-09-05):** el "45% implementado" reportado en la versión anterior de este documento no reflejaba piezas críticas del alcance funcional completo (módulos de Newsletter/Blog en admin, cotizaciones/tarifas, señales reales de Opportunity Search). Este documento se actualiza para incluir las tareas correctivas y las tareas que cierran brechas funcionales identificadas frente a la definición de producto completa. Ver también: [ADR-005](../01_ARCHITECTURE/adr/ADR-005_website_backend_consolidation.md), [ADR-006](../01_ARCHITECTURE/adr/ADR-006_admin_routing_strategy_v2.md), [ADR-007](../01_ARCHITECTURE/adr/ADR-007_platform_scope_separation.md).
 >
@@ -20,7 +20,7 @@
 | **FASE 7** | Foundation Admin & API Client | 🔄 EN PROGRESO | 60% | TASK-009, TASK-010, TASK-011 |
 | **FASE 11** | Implementación MiniCRM (Admin) | 🔄 EN PROGRESO | 30% | TASK-005 (Leads), TASK-006 (Opportunities) |
 | **FASE 13** | Testing & Calidad E2E | ⬜ BACKLOG | 15% | TASK-012 |
-| **FASE 14** | Corrección de Deuda Técnica (Auditoría 2026-09) | 🔄 EN PROGRESO | 60% | TASK-013✅, TASK-014✅, TASK-015✅, TASK-016🔄, TASK-017⬜, TASK-023⬜, TASK-024⬜ |
+| **FASE 14** | Corrección de Deuda Técnica (Auditoría 2026-09) | 🔄 EN PROGRESO | 80% | TASK-013✅, TASK-014✅, TASK-015✅, TASK-016✅, TASK-017⬜, TASK-023⬜, TASK-024⬜ |
 | **FASE 15** | Cierre de Brechas Funcionales (Requisito 6 completo) | ⬜ BACKLOG | 0% | TASK-018 a TASK-022 |
 
 ---
@@ -43,10 +43,10 @@
 | **TASK-005** | Admin Panel: Leads Management Page | FASE 11 | 🔴 CRÍTICO | 🔄 EN PROGRESO | `apps/admin/src/features/leads/` |
 | **TASK-006** | Admin Panel: Opportunity Search | FASE 11 | 🔴 CRÍTICO | 🔄 EN PROGRESO | `apps/admin/src/features/opportunities/` |
 | **TASK-012** | Configuración Testing E2E / Unitario | FASE 13 | 🟡 HIGH | ⬜ BACKLOG | `apps/admin/tests/` |
-| **TASK-013** | Corregir referencia rota en `Framework.Automation.sln` | FASE 14 | 🔴 CRÍTICO | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-013.md` |
-| **TASK-014** | Consolidar `apps/api` → `apps/website/src/backend` | FASE 14 | 🔴 CRÍTICO | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-014.md` (ADR-005) |
-| **TASK-015** | Admin bajo path `/admin` | FASE 14 | 🔴 CRÍTICO | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-015.md` (ADR-006) |
-| **TASK-016** | Sincronizar documentación desactualizada | FASE 14 | 🟡 HIGH | 🔄 EN PROGRESO | `docs/04_TRACKING/tasks/TASK-016.md` |
+| **TASK-013** | Corregir referencia rota en `Framework.Automation.sln` | FASE 14 | 🔴 CRÍTICO | ✅ DONE | `docs/04_TRACKING/tasks/TASK-013.md` |
+| **TASK-014** | Consolidar `apps/api` → `apps/website/src/backend` | FASE 14 | 🔴 CRÍTICO | ✅ DONE | `docs/04_TRACKING/tasks/TASK-014.md` (ADR-005) |
+| **TASK-015** | Admin bajo path `/admin` | FASE 14 | 🔴 CRÍTICO | ✅ DONE | `docs/04_TRACKING/tasks/TASK-015.md` (ADR-006) |
+| **TASK-016** | Sincronizar documentación desactualizada | FASE 14 | 🟡 HIGH | ✅ DONE | `docs/04_TRACKING/tasks/TASK-016.md` |
 | **TASK-017** | Ejecutar consolidación de BD en infraestructura | FASE 14 | 🟡 HIGH | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-017.md` (ADR-004) |
 | **TASK-018** | Admin: Gestión de Mensajes de Contáctenos | FASE 15 | 🟡 HIGH | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-018.md` (Req. 6.1) |
 | **TASK-019** | Admin: Newsletter WYSIWYG | FASE 15 | 🟡 HIGH | ⬜ BACKLOG | `docs/04_TRACKING/tasks/TASK-019.md` (SPEC-004, Req. 6.2) |
@@ -65,9 +65,13 @@ TASK-014 (consolidar backend)
    └─▶ TASK-013 (fix .sln — coordinado con el movimiento de TASK-014)
    └─▶ TASK-015 (admin bajo /admin — toca el mismo gateway/compose)
          └─▶ TASK-017 (consolidación BD — mismo docker-compose.yml)
-               └─▶ TASK-016 (sincronizar docs — con todo lo anterior ya estable)
-TASK-023 (JSON-LD) — independiente, puede ejecutarse en paralelo
-TASK-024 (intranet) — independiente, puede ejecutarse en paralelo
+               └─▶ TASK-023 (JSON-LD SEO — build de website ya estable)
+                     └─▶ TASK-024 (decisión Intranet — independiente)
+                           └─▶ TASK-018 a TASK-022 (brechas funcionales)
+                                 └─▶ TASK-026 (verificación final Lighthouse)
+TASK-023 (JSON-LD) — independiente, puede ejecutarse en paralelo con TASK-017/TASK-024
+TASK-024 (intranet) — independiente, requiere decisión de Product Owner antes de ejecutar
+TASK-025/026 (verificación final) — depende de todas las tareas anteriores completadas
 ```
 
 ### Orden Recomendado (FASE 15, funcionales)
@@ -92,12 +96,12 @@ TASK-022 (cotizaciones/tarifas) — requiere SPEC-001 estable (TASK-005) como ba
 2. **Admin Panel (`apps/admin/src/frontend/`)**:
    - **Tecnología:** React 18 + Vite + TypeScript.
    - **Estado:** 🟡 En Desarrollo (~20% del alcance funcional completo del requisito 6 — corregido a la baja tras auditoría; el 45% previo no contemplaba Newsletter, Blog, Contacto, Cotizaciones/Tarifas ni las señales reales de Opportunity Search). Login, Dashboard básico, Leads en progreso.
-   - **Pendiente crítico:** servir bajo `/admin` (TASK-015, hoy no implementado ni por subdominio ni por path).
+   - **Pendiente crítico:** servir bajo `/admin` (TASK-015, ✅ DONE 2026-09-07).
 
 3. **Backend (`apps/website/src/backend/` tras ADR-005 — antes `apps/api/src/backend/`)**:
    - **Tecnología:** Laravel 11 + PHP 8.2 + Sanctum Auth.
    - **Estado:** 🟡 Funcional para lo ya construido (`/contact`, `/newsletter`, `/leads`), pero con `FindOpportunitiesJob` en estado de stub (ver TASK-021) y sin ningún artefacto de Cotizaciones/Tarifas (ver TASK-022).
-   - **Pendiente crítico:** migración física a `apps/website/src/backend` (TASK-014, aún no ejecutada al momento de este documento).
+   - **Pendiente crítico:** migración física a `apps/website/src/backend` (TASK-014, ✅ DONE 2026-09-07).
 
 4. **Design System (`packages/design-system/src/`)**:
    - **Tecnología:** React + TypeScript + Tailwind CSS.
