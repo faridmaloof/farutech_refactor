@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35117.112
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F7021}8D") = "Framework.Core", "tests\framework-automation\src\Framework.Core\Framework.Core.csproj", "{79DF936B-1204-40E8-98A7-D50E60D1E701}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F7021}8D") = "Framework.Core", "packages\framework-automation\src\Framework.Core\Framework.Core.csproj", "{79DF936B-1204-40E8-98A7-D50E60D1E701}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F7021}8D") = "Farutech.Api.Tests", "apps\api\test\Farutech.Api.Tests.csproj", "{25ECDF7A-5A8B-4991-A900-82C75D272B41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F7021}8D") = "Farutech.Api.Tests", "apps\website\test\backend\Farutech.Api.Tests.csproj", "{25ECDF7A-5A8B-4991-A900-82C75D272B41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F7021}8D") = "Farutech.Website.Tests", "apps\website\test\Farutech.Website.Tests.csproj", "{B1DD41BA-87C0-45A2-AF36-C3B106561939}"
 EndProject

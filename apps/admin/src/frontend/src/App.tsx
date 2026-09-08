@@ -2,39 +2,51 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { LoginScreen } from "@farutech/design-system/auth-screens";
 import { MainLayout } from "@farutech/design-system/components/layout";
 
-// Páginas Admin (pendientes de migrar al Design System)
+// Páginas Admin
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminLeadsPage from "./pages/AdminLeadsPage";
 import AdminSettingsPage from "./pages/AdminSettingsPage";
+import NewslettersPage from "./pages/NewslettersPage";
+import { ContactMessagesPage } from "./pages/ContactMessagesPage";
 
 function RequireAuth() {
   const token = localStorage.getItem("admin_token");
-  return token ? <Outlet /> : <Navigate to="/admin/login" replace />;
+  return token ? <Outlet /> : <Navigate to="/login" replace />;
 }
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/admin/login" element={<LoginScreen />} />
+      <Route path="/login" element={<LoginScreen />} />
       <Route element={<RequireAuth />}>
-        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-        <Route path="/admin/dashboard" element={
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={
           <MainLayout>
             <AdminDashboardPage />
           </MainLayout>
         } />
-        <Route path="/admin/leads" element={
+        <Route path="/leads" element={
           <MainLayout>
             <AdminLeadsPage />
           </MainLayout>
         } />
-        <Route path="/admin/settings" element={
+        <Route path="/messages" element={
+          <MainLayout>
+            <ContactMessagesPage />
+          </MainLayout>
+        } />
+        <Route path="/newsletters" element={
+          <MainLayout>
+            <NewslettersPage />
+          </MainLayout>
+        } />
+        <Route path="/settings" element={
           <MainLayout>
             <AdminSettingsPage />
           </MainLayout>
         } />
       </Route>
-      <Route path="*" element={<Navigate to="/admin" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

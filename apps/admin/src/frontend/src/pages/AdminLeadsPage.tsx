@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { MainLayout } from '../../layouts/MainLayout';
-import { Card } from '@farutech/design-system/src/components/ui/Card';
-import { DataTable } from '@farutech/design-system/src/components/ui/DataTable';
-import { Badge } from '@farutech/design-system/src/components/ui/Badge';
-import { Button } from '@farutech/design-system/src/components/ui/Button';
-import { EmptyState } from '@farutech/design-system/src/components/ui/EmptyState';
-import { Loading } from '@farutech/design-system/src/components/ui/Loading';
-import { Notification } from '@farutech/design-system/src/components/basic/Notification';
+import { MainLayout } from '@farutech/design-system/components/layout';
+import { Card } from '@farutech/design-system/components/ui';
+import { DataTable } from '@farutech/design-system/components/ui';
+import { Badge } from '@farutech/design-system/components/ui';
+import { Button } from '@farutech/design-system/components/ui';
+import { EmptyState } from '@farutech/design-system/components/ui';
+import { Loading } from '@farutech/design-system/components/ui';
+import { Notification } from '@farutech/design-system/components/basic';
 import { 
   Search, 
   Plus, 

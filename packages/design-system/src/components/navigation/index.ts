@@ -3,4 +3,4 @@
  */
 
 export { TopNav } from './TopNav'
-export type { TopNavProps, NavItem, UserMenuConfig } from './TopNav'
+export type { TopNavProps, MenuItem as NavItem, UserMenu as UserMenuConfig } from './TopNav'

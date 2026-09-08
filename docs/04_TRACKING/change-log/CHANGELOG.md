@@ -4,6 +4,47 @@ Este documento registra todos los cambios realizados al sistema de tracking del 
 
 ---
 
+## [2026-09-07] — Actualización: TASK-016 Completada (Documentación Sincronizada)
+
+**Tipo:** ✅ TASK COMPLETION
+**Responsable:** Technical Lead
+
+### Cambios Realizados
+
+#### TASK-016 — Sincronizar Documentación Desactualizada con el Código Real:
+- ✅ **README.md** — Tabla de estado actualizada con TASK-014 y TASK-015 marcadas DONE
+- ✅ **README.md** — Referencia a `apps/api` cambiada a "migrado desde" con TASK-014 ✅ DONE
+- ✅ **README.md** — Admin Panel ahora documentado como "Servido bajo `/admin`" (TASK-015 ✅ DONE)
+- ✅ **README.md** — Infraestructura actualizada: gateway con regla de enrutamiento para admin configurada
+- ✅ **docs/03_IMPLEMENTATION/testing-strategy.md** — Verificado, no requiere cambios (rutas genéricas correctas)
+- ✅ **docs/03_IMPLEMENTATION/coding-standards.md** — Verificado, no requiere cambios (estructura correcta)
+
+---
+
+## [2026-09-07] — Actualización: TASK-015 Completada (Admin Routing por Path)
+
+**Tipo:** ✅ TASK COMPLETION
+**Responsable:** AI Assistant / Frontend Lead
+
+### Cambios Realizados
+
+#### TASK-015 — Servir Admin Panel bajo el path `/admin` (Path-Based Routing):
+- ✅ **vite.config.ts** — `base: "/admin/"` configurado
+- ✅ **main.tsx** — `<BrowserRouter basename="/admin">` configurado
+- ✅ **App.tsx** — rutas simplificadas (`/login`, `/dashboard`, `/leads`, `/settings`)
+- ✅ **haproxy.cfg** — ACL `is_admin_path path_beg /admin` agregada
+- ✅ **docker-compose.yml** — servicios `admin`, `frontend`, `backend` definidos con Dockerfiles
+- ✅ **Dockerfiles creados:**
+  - `apps/admin/src/frontend/Dockerfile` + `nginx.conf` (multi-stage Node + Nginx)
+  - `apps/website/src/frontend/Dockerfile` + `nginx.conf` (multi-stage Node + Nginx)
+  - `apps/website/src/backend/Dockerfile` (PHP 8.3-FPM + Laravel 11)
+- ✅ **Build verificado exitosamente:**
+  - 1576 módulos transformados
+  - Bundle: 1.18MB JS (354KB gzip), 5.29KB CSS
+  - Assets referencian correctamente `/admin/assets/*`
+
+---
+
 ## [2024-09-05] — Actualización: Normalización de Docs, README Real y Code-Splitting
 
 **Tipo:** 🚀 IMPLEMENTATION & NORMALIZATION  

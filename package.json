@@ -2,7 +2,9 @@
   "name": "farutech-monorepo",
   "private": true,
   "workspaces": [
-    "apps/website/src/frontend"
+    "apps/website/src/frontend",
+    "apps/admin/src/frontend",
+    "packages/design-system/src"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=farutech-web",

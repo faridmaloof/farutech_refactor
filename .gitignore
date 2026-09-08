@@ -37,24 +37,36 @@ $RECYCLE.BIN/
 ## Resultados de compilación (Debug/Release)
 [Dd]ebug/
 [Rr]elease/
+**/[Dd]ebug/
+**/[Rr]elease/
 x64/
 x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
+**/[Bb]in/
 [Oo]bj/
+**/[Oo]bj/
 [Ll]og/
 [Ll]ogs/
+**/[Ll]og/
+**/[Ll]ogs/
 
-## Carpeta oculta de Visual Studio
-.vs/
+## Playwright (descargas de browsers y paquetes en tiempo de ejecución)
+/.playwright/
+/.cache/
+**/node_modules/.cache/
+**/.playwright/
 
 ## Paquetes NuGet (si usas el modelo antiguo de packages.config)
 **/[Pp]ackages/*
 !**/[Pp]ackages/build/
 !**/packages/framework-automation/
 !**/packages/framework-automation/**
+## ...pero sin binarios ni artefactos de compilación dentro de los packages referenciados
+**/packages/framework-automation/**/[Bb]in/
+**/packages/framework-automation/**/[Oo]bj/
 *.nuget.props
 *.nuget.targets
 *.nupkg

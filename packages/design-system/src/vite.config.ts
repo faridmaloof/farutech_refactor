@@ -21,10 +21,17 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'index.ts'),
-      name: 'FarutechDesignSystem',
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
-      formats: ['es', 'cjs'],
+      entry: {
+        index: path.resolve(__dirname, 'index.ts'),
+        'components/ui': path.resolve(__dirname, 'components/ui/index.ts'),
+        'components/crud': path.resolve(__dirname, 'components/crud/index.ts'),
+        'components/layout': path.resolve(__dirname, 'components/layout/index.ts'),
+        'components/basic': path.resolve(__dirname, 'components/basic/index.ts'),
+        'components/navigation': path.resolve(__dirname, 'components/navigation/index.ts'),
+        'auth-screens': path.resolve(__dirname, 'auth-screens/index.ts'),
+        tokens: path.resolve(__dirname, 'tokens/index.ts'),
+      },
+      formats: ['es'],
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
@@ -34,11 +41,12 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
         },
+        preserveModules: false,
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
             return 'styles.css'
           }
-          return 'assets/[name]-[hash].[ext]'
+          return '[name].js'
         },
       },
     },

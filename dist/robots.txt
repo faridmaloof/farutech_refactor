@@ -1,0 +1,14 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.farutech.com/sitemap.xml
+
+# Disallow admin or private areas (if any)
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

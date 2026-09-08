@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -8,7 +8,7 @@ interface User {
   avatar?: string;
 }
 
-interface UseAuthReturn {
+export interface UseAuthReturn {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
@@ -22,7 +22,7 @@ export function useAuth(): UseAuthReturn {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (email: string, _password: string) => {
     setIsLoading(true);
     try {
       // TODO: Implementar llamada real a la API
@@ -39,7 +39,7 @@ export function useAuth(): UseAuthReturn {
     }
   }, []);
 
-  const register = useCallback(async (name: string, email: string, password: string) => {
+  const register = useCallback(async (name: string, email: string, _password: string) => {
     setIsLoading(true);
     try {
       // TODO: Implementar llamada real a la API
