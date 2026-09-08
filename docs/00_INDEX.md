@@ -20,15 +20,17 @@ docs/
 │       ├── ADR-001_admin_routing_strategy.md          # SUPERSEDED
 │       ├── ADR-002_design_system_structure.md
 │       ├── ADR-003_intranet_strategy.md
-│       ├── ADR-004_multi_database_strategy.md         # decidido, pendiente
+│       ├── ADR-004_multi_database_strategy.md
 │       ├── ADR-005_website_backend_consolidation.md
 │       ├── ADR-006_admin_routing_strategy_v2.md       # SUPERSEDED por ADR-008
-│       ├── ADR-007_platform_scope_separation.md
-│       └── ADR-008_admin_hosting_and_ownership.md     # VIGENTE
+│       ├── ADR-007_platform_scope_separation.md       # VIGENTE
+│       ├── ADR-008_admin_hosting_and_ownership.md     # VIGENTE
+│       └── ADR-009_package_distribution_strategy.md   # VIGENTE
 ├── 02_SPECIFICATIONS/
 ├── 03_IMPLEMENTATION/
 ├── 04_TRACKING/
 │   ├── master-plan.md
+│   ├── TASK_WORKFLOW_AND_HANDOFF.md
 │   ├── guia-de-uso.md
 │   ├── IMPLEMENTATION_PROMPT.md
 │   ├── change-log/CHANGELOG.md
@@ -39,11 +41,14 @@ docs/
 ## 🔗 Enlaces rápidos
 
 - [Master Plan](04_TRACKING/master-plan.md)
+- [Workflow, ownership y quality gates](04_TRACKING/TASK_WORKFLOW_AND_HANDOFF.md)
 - [Guía de Tracking](04_TRACKING/guia-de-uso.md)
 - [ADRs](01_ARCHITECTURE/adr/)
 - [Especificaciones](02_SPECIFICATIONS/)
 - [CHANGELOG](04_TRACKING/change-log/CHANGELOG.md)
 - [TASK-025 — Integración definitiva del Admin](04_TRACKING/tasks/TASK-025.md)
+- [TASK-026 — Publicación de paquetes](04_TRACKING/tasks/TASK-026-PACKAGES-PUBLISHING.md)
+- [TASK-027 — Infraestructura y topología](04_TRACKING/tasks/TASK-027-INFRASTRUCTURE-TOPOLOGY.md)
 
 ## 🏗️ Reglas arquitectónicas clave
 
@@ -57,6 +62,7 @@ docs/
 8. **Ejemplo:** `Examples/tests/framework-automation` no es un segundo framework.
 9. **Histórico:** documentación obsoleta se conserva y se marca `SUPERSEDED`/`ARCHIVED`.
 10. **Platform:** alcance futuro separado; no mezclarlo con Website Ecosystem.
+11. **Packages:** Design System y Framework.Core tienen versionado y distribución independientes.
 
 ## 📌 Estados documentales
 
@@ -69,8 +75,10 @@ docs/
 - `SUPERSEDED` — reemplazado por una decisión/implementación posterior.
 - `ARCHIVED` — conservado como historia y no aplicable al estado actual.
 
-## 🧾 Nota de reconciliación 2026-09-07
+## 🧾 Reconciliación 2026-09-07
 
-La auditoría documental detectó que la estrategia intermedia de ADR-006 y TASK-015 seguía describiendo `apps/admin` como aplicación independiente. La URL `/admin` continúa siendo correcta, pero la topología fue reemplazada por ADR-008. TASK-025 contiene la migración definitiva.
+ADR-007 queda reservado para Platform. La estrategia de distribución de paquetes se normaliza como ADR-009. La tarea de publicación de paquetes se normaliza como TASK-026 porque TASK-017 corresponde a infraestructura histórica.
 
-Los documentos bajo `docs/99_ARCHIVE/` que describen subdominios, repositorios separados o `apps/admin` se conservan como evidencia histórica y **no constituyen instrucciones de implementación actuales**.
+ADR-006/TASK-015 describieron una etapa intermedia en la que el Admin era una aplicación independiente. Esa etapa queda superseded por ADR-008/TASK-025.
+
+Las referencias históricas a `apps/admin`, subdominios o repositorios separados pueden permanecer cuando documenten decisiones anteriores, pero no son instrucciones actuales.
