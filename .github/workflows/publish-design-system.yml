@@ -14,9 +14,13 @@ concurrency:
   group: publish-design-system
   cancel-in-progress: false
 
+env:
+  NODE_VERSION: 24
+  REGISTRY: https://npm.pkg.github.com
+
 jobs:
   publish:
-    name: Build, validate and publish @farutech/design-system
+    name: Build, validate and publish Design System
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -24,15 +28,41 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.REGISTRY }}
           cache: npm
           cache-dependency-path: packages/design-system/src/package-lock.json
+
+      - name: Validate package identity and version
+        shell: bash
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          EXPECTED_SCOPE="@$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
+          ACTUAL_SCOPE="${PACKAGE_NAME%@*}"
+          ACTUAL_SCOPE="@${PACKAGE_NAME#*@}"
+
+          if [[ "$ACTUAL_SCOPE" != "$EXPECTED_SCOPE" ]]; then
+            echo "Package scope mismatch: $ACTUAL_SCOPE != $EXPECTED_SCOPE"
+            echo "The npm package scope must match the GitHub owner for GitHub Packages publishing."
+            exit 1
+          fi
+
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            EXPECTED_VERSION="${GITHUB_REF_NAME#design-system-v}"
+            if [[ "$PACKAGE_VERSION" != "$EXPECTED_VERSION" ]]; then
+              echo "Package version $PACKAGE_VERSION does not match tag version $EXPECTED_VERSION"
+              exit 1
+            fi
+          fi
+
+          echo "Package: $PACKAGE_NAME"
+          echo "Version: $PACKAGE_VERSION"
 
       - name: Install dependencies
         run: npm ci
@@ -40,10 +70,16 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test -- --run
+
       - name: Package validation
         run: npm pack --dry-run
 
       - name: Publish
-        run: npm publish
+        run: npm publish --registry "$REGISTRY"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
