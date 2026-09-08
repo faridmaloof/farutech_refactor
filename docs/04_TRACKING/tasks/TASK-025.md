@@ -3,98 +3,116 @@
 **Fase:** FASE 14 — Corrección de Deuda Técnica / Reconciliación Arquitectónica  
 **Estado:** READY  
 **Prioridad:** 🔴 CRÍTICO  
-**Responsable:** Technical Lead / Frontend / Backend / QA  
-**ADR:** [ADR-008](../../01_ARCHITECTURE/adr/ADR-008_admin_hosting_and_ownership.md)
+**Owner:** Technical Lead (`/TL`) → Developer / QA / Test Automation / Security / Documentation  
+**ADR:** ADR-008
 
 ## Objetivo
 
-Eliminar la contradicción entre la URL `/admin` y la topología actualmente documentada/implementada como `apps/admin`.
-
-La arquitectura definitiva requiere que el Admin forme parte de `apps/website`, manteniendo separación modular interna y reutilizando el Design System y Framework.Core.
+Eliminar la contradicción entre la URL `/admin` y la topología `apps/admin`. La arquitectura definitiva requiere que el Admin forme parte de `apps/website`, con separación modular interna y reutilización del Design System y Framework.Core.
 
 ## Alcance
 
 ### Frontend
 
-- Identificar todo el código funcional actualmente ubicado en `apps/admin/src/frontend`.
-- Integrarlo dentro del frontend de `apps/website` con una frontera modular clara para Admin.
-- Mantener rutas `/admin/*`.
-- Mantener lazy loading y guards donde correspondan.
-- Eliminar dependencias de un segundo entrypoint SPA.
-- Reutilizar `packages/design-system`.
+- Migrar el código funcional necesario desde el legado `apps/admin` hacia `apps/website`.
+- Mantener una frontera modular clara para Admin.
+- Mantener rutas `/admin/*`, lazy loading y guards.
+- Eliminar el segundo entrypoint SPA como dependencia objetivo.
+- Consumir `packages/design-system`.
 
 ### Backend
 
-- Confirmar que toda API administrativa usa `apps/website/src/backend`.
-- No crear backend paralelo.
-- Validar autenticación, autorización, roles y middleware.
-- Revisar CORS, cookies, Sanctum y CSRF bajo same-origin.
+- Mantener toda API administrativa en `apps/website/src/backend`.
+- Validar autenticación, autorización, roles, middleware, CORS, cookies, Sanctum y CSRF bajo same-origin.
 
 ### Tests
 
-- Migrar/adaptar pruebas del Admin para utilizar la estructura de pruebas vigente del Website Ecosystem.
+- Migrar/adaptar pruebas a la estructura vigente.
 - Reutilizar `packages/framework-automation/src/Framework.Core`.
-- Mantener `Examples/tests/framework-automation` como referencia, no como implementación duplicada.
-- Cubrir como mínimo login, autorización, navegación `/admin`, una operación CRUD representativa y manejo de sesión.
+- Mantener `Examples/tests/framework-automation` como referencia.
+- Cubrir login, autorización, navegación `/admin`, CRUD representativo y sesión.
 
 ### Infraestructura
 
-- Eliminar del despliegue objetivo cualquier servicio dedicado a `apps/admin`.
-- Servir `/admin` desde el mismo artefacto/servicio frontend de Website, salvo una decisión posterior documentada que justifique otra cosa.
-- Revisar Docker, Compose, gateway, CI/CD y scripts de build.
+- Eliminar la dependencia de producción de un servicio dedicado a `apps/admin`.
+- Servir `/admin` desde el artefacto/servicio Website.
+- Revisar Docker, gateway, CI/CD, scripts y rutas directas/refresh.
 
 ### Documentación
 
-- Actualizar README, índice maestro, overview, testing strategy, getting started, master-plan y tareas relacionadas.
-- Mantener documentos históricos bajo `docs/99_ARCHIVE`.
-- Marcar como `SUPERSEDED` cualquier documento que presente `apps/admin` como arquitectura vigente.
-- Registrar la migración en CHANGELOG.
+- Reconciliar README, índice, overview, testing strategy, coding standards, getting started, master plan, tareas relacionadas y changelog.
+- Conservar historia en `docs/99_ARCHIVE`.
 
-## Dependencias
+## Criterios de aceptación funcionales
 
-- ADR-005 — backend consolidado.
-- ADR-008 — ownership final del Admin.
-- TASK-014 — consolidación backend.
-- TASK-015 — migración histórica por path; no debe tratarse como arquitectura vigente.
-- TASK-016 — reconciliación documental previa; debe revisarse nuevamente porque ahora existe ADR-008.
+- [ ] Admin integrado en `apps/website`.
+- [ ] `/admin` funciona con el router del Website.
+- [ ] Refresh y acceso directo a `/admin/*` funcionan.
+- [ ] Backend Admin permanece en `apps/website/src/backend`.
+- [ ] No existe `admin.<dominio>` como arquitectura objetivo.
+- [ ] No existe dependencia operativa de `apps/admin`.
+- [ ] Design System reutilizado desde `packages/design-system`.
+- [ ] Automatización reutiliza Framework.Core.
+- [ ] Autenticación/autorización funcionan correctamente.
 
-## Criterios de aceptación
+## Quality Gates obligatorios
 
-- [ ] No existe `apps/admin` como aplicación objetivo en la documentación ni en el despliegue.
-- [ ] El código Admin está integrado dentro de `apps/website`.
-- [ ] `/admin` funciona mediante el router del Website.
-- [ ] El backend Admin reside en `apps/website/src/backend`.
-- [ ] No existe routing objetivo por `admin.<dominio>`.
-- [ ] No existe backend/container/CI de Admin independiente requerido para producción.
-- [ ] Design System se consume desde `packages/design-system`.
-- [ ] Tests Admin reutilizan Framework.Core y no duplican framework.
-- [ ] Build, lint, type-check y tests relevantes pasan.
-- [ ] Se validan rutas directas y refresh de `/admin/*`.
-- [ ] Se valida autenticación/autorización.
-- [ ] Se actualizan docs y changelog.
-- [ ] La evidencia de cierre incluye comandos ejecutados y resultados.
+### Build
 
-## Regla de seguridad documental
+- [ ] Todos los proyectos afectados compilan.
+- [ ] Build global aplicable compila.
+- [ ] **0 errores.**
+- [ ] **0 warnings.**
+- [ ] 0 diagnósticos inesperados.
 
-No borrar automáticamente `apps/admin` ni los documentos históricos hasta haber identificado dependencias, migrado código necesario y confirmado que CI/CD, Docker, tests y documentación ya no dependen de esa aplicación.
+### Static quality
 
-## Resultado esperado
+- [ ] type-check pasa donde aplique.
+- [ ] lint pasa donde aplique.
+- [ ] analyzers/static analysis pasan donde aplique.
+- [ ] No se ocultan warnings con supresiones injustificadas.
 
-Una única aplicación Website con dos superficies claramente separadas a nivel de rutas/módulos:
+### Tests
 
-```text
-apps/website
-├── src/frontend
-│   ├── public/...
-│   └── admin/...
-└── src/backend
-    ├── public APIs
-    └── admin APIs
-```
+- [ ] Unit tests aplicables pasan.
+- [ ] Integration tests aplicables pasan.
+- [ ] API tests aplicables pasan.
+- [ ] E2E tests aplicables pasan.
+- [ ] Regression tests aplicables pasan.
+- [ ] Ningún test requerido se deshabilita para conseguir verde.
+- [ ] Todo fallo fue clasificado como producto/test/flaky/infraestructura/security/arquitectura antes de corregirse.
 
-con una única entrada de dominio:
+### Security
 
-```text
-<dominio>/
-<dominio>/admin
-```
+- [ ] No hay secretos en el cambio.
+- [ ] Dependency/security checks aplicables pasan.
+- [ ] No existen vulnerabilidades Critical/High sin resolver.
+- [ ] Findings Medium/Low tienen disposición documentada según política.
+
+### Documentation
+
+- [ ] TASK actualizada con evidencia.
+- [ ] ADRs consistentes.
+- [ ] Implementation docs actualizadas.
+- [ ] CHANGELOG actualizado.
+- [ ] INDEX/master-plan consistentes.
+
+## Triage y ownership
+
+- Defecto real de producto → Developer.
+- Falso positivo o expectativa incorrecta del test → QA/Test Automation.
+- Flaky test → QA/Test Automation.
+- Problema de infraestructura → Infrastructure/Developer.
+- Vulnerabilidad → Security valida; Developer remedia.
+- Conflicto arquitectónico → TL + Architect.
+- Documentación inconsistente → Documentation Guardian.
+
+El TL conserva la responsabilidad de aceptación final.
+
+## Evidencia de cierre
+
+Registrar comandos ejecutados y resultados para build, type-check/lint, tests, seguridad y validaciones funcionales. Si una validación obligatoria no puede ejecutarse, el estado no puede ser `DONE`.
+
+## Regla de migración
+
+No borrar automáticamente el legado hasta identificar dependencias y demostrar que CI/CD, Docker, tests y documentación ya no lo necesitan. Una vez demostrado, el legado puede eliminarse o archivarse según el resultado de la auditoría.
