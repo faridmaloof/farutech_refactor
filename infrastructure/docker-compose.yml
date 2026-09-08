@@ -158,6 +158,58 @@ services:
       - "com.farutech.env=development"
 
   # ===========================================================================
+  # ADMIN - Admin Panel (servido bajo /admin, ver ADR-006)
+  # ===========================================================================
+  admin:
+    build:
+      context: ../apps/admin/src/frontend
+      dockerfile: Dockerfile
+    container_name: farutech-admin
+    restart: unless-stopped
+    networks:
+      - farutech-proxy-network
+    depends_on:
+      - gateway
+
+  # ===========================================================================
+  # FRONTEND - Website público
+  # ===========================================================================
+  frontend:
+    build:
+      context: ../apps/website/src/frontend
+      dockerfile: Dockerfile
+    container_name: farutech-frontend
+    restart: unless-stopped
+    networks:
+      - farutech-proxy-network
+    depends_on:
+      - gateway
+
+  # ===========================================================================
+  # BACKEND - Laravel API (consolidado desde apps/api, ver TASK-014)
+  # ===========================================================================
+  backend:
+    build:
+      context: ../apps/website/src/backend
+      dockerfile: Dockerfile
+    container_name: farutech-backend
+    restart: unless-stopped
+    environment:
+      - APP_ENV=production
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=${MYSQL_DATABASE}
+      - DB_USERNAME=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - farutech-data-network
+      - farutech-proxy-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # ===========================================================================
   # PHPMYADMIN - MySQL Management
   # ===========================================================================
   phpmyadmin:

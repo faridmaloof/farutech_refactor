@@ -28,6 +28,10 @@
       "import": "./dist/components/layout.js",
       "types": "./dist/components/layout/index.d.ts"
     },
+    "./components/basic": {
+      "import": "./dist/components/basic.js",
+      "types": "./dist/components/basic/index.d.ts"
+    },
     "./auth-screens": {
       "import": "./dist/auth-screens.js",
       "types": "./dist/auth-screens/index.d.ts"

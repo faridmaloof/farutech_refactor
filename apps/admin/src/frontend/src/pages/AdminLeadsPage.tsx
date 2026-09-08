@@ -6,7 +6,7 @@ import { Badge } from '@farutech/design-system/components/ui';
 import { Button } from '@farutech/design-system/components/ui';
 import { EmptyState } from '@farutech/design-system/components/ui';
 import { Loading } from '@farutech/design-system/components/ui';
-import { Notification } from '@farutech/design-system/components/basic/Notification';
+import { Notification } from '@farutech/design-system/components/basic';
 import { 
   Search, 
   Plus, 
