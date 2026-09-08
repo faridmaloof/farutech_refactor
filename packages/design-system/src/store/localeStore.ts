@@ -7,7 +7,10 @@ export type TimeFormat = 'short' | 'medium'
 export interface LocaleConfig {
   locale: Locale
   months: string[]
+  monthsShort: string[]
   weekdays: string[]
+  days: string[]
+  daysShort: string[]
   dateFormat: DateFormat
   timeFormat: TimeFormat
 }
@@ -18,28 +21,42 @@ interface LocaleState {
   getLocaleConfig: () => LocaleConfig
 }
 
+function createLocaleConfig(locale: Locale): LocaleConfig {
+  const dateLocale = locale === 'pt' ? 'pt-BR' : locale
+  const referenceDate = new Date(2024, 0, 7)
+
+  return {
+    locale,
+    months: Array.from({ length: 12 }, (_, month) =>
+      new Intl.DateTimeFormat(dateLocale, { month: 'long' }).format(new Date(2024, month, 1))
+    ),
+    monthsShort: Array.from({ length: 12 }, (_, month) =>
+      new Intl.DateTimeFormat(dateLocale, { month: 'short' }).format(new Date(2024, month, 1))
+    ),
+    weekdays: Array.from({ length: 7 }, (_, day) =>
+      new Intl.DateTimeFormat(dateLocale, { weekday: 'long' }).format(
+        new Date(referenceDate.getTime() + day * 24 * 60 * 60 * 1000)
+      )
+    ),
+    days: Array.from({ length: 7 }, (_, day) =>
+      new Intl.DateTimeFormat(dateLocale, { weekday: 'long' }).format(
+        new Date(referenceDate.getTime() + day * 24 * 60 * 60 * 1000)
+      )
+    ),
+    daysShort: Array.from({ length: 7 }, (_, day) =>
+      new Intl.DateTimeFormat(dateLocale, { weekday: 'short' }).format(
+        new Date(referenceDate.getTime() + day * 24 * 60 * 60 * 1000)
+      )
+    ),
+    dateFormat: 'long',
+    timeFormat: 'short',
+  }
+}
+
 const localeConfigs: Record<Locale, LocaleConfig> = {
-  es: {
-    locale: 'es',
-    months: Array.from({ length: 12 }, (_, month) => new Intl.DateTimeFormat('es', { month: 'long' }).format(new Date(2024, month, 1))),
-    weekdays: Array.from({ length: 7 }, (_, day) => new Intl.DateTimeFormat('es', { weekday: 'short' }).format(new Date(2024, 0, 7 + day))),
-    dateFormat: 'long',
-    timeFormat: 'short',
-  },
-  en: {
-    locale: 'en',
-    months: Array.from({ length: 12 }, (_, month) => new Intl.DateTimeFormat('en', { month: 'long' }).format(new Date(2024, month, 1))),
-    weekdays: Array.from({ length: 7 }, (_, day) => new Intl.DateTimeFormat('en', { weekday: 'short' }).format(new Date(2024, 0, 7 + day))),
-    dateFormat: 'long',
-    timeFormat: 'short',
-  },
-  pt: {
-    locale: 'pt',
-    months: Array.from({ length: 12 }, (_, month) => new Intl.DateTimeFormat('pt', { month: 'long' }).format(new Date(2024, month, 1))),
-    weekdays: Array.from({ length: 7 }, (_, day) => new Intl.DateTimeFormat('pt', { weekday: 'short' }).format(new Date(2024, 0, 7 + day))),
-    dateFormat: 'long',
-    timeFormat: 'short',
-  },
+  es: createLocaleConfig('es'),
+  en: createLocaleConfig('en'),
+  pt: createLocaleConfig('pt'),
 }
 
 export const useLocaleStore = create<LocaleState>((set, get) => ({
