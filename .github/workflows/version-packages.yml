@@ -40,7 +40,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          changed_files="$(git diff-tree --no-commit-id --name-only -r HEAD)"
+          # Compare against the first parent so this works for both squash and merge commits.
+          changed_files="$(git diff-tree --no-commit-id --name-only -r HEAD^1 HEAD)"
 
           design_system_changed=false
           framework_core_changed=false
@@ -124,8 +125,7 @@ jobs:
             exit 1
           fi
 
-          message="chore(release): version changed packages [skip ci]"
-          git commit -m "$message"
+          git commit -m "chore(release): version changed packages [skip ci]"
           git push origin HEAD:main
 
       - name: Create release tags
