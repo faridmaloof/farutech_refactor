@@ -118,3 +118,14 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::post('users', 'App\Http\Controllers\UserController@store');
     Route::patch('users/{user}/status', 'App\Http\Controllers\UserController@toggleStatus');
 });
+
+// ============================================================
+// API ADMIN — Gestión de mensajes de contacto (TASK-018)
+// ============================================================
+Route::prefix('admin/contacts')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', 'App\Http\Controllers\ContactController@index');
+    Route::get('{id}', 'App\Http\Controllers\ContactController@show');
+    Route::patch('{id}/read', 'App\Http\Controllers\ContactController@markAsRead');
+    Route::patch('{id}/archive', 'App\Http\Controllers\ContactController@markAsArchived');
+    Route::patch('{id}/note', 'App\Http\Controllers\ContactController@updateNote');
+});

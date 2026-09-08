@@ -32,6 +32,10 @@
       "import": "./dist/components/basic.js",
       "types": "./dist/components/basic/index.d.ts"
     },
+    "./components/navigation": {
+      "import": "./dist/components/navigation.js",
+      "types": "./dist/components/navigation/index.d.ts"
+    },
     "./auth-screens": {
       "import": "./dist/auth-screens.js",
       "types": "./dist/auth-screens/index.d.ts"
