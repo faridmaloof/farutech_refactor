@@ -1,6 +1,6 @@
 {
   "name": "@faridmaloof/design-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sistema de diseño de Farutech - Componentes UI reutilizables para website, admin, intranet y futuras aplicaciones",
   "author": {
     "name": "Farid Maloof Suarez",
@@ -46,14 +46,8 @@
     },
     "./styles.css": "./dist/styles.css"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": ["**/*.css"],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "public"
@@ -64,17 +58,8 @@
     "directory": "packages/design-system/src"
   },
   "homepage": "https://github.com/faridmaloof/farutech_refactor/tree/main/packages/design-system/src",
-  "keywords": [
-    "react",
-    "design-system",
-    "ui-components",
-    "farutech",
-    "tailwindcss",
-    "typescript"
-  ],
-  "engines": {
-    "node": ">=20"
-  },
+  "keywords": ["react", "design-system", "ui-components", "farutech", "tailwindcss", "typescript"],
+  "engines": { "node": ">=20" },
   "scripts": {
     "dev": "vite build --watch",
     "build": "tsc && vite build",
@@ -89,8 +74,8 @@
     "pack:check": "npm pack --dry-run"
   },
   "peerDependencies": {
-    "react": ">=18.0.0 <20.0.0",
-    "react-dom": ">=18.0.0 <20.0.0"
+    "react": ">=18.3.0 <20.0.0",
+    "react-dom": ">=18.3.0 <20.0.0"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
@@ -117,8 +102,8 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^26.3.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^6.1.0",
     "autoprefixer": "^10.5.4",
     "eslint": "^10.9.1",
@@ -134,7 +119,5 @@
     "vite-plugin-dts": "^4.5.0",
     "vitest": "^3.2.4"
   },
-  "allowScripts": {
-    "esbuild@0.28.2": true
-  }
+  "allowScripts": { "esbuild@0.28.2": true }
 }
